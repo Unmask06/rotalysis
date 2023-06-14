@@ -29,7 +29,6 @@ class Core:
     def process_task(self):
         total_tasks = len(self.dftask_list)
 
-        # Create a progress bar using tqdm
         progress_bar = tqdm(total=total_tasks, desc="Processing", unit="task")
 
         for i in range(total_tasks):
@@ -45,12 +44,18 @@ class Core:
 
                 try:
                     PF.check_mandatory_columns(dfoperation)
+
                 except Exception as e:
                     print(e)
 
                 dfoperation = PF.remove_abnormal_rows(dfoperation)
 
-                dfoperation = PF.get_computed_columns(dfoperation)
+                try:
+                    dfoperation = PF.get_computed_columns(dfoperation)
+
+                except Exception as e:
+                    print("Error occurred while computing columns: ", site, tag)
+                    print(e)
 
                 for option in ["VSD", "Impeller"]:
                     dfenergy = PF.create_energy_calculation(dfoperation, selected_option=option)
