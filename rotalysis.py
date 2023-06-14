@@ -6,7 +6,7 @@ import os
 
 class UtilityFunction:
     @staticmethod
-    def load_task_list(task_path="task list.xlsx", sheet_name="task_list_1"):
+    def load_task_list(task_path="TaskList.xlsx", sheet_name="task_list_1"):
         task_list = pd.read_excel(task_path, sheet_name=sheet_name, header=0).fillna("")
         task_list = task_list.loc[task_list["Perform"] == "Y"]
         task_list.reset_index(drop=True, inplace=True)
