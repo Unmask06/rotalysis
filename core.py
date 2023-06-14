@@ -27,10 +27,6 @@ class Core:
         self.dftask_list = UF.load_task_list(task_path=self.task_path)
 
     def process_task(self):
-        print(PF.config)
-        print(self.comp_cfg)
-        print(self.dftask_list.head())
-
         total_tasks = len(self.dftask_list)
 
         # Create a progress bar using tqdm
@@ -54,7 +50,6 @@ class Core:
 
                 dfoperation = PF.remove_abnormal_rows(dfoperation)
 
-
                 dfoperation = PF.get_computed_columns(dfoperation)
 
                 for option in ["VSD", "Impeller"]:
@@ -77,24 +72,3 @@ class Core:
         progress_bar.close()
 
         print("Task completed!")
-        
-config_path = "Config.xlsx"
-task_path = "TaskList.xlsx"
-errmsg_path = "ErrorMessages.xlsx"
-input_path = "Input"
-output_path = "Output"
-
-
-trail = Core(config_path, task_path, errmsg_path, input_path, output_path)
-trail.intialize()
-
-
-i=0
-site, tag = trail.dftask_list["Site"][i], trail.dftask_list["Tag"][i]
-excel_path = UF.get_excel_path(site, tag)
-dfprocess, dfoperation, dfcurve, dfunit = UF.load_equipment_data(excel_path)
-PF.set_process_data(dfprocess)
-dfoperation = PF.remove_irrelevant_columns(dfoperation)
-
-PF.set_unit(dfunit)
-PF.convert_default_unit(dfoperation)

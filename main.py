@@ -47,56 +47,56 @@ def is_valid_dir_path(path):
 
 
 def main():
-    # animate_logo()
-    # custom_style = Style(
-    #     [
-    #         ("qmark", "fg:blue bold"),
-    #         ("question", "bold"),
-    #         ("answer", "fg:green"),
-    #         ("highlighted", "fg:black bg:white"),
-    #     ]
-    # )
+    animate_logo()
+    custom_style = Style(
+        [
+            ("qmark", "fg:blue bold"),
+            ("question", "bold"),
+            ("answer", "fg:green"),
+            ("highlighted", "fg:black bg:white"),
+        ]
+    )
 
-    # config_path = questionary.path(
-    #     "Enter Configuration file path:",
-    #     only_directories=False,
-    #     default="Config.xlsx",
-    #     validate=is_valid_file_path,
-    # ).ask()
+    config_path = questionary.path(
+        "Enter Configuration file path:",
+        only_directories=False,
+        default="Config.xlsx",
+        validate=is_valid_file_path,
+    ).ask()
 
-    # task_path = questionary.path(
-    #     "Enter Task file path:",
-    #     only_directories=False,
-    #     default="TaskList.xlsx",
-    #     validate=is_valid_file_path,
-    # ).ask()
+    task_path = questionary.path(
+        "Enter Task file path:",
+        only_directories=False,
+        default="TaskList.xlsx",
+        validate=is_valid_file_path,
+    ).ask()
 
-    # errmsg_path = questionary.path(
-    #     "Enter Error Message file path:",
-    #     only_directories=False,
-    #     default="ErrorMessages.xlsx",
-    #     #        validate=is_valid_file_path,
-    # ).ask()
+    errmsg_path = questionary.path(
+        "Enter Error Message file path:",
+        only_directories=False,
+        default="ErrorMessages.xlsx",
+        #        validate=is_valid_file_path,
+    ).ask()
 
-    # input_path = questionary.path(
-    #     "Enter Input folder path:",
-    #     only_directories=True,
-    #     default="Input",
-    #     validate=is_valid_dir_path,
-    # ).ask()
+    input_path = questionary.path(
+        "Enter Input folder path:",
+        only_directories=True,
+        default="Input",
+        validate=is_valid_dir_path,
+    ).ask()
 
-    # output_path = questionary.path(
-    #     "Enter Output folder path:",
-    #     only_directories=True,
-    #     default="Output",
-    #     validate=is_valid_dir_path,
-    # ).ask()
+    output_path = questionary.path(
+        "Enter Output folder path:",
+        only_directories=True,
+        default="Output",
+        validate=is_valid_dir_path,
+    ).ask()
 
-    config_path = "Config.xlsx"
-    task_path = "TaskList.xlsx"
-    errmsg_path = "ErrorMessages.xlsx"
-    input_path = "Input"
-    output_path = "Output"
+    # config_path = "Config.xlsx"
+    # task_path = "TaskList.xlsx"
+    # errmsg_path = "ErrorMessages.xlsx"
+    # input_path = "Input"
+    # output_path = "Output"
 
     print(BLUE + f"Configuration File path: {config_path}" + RESET)
     print(GREEN + f"Task File path: {task_path}" + RESET)

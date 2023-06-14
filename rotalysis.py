@@ -561,15 +561,6 @@ class PumpFunction:
 
     @staticmethod
     def create_energy_calculation(df, selected_option="VFD"):
-        """create final energy calculation dataframe from dfopeartion dataframe
-
-        Args:
-            df (_type_): _description_
-            selected_option (str, optional): _description_. Defaults to "VFD".
-
-        Returns:
-            _type_: _description_
-        """
         dfEnergy = PumpFunction.group_by_flowrate_percent(df)
         dfEnergy["selected_option"] = selected_option
         PumpFunction.select_speed_reduction(dfEnergy)
@@ -583,8 +574,3 @@ class CompressorFunction:
     @staticmethod
     def dummy(number, number2):
         return None
-
-
-# cf = PumpFunction.get_speed_variation(150, 100)
-# new_dia = cf * 55
-# print(new_dia)
