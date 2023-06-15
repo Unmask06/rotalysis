@@ -108,6 +108,16 @@ def main():
     core.intialize()
     core.process_task()
 
+    print(
+        "Program finished successfully! \
+        \nCheck the Error message and modify the input files accordingly and rerun the application."
+    )
+    close_program = questionary.confirm("Do you want to close the program?").ask()
+    if close_program:
+        print("Closing the program...")
+    else:
+        input("Press Enter to close the program...")
+
 
 if __name__ == "__main__":
     main()

@@ -29,7 +29,13 @@ class Core:
     def process_task(self):
         total_tasks = len(self.dftask_list)
 
-        progress_bar = tqdm(total=total_tasks, desc="Processing", unit="task")
+        progress_bar = tqdm(
+            total=total_tasks,
+            initial=0,
+            bar_format="{desc}: {percentage:.0f}%\n{bar}",
+            desc="Processing",
+            unit="task",
+        )
 
         for i in range(total_tasks):
             try:
@@ -37,6 +43,7 @@ class Core:
                 excel_path = UF.get_excel_path(site, tag)
                 print("Processing: ", excel_path)
                 dfprocess, dfoperation, dfcurve, dfunit = UF.load_equipment_data(excel_path)
+                output_path = self.output_path
                 PF.set_process_data(dfprocess)
                 dfoperation = PF.remove_irrelevant_columns(dfoperation)
                 PF.set_unit(dfunit)
@@ -46,7 +53,7 @@ class Core:
                     PF.check_mandatory_columns(dfoperation)
 
                 except Exception as e:
-                    print(e)
+                    print("\n", e)
 
                 dfoperation = PF.remove_abnormal_rows(dfoperation)
 
@@ -57,16 +64,10 @@ class Core:
                     print("Error occurred while computing columns: ", site, tag)
                     print(e)
 
-                for option in ["VSD", "Impeller"]:
-                    dfenergy = PF.create_energy_calculation(dfoperation, selected_option=option)
-                    output_folder_path = os.path.join(os.getcwd(), self.output_path, site)
-                    os.makedirs(output_folder_path, exist_ok=True)
-                    output_file_path = os.path.join(output_folder_path, tag + ".xlsx")
-                    UF.write_to_excel(output_file_path, option, dfenergy)
-                print("Output file saved to: ", output_file_path)
+                PF.create_energy_summary(dfoperation, output_path, site, tag)
 
             except Exception as e:
-                print(traceback.format_exc())
+                # print(traceback.format_exc())
                 print("Error occurred while processing: ", site, tag)
                 print("Error message saved to: ", self.errmsg_path)
 

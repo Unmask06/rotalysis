@@ -58,7 +58,7 @@ class UtilityFunction:
                 excel_path = os.path.join(subfolder_path, excel_files[0])
             else:
                 raise FileNotFoundError(
-                    f'No Excel file found with "{tag}" tag in the "{site}" sub-folder of Input directory.'
+                    f'Excel file not found with "{tag}" tag in the "{site}" sub-folder of Input directory.'
                 )
 
             return excel_path
@@ -568,6 +568,17 @@ class PumpFunction:
         PumpFunction.get_emissions_columns(dfEnergy)
 
         return dfEnergy
+
+    @staticmethod
+    def create_energy_summary(dfoperation,output_path,site,tag):
+        for option in ["VSD", "Impeller"]:
+            dfenergy = PumpFunction.create_energy_calculation(dfoperation, selected_option=option)
+            output_folder_path = os.path.join(os.getcwd(), output_path, site)
+            os.makedirs(output_folder_path, exist_ok=True)
+            output_file_path = os.path.join(output_folder_path, tag + ".xlsx")
+            UtilityFunction.write_to_excel(output_file_path, option, dfenergy)
+        print("Output file saved to: ", output_file_path)
+
 
 
 class CompressorFunction:
