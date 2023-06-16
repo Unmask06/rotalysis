@@ -54,7 +54,7 @@ class Core:
                     PF.check_mandatory_columns(dfoperation)
 
                 except Exception as e:
-                    print(colored("\n", e, "red"))
+                    print("\n",colored( e, "red"))
 
                 dfoperation = PF.remove_abnormal_rows(dfoperation)
 
