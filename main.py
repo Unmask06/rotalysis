@@ -5,32 +5,25 @@ from art import text2art
 import time
 import os
 from core import Core
-
-
-# ANSI escape code for colors
-RESET = "\033[0m"
-RED = "\033[91m"
-GREEN = "\033[92m"
-YELLOW = "\033[93m"
-BLUE = "\033[94m"
-PURPLE = "\033[95m"
-CYAN = "\033[96m"
+from termcolor import colored
 
 
 def animate_logo():
     company_name = "Tebodin"
     client_name = "ADNOC"
     program_name = "DECARB"
-    clear_terminal()  # Optional: Clear the terminal screen before each frame
-    print(RED + text2art(company_name) + RESET)
+    clear_terminal()
+    print(colored(text2art(company_name), "red"))
     time.sleep(1)
-    clear_terminal()  # Optional: Clear the terminal screen before each frame
-    print(BLUE + text2art(client_name) + RESET)
+    clear_terminal()
+
+    print(colored(text2art(client_name), "blue"))
     time.sleep(1)
-    clear_terminal()  # Optional: Clear the terminal screen before each frame
-    print(GREEN + text2art(program_name) + RESET)
+    clear_terminal()
+
+    print(colored(text2art(program_name), "green"))
     time.sleep(1)
-    clear_terminal()  # Optional: Clear the terminal screen before each frame
+    clear_terminal()
 
 
 def clear_terminal():
@@ -92,17 +85,11 @@ def main():
         validate=is_valid_dir_path,
     ).ask()
 
-    # config_path = "Config.xlsx"
-    # task_path = "TaskList.xlsx"
-    # errmsg_path = "ErrorMessages.xlsx"
-    # input_path = "Input"
-    # output_path = "Output"
-
-    print(BLUE + f"Configuration File path: {config_path}" + RESET)
-    print(GREEN + f"Task File path: {task_path}" + RESET)
-    print(PURPLE + f"Task File path: {errmsg_path}" + RESET)
-    print(CYAN + f"Input folder path: {input_path}" + RESET)
-    print(BLUE + f"Output folder path: {output_path}" + RESET)
+    print(colored(f"Configuration File path: {config_path}", "blue"))
+    print(colored(f"Task File path: {task_path}", "green"))
+    print(colored(f"Error Message File path: {errmsg_path}", "magenta"))
+    print(colored(f"Input folder path: {input_path}", "cyan"))
+    print(colored(f"Output folder path: {output_path}", "blue"))
 
     core = Core(config_path, task_path, errmsg_path, input_path, output_path)
     core.intialize()

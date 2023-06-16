@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import xlwings as xw
 import os
+from termcolor import colored
 
 
 class UtilityFunction:
@@ -570,7 +571,7 @@ class PumpFunction:
         return dfEnergy
 
     @staticmethod
-    def create_energy_summary(dfoperation,output_path,site,tag):
+    def create_energy_summary(dfoperation, output_path, site, tag):
         for option in ["VSD", "Impeller"]:
             dfenergy = PumpFunction.create_energy_calculation(dfoperation, selected_option=option)
             output_folder_path = os.path.join(os.getcwd(), output_path, site)
@@ -578,7 +579,6 @@ class PumpFunction:
             output_file_path = os.path.join(output_folder_path, tag + ".xlsx")
             UtilityFunction.write_to_excel(output_file_path, option, dfenergy)
         print("Output file saved to: ", output_file_path)
-
 
 
 class CompressorFunction:

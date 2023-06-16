@@ -11,6 +11,7 @@ from rotalysis import (
     ValveFunction as VF,
 )
 import traceback
+from termcolor import colored
 
 
 class Core:
@@ -53,7 +54,7 @@ class Core:
                     PF.check_mandatory_columns(dfoperation)
 
                 except Exception as e:
-                    print("\n", e)
+                    print(colored("\n", e, "red"))
 
                 dfoperation = PF.remove_abnormal_rows(dfoperation)
 
@@ -68,7 +69,7 @@ class Core:
 
             except Exception as e:
                 # print(traceback.format_exc())
-                print("Error occurred while processing: ", site, tag)
+                print(colored("Error occurred while processing: ", "red"), site, tag)
                 print("Error message saved to: ", self.errmsg_path)
 
             time.sleep(0.1)
