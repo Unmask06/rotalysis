@@ -1,7 +1,0 @@
-rated_flowrate: 638 # m3/hr
-min_cv_loss: 0.5 # bar
-pipe_loss: 0.2 # fraction
-emission_factor: 0.45 # tCo2/MWh
-valve_character: Linear
-valve_size: 6 # inch
-density: 1000 # kg/m3
