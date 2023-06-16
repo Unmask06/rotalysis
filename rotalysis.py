@@ -393,8 +393,8 @@ class PumpFunction:
         percent = PumpFunction.config["bin_percent"]
         df["flowrate_percent"] = df["discharge_flowrate"] / PumpFunction.process_data["rated_flow"]
 
-        bins = np.arange(0.275, 1 + (4 * percent), percent)
-        labels = np.arange(0.30, 1 + (4 * percent), percent)
+        bins = np.concatenate(([0], np.arange(0.275, 1 + (5 * percent), percent)))
+        labels = np.arange(0.25, 1 + (5 * percent), percent)
         df["flowrate_percent"] = pd.cut(
             df["flowrate_percent"], bins=bins, labels=labels, right=True
         )
