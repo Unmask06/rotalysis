@@ -88,7 +88,7 @@ class UtilityFunction:
 
         except Exception as e:
             raise Exception(
-                "Error in reading operational data. Check whether header row is correct. "
+                e, "Error in reading operational data. Check whether header row is correct. "
             )
 
         try:
@@ -104,7 +104,7 @@ class UtilityFunction:
             dfunit.dropna(inplace=True)
             dfunit = dict(zip(dfunit["parameter"], dfunit["unit"]))
         except Exception as e:
-            raise Exception("Error in reading unit data.")
+            raise Exception(e, "Error in reading unit data.")
 
         return process_data, dfoperation, dfcurve, dfunit
 
@@ -128,7 +128,7 @@ class UtilityFunction:
             wb.close()
             app.quit()
         except Exception as e:
-            raise Exception("Error in writing to excel.")
+            raise Exception(e, "Error in writing to excel.")
 
 
 class ValveFunction:
@@ -187,7 +187,9 @@ class ValveFunction:
         if valve_character == "Linear":
             actual_cv = rated_cv * (cv_opening / 100)
         elif valve_character == "Equal Percentage":
-            actual_cv = None
+            actual_cv = rated_cv * (cv_opening / 100) ** 3
+        elif valve_character == "Quick Opening":
+            actual_cv = rated_cv * (cv_opening / 100) ** 0.5
         return actual_cv
 
     @staticmethod
