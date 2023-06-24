@@ -4,13 +4,14 @@ from tqdm import tqdm
 from art import text2art
 import time
 import os
-from core import Core
+from rotalysis import Core
 from termcolor import colored
 
 
 def animate_logo():
     company_name = "Tebodin"
     client_name = "ADNOC"
+    
     program_name = "DECARB"
     clear_terminal()
     print(colored(text2art(company_name), "red"))
