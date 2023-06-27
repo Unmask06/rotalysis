@@ -14,35 +14,64 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("gui/main_window.ui", self)
+        self.set_default_values()
 
-        # Connect the button's clicked signal to a custom slot
-        self.pbConfig = self.findChild(QPushButton, "pbConfig")
-        self.tbox_config = self.findChild(QPlainTextEdit, "tbox_config")
-        self.pbConfig.clicked.connect(self.open_file_dialog)
+        self.connect_buttons()
 
-        self.pbInputFolder = self.findChild(QPushButton, "pbInputFolder")
-        self.tbox_InputFolder = self.findChild(QPlainTextEdit, "tbox_InputFolder")
-        self.pbInputFolder.clicked.connect(self.open_folder_dialog)
+    def set_default_values(self):
+        default_values = {
+            "tbox_config": "Config.xlsx",
+            "tbox_tasklist": "TaskList.xlsx",
+            "tbox_InputFolder": "/Input",
+            "tbox_OutputFolder": "/Output",
+        }
 
-    def modify_button(self):
-        self.button.setText("Modified Button")
-        self.button.setEnabled(False)
+        for widget_name, default_value in default_values.items():
+            widget = self.findChild(QPlainTextEdit, widget_name)
+            widget.setPlainText(default_value)
+    
+    def connect_buttons(self):
+        buttons = {
+            "pbConfig": {"dialog": QFileDialog.getOpenFileName, "widget": "tbox_config"},
+            "pbTaskList": {"dialog": QFileDialog.getOpenFileName, "widget": "tbox_tasklist"},
+            "pbInputFolder": {
+                "dialog": QFileDialog.getExistingDirectory,
+                "widget": "tbox_InputFolder",
+            },
+            "pbOutputFolder": {
+                "dialog": QFileDialog.getExistingDirectory,
+                "widget": "tbox_OutputFolder",
+            },
+        }
 
-    def print_hello(self):
-        print("Hello World")
-        self.button.setEnabled(True)
-        self.modify_button()
+        for button_name, button_info in buttons.items():
+            try:
+                button = self.findChild(QPushButton, button_name)
+                widget_name = button_info["widget"]
+                widget = self.findChild(QPlainTextEdit, widget_name)
+                dialog_func = button_info["dialog"]
 
-    def open_file_dialog(self):
+                button.clicked.connect(
+                    lambda _, btn=button, dlg=dialog_func, wgt=widget: self.handle_button_click(
+                        btn, dlg, wgt
+                    )
+                )
+            except Exception as e:
+                print(e, button_name)
+
+    def handle_button_click(self, button, dialog_func, widget):
         options = QFileDialog.Options()
-        file_path, _ = QFileDialog.getOpenFileName(
-            self, "Open File", "", "All Files (*);;Text Files (*.txt)", options=options
-        )
-        if file_path:
-            self.tbox_config.setPlainText(file_path)
-
-    def open_folder_dialog(self):
-        options = QFileDialog.Options()
-        folder_path = QFileDialog.getExistingDirectory(self, "Open Folder", options=options)
-        if folder_path:
-            self.tbox_InputFolder.setPlainText(folder_path)
+        if dialog_func == QFileDialog.getOpenFileName:
+            file_path, _ = dialog_func(
+                self,
+                caption=button.text(),
+                options=options,
+                filter="Excel Files (*.xlsx)",
+                directory="",
+            )
+            if file_path:
+                widget.setPlainText(file_path)
+        elif dialog_func == QFileDialog.getExistingDirectory:
+            folder_path = dialog_func(self, caption=button.text(), options=options, directory="")
+            if folder_path:
+                widget.setPlainText(folder_path)
