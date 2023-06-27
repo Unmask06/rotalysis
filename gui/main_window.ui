@@ -24,19 +24,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QDialogButtonBox" name="bbConfig">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>156</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
@@ -61,19 +48,6 @@
     </property>
     <property name="text">
      <string>Select File</string>
-    </property>
-   </widget>
-   <widget class="QDialogButtonBox" name="bbTaskList">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>230</y>
-      <width>156</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="tbox_tasklist">
@@ -125,19 +99,6 @@
      <string>Select Folder</string>
     </property>
    </widget>
-   <widget class="QDialogButtonBox" name="bbInputFolder">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>370</y>
-      <width>156</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-    </property>
-   </widget>
    <widget class="QPlainTextEdit" name="tbox_InputFolder">
     <property name="geometry">
      <rect>
@@ -171,19 +132,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="QDialogButtonBox" name="bbOutputFolder">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>100</y>
-      <width>156</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="standardButtons">
-     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
@@ -208,6 +156,19 @@
     </property>
     <property name="text">
      <string>Select Folder</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbRun">
+    <property name="geometry">
+     <rect>
+      <x>690</x>
+      <y>470</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Run</string>
     </property>
    </widget>
   </widget>
