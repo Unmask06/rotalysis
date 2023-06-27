@@ -1,1 +1,1 @@
-from .test import Ui_MainWindow
+from .gui import MainWindow
