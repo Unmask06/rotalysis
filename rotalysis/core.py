@@ -16,10 +16,9 @@ from termcolor import colored
 
 
 class Core:
-    def __init__(self, config_path, task_path, errmsg_path, input_path, output_path):
+    def __init__(self, config_path, task_path, input_path, output_path):
         self.config_path = config_path
         self.task_path = task_path
-        self.errmsg_path = errmsg_path
         self.input_path = input_path
         self.output_path = output_path
 
@@ -71,7 +70,7 @@ class Core:
             except Exception as e:
                 print(traceback.format_exc())
                 print(colored("Error occurred while processing: ", "red"), site, tag)
-                print("Error message saved to: ", self.errmsg_path)
+                print("Error message saved to: erro.log")
 
             time.sleep(0.1)
 
