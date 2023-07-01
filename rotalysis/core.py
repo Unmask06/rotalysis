@@ -15,12 +15,14 @@ import traceback
 from termcolor import colored
 
 
+
 class Core:
-    def __init__(self, config_path, task_path, input_path, output_path):
+    def __init__(self, config_path, task_path, input_path, output_path,window = None):
         self.config_path = config_path
         self.task_path = task_path
         self.input_path = input_path
         self.output_path = output_path
+        self.window = window
 
     def intialize(self):
         PF.set_config(UF.load_config_pump(config_path=self.config_path))
@@ -30,13 +32,6 @@ class Core:
     def process_task(self):
         total_tasks = len(self.dftask_list)
 
-        progress_bar = tqdm(
-            total=total_tasks,
-            initial=0,
-            bar_format="{desc}: {percentage:.0f}%\n{bar}",
-            desc="Processing",
-            unit="task",
-        )
 
         for i in range(total_tasks):
             try:
@@ -74,8 +69,9 @@ class Core:
 
             time.sleep(0.1)
 
-            progress_bar.update(1)
+            progress = int((i + 1) / total_tasks * 100)
+            if self.window:
+                self.window.ProgressBar.setValue(progress)
 
-        progress_bar.close()
 
         print("Task completed!")

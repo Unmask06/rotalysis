@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import (
     QDialogButtonBox,
     QPushButton,
     QPlainTextEdit,
+    QProgressBar,
+    QLabel
 )
 from PyQt5 import uic
 
@@ -17,6 +19,9 @@ class MainWindow(QMainWindow):
         self.set_default_values()
 
         self.connect_buttons()
+        self.tabWidget.setCurrentIndex(0)
+        self.ProgressBar = self.findChild(QProgressBar, "ProgressBar")
+        self.lbOutput = self.findChild(QLabel, "lbOutput")
 
     def set_default_values(self):
         default_values = {
@@ -75,3 +80,4 @@ class MainWindow(QMainWindow):
             folder_path = dialog_func(self, caption=button.text(), options=options, directory="")
             if folder_path:
                 widget.setPlainText(folder_path)
+        
