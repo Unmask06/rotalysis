@@ -6,3 +6,8 @@
 /build
 *.exe
 *.spec
+/.vscode
+/rotalysis/__pycache__
+/utils/__pycache__
+**/*trail*
+**/*test*

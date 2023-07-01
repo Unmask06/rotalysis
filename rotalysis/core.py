@@ -66,10 +66,10 @@ class Core:
                     print("Error occurred while computing columns: ", site, tag)
                     print(e)
 
-                PF.create_energy_summary(dfoperation, output_path, site, tag)
+                PF.save_energy_summary(dfoperation, output_path, site, tag)
 
             except Exception as e:
-                # print(traceback.format_exc())
+                print(traceback.format_exc())
                 print(colored("Error occurred while processing: ", "red"), site, tag)
                 print("Error message saved to: ", self.errmsg_path)
 
