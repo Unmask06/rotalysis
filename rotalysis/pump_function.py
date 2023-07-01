@@ -1,11 +1,12 @@
-#pump_function.py in rotalysis folder
-from rotalysis import ValveFunction, UtilityFunction
-
-import pandas as pd
-import numpy as np
-import xlwings as xw
+# pump_function.py in rotalysis folder
 import os
+
+import numpy as np
+import pandas as pd
+import xlwings as xw
 from termcolor import colored
+
+from rotalysis import UtilityFunction, ValveFunction
 
 
 class PumpFunction:
@@ -362,7 +363,7 @@ class PumpFunction:
         )
 
     @staticmethod
-    def create_energy_calculation(df, selected_option="VFD"):
+    def create_energy_calculation(df, selected_option="VSD"):
         dfEnergy = PumpFunction.group_by_flowrate_percent(df)
         dfEnergy["selected_option"] = selected_option
         PumpFunction.select_speed_reduction(dfEnergy)
@@ -372,11 +373,55 @@ class PumpFunction:
         return dfEnergy
 
     @staticmethod
-    def create_energy_summary(dfoperation, output_path, site, tag):
+    def create_summary(dfenergy):
+        dfenergy = dfenergy[dfenergy["working_percent"] > 0]
+        columns = [
+            "selected_speed_variation",
+            "base_case_energy_consumption",
+            "proposed_case_energy_consumption",
+            "annual_energy_savings",
+            "base_case_emission",
+            "proposed_case_emission",
+            "ghg_reduction",
+            "ghg_reduction_percent",
+        ]
+        dfsummary = pd.DataFrame(columns=columns,data=np.nan,index=[0])
+        dfsummary["pump_tag"] = PumpFunction.process_data["tag_no"]
+        dfsummary["rated_flowrate"] = PumpFunction.process_data["rated_flow"]
+
+        dfsummary["selected_speed_variation"] = (
+            "{:.0%}".format(dfenergy["selected_speed_variation"].max())
+            + " - "
+            + "{:.0%}".format(dfenergy["selected_speed_variation"].min())
+        )
+        dfsummary["base_case_energy_consumption"] = dfenergy["base_case_energy_consumption"].sum()
+        dfsummary["proposed_case_energy_consumption"] = dfenergy[
+            "proposed_case_energy_consumption"
+        ].sum()
+        dfsummary["annual_energy_savings"] = dfenergy["annual_energy_savings"].sum()
+        dfsummary["base_case_emission"] = dfenergy["base_case_emission"].sum()
+        dfsummary["proposed_case_emission"] = dfenergy["proposed_case_emission"].sum()
+        dfsummary["ghg_reduction"] = dfenergy["ghg_reduction"].sum()
+        dfsummary["ghg_reduction_percent"] = (
+            dfsummary["ghg_reduction"] / dfsummary["base_case_emission"]
+        )
+
+        return dfsummary
+
+    @staticmethod
+    def save_energy_summary(dfoperation, output_path, site, tag):
+        dfs = []
         for option in ["VSD", "Impeller"]:
             dfenergy = PumpFunction.create_energy_calculation(dfoperation, selected_option=option)
+            dfsummary = PumpFunction.create_summary(dfenergy)
+            dfsummary.index = [option]
+            dfs.append(dfsummary)
             output_folder_path = os.path.join(os.getcwd(), output_path, site)
             os.makedirs(output_folder_path, exist_ok=True)
             output_file_path = os.path.join(output_folder_path, tag + ".xlsx")
             UtilityFunction.write_to_excel(output_file_path, option, dfenergy)
         print("Output file saved to: ", output_file_path)
+
+        dfsummary = pd.concat(dfs)
+        dfsummary = dfsummary.transpose()
+        UtilityFunction.write_to_excel(output_file_path, "Summary", dfsummary)

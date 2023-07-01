@@ -109,21 +109,18 @@ class UtilityFunction:
     @staticmethod
     def write_to_excel(path: str, sheet_name: str, dataframe: pd.DataFrame) -> None:
         try:
-            app = xw.App()
             if not os.path.isfile(path):
                 wb = xw.Book()
             else:
                 wb = xw.Book(path)
-            ws = None
-            sheet_names = [sheet.name for sheet in wb.sheets]
-            if sheet_name in sheet_names:
-                ws = wb.sheets[sheet_name]
-            else:
-                ws = wb.sheets.add(sheet_name)
-            ws.clear_contents()
-            ws.range("A1").options(index=False).value = dataframe
-            wb.save(path)
-            wb.close()
-            app.quit()
+            with xw.App(visible=False) as app:
+                sheet_names = [sheet.name for sheet in wb.sheets]
+                if sheet_name in sheet_names:
+                    ws = wb.sheets[sheet_name]
+                else:
+                    ws = wb.sheets.add(sheet_name)
+                ws.clear_contents()
+                ws.range("A1").options(index=True).value = dataframe
+                wb.save(path)
         except Exception as e:
             raise Exception(e, "Error in writing to excel.")
