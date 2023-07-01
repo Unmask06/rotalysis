@@ -1,3 +1,6 @@
+import sys
+sys.path.append('..')
+
 import pandas as pd
 from rotalysis import UtilityFunction as uf
 import matplotlib.pyplot as plt
@@ -46,7 +49,7 @@ class CompressorFunction:
             Pd = Pd + 101.325
         Ts = uc.convert(Ts, Ts_unit, "K")
         Qm = (
-            uc.convert_MMSCFD_to_kg_per_h(Qm, MW)
+            uc.convert_MMSCFD_to_kg_per_h(Qm, MW) / 3600
             if Qm_unit == "MMSCFD"
             else uc.convert(Qm, Qm_unit, "kg/s")
         )
@@ -67,8 +70,8 @@ class CompressorFunction:
         return compressor_power
 
 
-    power = calculate_compressor_power(
-        Qm=260, Ps=260, Pd=4810, Ts=95, MW=19.2, k=1.325, poly_eff=0.795, Zs=0.894, Zd=0.948
-    )
+power = CompressorFunction.calculate_compressor_power(
+    Qm=260, Ps=260, Pd=4810, Ts=95, MW=19.2, k=1.325, poly_eff=0.795, Zs=0.894, Zd=0.948
+)
 
-    print(power)
+print(power)
