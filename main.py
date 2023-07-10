@@ -4,6 +4,16 @@ import sys
 from rotalysis import Core
 from gui import MainWindow
 
+class RedirectOutput:
+    def __init__(self, printOccured):
+        self.printOccured = open("text.txt", "w")
+
+    def write(self, string):
+        self.printOccured.write(string)
+
+    def flush(self):
+        pass
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

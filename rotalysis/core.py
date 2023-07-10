@@ -1,23 +1,22 @@
-#core.py in rotalysis folder
-import pandas as pd
-import numpy as np
+# core.py in rotalysis folder
 import os
 import time
-from tqdm import tqdm
-import xlwings as xw
-from rotalysis import (
-    UtilityFunction as UF,
-    PumpFunction as PF,
-    CompressorFunction as CF,
-    ValveFunction as VF,
-)
 import traceback
-from termcolor import colored
 
+import numpy as np
+import pandas as pd
+import xlwings as xw
+from termcolor import colored
+from tqdm import tqdm
+
+from rotalysis import CompressorFunction as CF
+from rotalysis import Pump as PF
+from rotalysis import UtilityFunction as UF
+from rotalysis import ValveFunction as VF
 
 
 class Core:
-    def __init__(self, config_path, task_path, input_path, output_path,window = None):
+    def __init__(self, config_path, task_path, input_path, output_path, window=None):
         self.config_path = config_path
         self.task_path = task_path
         self.input_path = input_path
@@ -31,7 +30,6 @@ class Core:
 
     def process_task(self):
         total_tasks = len(self.dftask_list)
-
 
         for i in range(total_tasks):
             try:
@@ -49,7 +47,7 @@ class Core:
                     PF.check_mandatory_columns(dfoperation)
 
                 except Exception as e:
-                    print("\n",colored( e, "red"))
+                    print("\n", colored(e, "red"))
 
                 dfoperation = PF.remove_abnormal_rows(dfoperation)
 
@@ -72,6 +70,5 @@ class Core:
             progress = int((i + 1) / total_tasks * 100)
             if self.window:
                 self.window.ProgressBar.setValue(progress)
-
 
         print("Task completed!")

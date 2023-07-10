@@ -32,4 +32,4 @@ Calculating energy and emission saving calculation along with the economics calc
 12. **Selected Speed variation** 
 - If selected option is "Impeller" then selected speed variation is the max of required speed variation.
 - if selected option is "VSD" then selected speed variation same as the required speed variation.
-13. Pump efficiency is calculated based on the equation 1- (1-%Q)^2
+13. Pump efficiency is calculated based on the equation ηpump = (1- (1-(Qactual/QBEP))**2) x ηpump@BEP
