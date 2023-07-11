@@ -9,8 +9,8 @@ import xlwings as xw
 from termcolor import colored
 from tqdm import tqdm
 
+from rotalysis import PF as PF
 from rotalysis import CompressorFunction as CF
-from rotalysis import Pump as PF
 from rotalysis import UtilityFunction as UF
 from rotalysis import ValveFunction as VF
 
