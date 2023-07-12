@@ -1,4 +1,4 @@
-# pump_function.py in rotalysis folder
+# pump.py in rotalysis folder
 import os
 import sys
 
@@ -7,20 +7,43 @@ sys.path.append("..")
 import numpy as np
 import pandas as pd
 import xlwings as xw
-from termcolor import colored
 
 from rotalysis import PumpFunction as PF
 from rotalysis import UtilityFunction as uf
-from rotalysis import ValveFunction
+from utils import Logger
 
 
 class Pump:
-    def __init__(self, config_path="Config.xlsx", data_path=None, load_task_list=False):
+
+    """
+    Calculates the energy savings potential of a pump upon conversion to variable speed drive or trimming the impeller
+    based on the operating data of the pump.
+
+    Args:
+        data_path (str): Path of the Excel file containing the operating data of the pump with the following sheets:
+            1. process data
+            2. operational data
+            3. unit
+            4. pump curve (optional)
+        config_path (str, optional): Path of the Config.xlsx file. Defaults to "Config.xlsx".
+
+    Returns:
+        Dataframe: Energy savings summary of the pump for both VSD and impeller trimming case.
+
+    Dependencies:
+        - pump_function.py in rotalysis folder for pump static functions
+        - utility_function.py in rotalysis folder for helper functions
+        - valve_function.py in rotalysis folder
+        - unit_converter.py in utils folder uses pint library for unit conversion
+    """
+
+    def __init__(self, config_path="Config.xlsx", data_path=None):
         self.data_path = data_path
         self.config_path = config_path
-        self.set_columns()
-        self.set_config()
         self.set_data()
+        self.logger = Logger(name=self.process_data["tag"]["value"])
+        self.set_config()
+        self.set_columns()
         self.check_mandatory_columns()
 
     def set_columns(self):
@@ -74,7 +97,6 @@ class Pump:
         self.computed_columns = computed_columns
         self.energy_columns = energy_columns
         self.emission_columns = emission_columns
-
 
     def set_config(self):
         dfconfig = pd.read_excel(self.config_path, sheet_name="PumpConfig1", header=0)
@@ -423,4 +445,3 @@ class Pump:
         for df in dfs:
             df.rename(columns=lambda x: x.replace("_", " ").title(), inplace=True)
         self.dfsummary.index = self.dfsummary.index.str.replace("_", " ").str.title()
-
