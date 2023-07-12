@@ -7,6 +7,6 @@ from .compressor_function import CompressorFunction
 from .pump import Pump
 
 
-# from .core import Core
+from .core import Core
 
 

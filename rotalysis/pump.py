@@ -1,6 +1,7 @@
 # pump.py in rotalysis folder
 import os
 import sys
+from pathlib import Path
 
 sys.path.append("..")
 
@@ -40,13 +41,13 @@ class Pump:
     def __init__(self, config_path="Config.xlsx", data_path=None):
         self.data_path = data_path
         self.config_path = config_path
-        self.set_data()
+        self.__set_data()
         self.logger = Logger(name=self.process_data["tag"]["value"])
-        self.set_config()
-        self.set_columns()
-        self.check_mandatory_columns()
+        self.__set_config()
+        self.__set_columns()
+        self.__check_mandatory_columns()
 
-    def set_columns(self):
+    def __set_columns(self):
         mandatory_columns = ["suction_pressure", "discharge_pressure", "discharge_flowrate"]
         optional_columns = [
             "cv_opening",
@@ -98,13 +99,21 @@ class Pump:
         self.energy_columns = energy_columns
         self.emission_columns = emission_columns
 
-    def set_config(self):
+    def __set_config(self):
+        """
+        INIT METHOD - Sets the config dictionary from the Config.xlsx file.
+        """
+
         dfconfig = pd.read_excel(self.config_path, sheet_name="PumpConfig1", header=0)
         dfconfig = dfconfig.iloc[:, :3].dropna(subset=["parameter"])
         dfconfig.set_index("parameter", inplace=True)
         self.config = dfconfig.to_dict("index")
 
-    def set_data(self):
+    def __set_data(self):
+        """
+        INIT METHOD - Sets the process data, operational data and unit dictionary from the Excel file.
+
+        """
         if self.data_path is None:
             raise ValueError("data_path is not defined.")
 
@@ -126,7 +135,13 @@ class Pump:
         dfunit = dfunit.iloc[:, :2].dropna(subset=["unit"])
         self.unit = dict(zip(dfunit["parameter"], dfunit["unit"]))
 
-    def check_mandatory_columns(self):
+    def __check_mandatory_columns(self):
+        """
+        INIT METHOD - Checks if the operational data excel sheet contains the mandatory columns.
+
+        Raises:
+            ValueError: If the operational data excel sheet is missing the mandatory columns.
+        """
         missing_columns = [
             col for col in self.mandatory_columns if col not in self.dfoperation.columns
         ]
@@ -135,6 +150,11 @@ class Pump:
             raise ValueError(missing_columns_error)
 
     def clean_non_numeric_data(self):
+        """
+        Cleans the non-numeric data from the operational data excel sheet
+
+            ** Method called from utlity function module.
+        """
         self.dfoperation = uf.Clean_dataframe(self.dfoperation)
 
     def remove_irrelevant_columns(self):
@@ -169,7 +189,14 @@ class Pump:
 
         return self.dfoperation
 
-    def remove_abnormal_rows(self):
+    def remove_non_operating_rows(self):
+        """
+        Remove rows non operating rows from dfoperationbasaed on the following criteria:
+        1. discharge_flowrate > 0
+        2. suction_pressure < discharge_pressure
+        3. downstream_pressure < discharge_pressure
+
+        """
         self.dfoperation.dropna(subset=self.mandatory_columns, inplace=True)
 
         calculation_method = self.process_data["calculation_method"]["value"]
@@ -202,7 +229,13 @@ class Pump:
 
         self.dfoperation = self.dfoperation.loc[mask].reset_index(drop=True)
 
-    def get_flowrate_percent(self):
+    def __get_flowrate_percent(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns()
+        - Calculates the flowrate percentage for each row in the dataframe
+        - Group the values based on the bin_percent specified in config file
+        - The resulting binned values are stored in a new column 'flowrate_percent'
+        """
         percent = self.config["bin_percent"]["value"]
         self.dfoperation["flowrate_percent"] = (
             self.dfoperation["discharge_flowrate"] / self.process_data["rated_flow"]["value"]
@@ -215,6 +248,12 @@ class Pump:
         )
 
     def get_computed_columns(self):
+        """
+        - Computed columns for the pump operation data
+        - Group the dfoperarion dataframe based on the flowrate percentage and create a new datframe "dfcalculation"
+
+        ** Function are stored in the PumpFunction class.
+        """
         density = self.process_data["density"]["value"]
         valve_size = self.process_data["valve_size"]["value"]
         valve_character = self.process_data["valve_character"]["value"]
@@ -295,9 +334,13 @@ class Pump:
             / self.dfoperation["old_motor_efficiency"]
         )
 
-        self.get_flowrate_percent()
+        self.__get_flowrate_percent()
 
     def group_by_flowrate_percent(self):
+        """
+        - Group the dfoperation dataframe based on the flowrate percentage
+        - Create a new datframe "dfcalculation"
+        """
         df2 = self.dfoperation.groupby(by=["flowrate_percent"], as_index=False, dropna=False).mean(
             numeric_only=True
         )
@@ -317,7 +360,11 @@ class Pump:
 
         self.dfcalculation = df2
 
-    def select_speed_reduction(self):
+    def __select_speed_reduction(self):
+        """
+        Private method used in create_energy_calculation() method to select the speed reduction based on the options
+        """
+
         self.dfcalculation.loc[
             self.dfcalculation["selected_option"] == "Vsd", "selected_speed_variation"
         ] = self.dfcalculation["required_speed_variation"]
@@ -338,7 +385,11 @@ class Pump:
             (self.dfcalculation["working_percent"] <= 0), "selected_speed_variation"
         ] = 0
 
-    def get_energy_columns(self):
+    def __get_energy_columns(self):
+        """
+        Private method used in create_energy_calculation() method to create energy related columns in dfcalculation dataframe.
+        """
+
         # calculate base case annual energy consumption
         self.dfcalculation["base_case_energy_consumption"] = (
             self.dfcalculation["base_motor_power"] * self.dfcalculation["working_hours"]
@@ -365,7 +416,10 @@ class Pump:
             - self.dfcalculation["proposed_case_energy_consumption"]
         )
 
-    def get_emissions_columns(self):
+    def __get_emissions_columns(self):
+        """
+        Private method used in create_energy_calculation() method to create emissions related columns in dfcalculation dataframe.
+        """
         emission_factor = self.config["emission_factor"]["value"]
 
         self.dfcalculation["base_case_emission"] = (
@@ -385,25 +439,35 @@ class Pump:
         )
 
     def create_energy_calculation(self):
+        """
+        - Create energy calculation dataframe for VSD and Impeller options.
+        - Create summary dataframe for VSD and Impeller options.
+        - Finally, renames the columns of all the dataframes from snake_case to Proper Case.
+        """
         for option in ["Vsd", "Impeller"]:
             self.dfcalculation["selected_option"] = option
-            self.select_speed_reduction()
-            self.get_energy_columns()
-            self.get_emissions_columns()
+            self.__select_speed_reduction()
+            self.__get_energy_columns()
+            self.__get_emissions_columns()
 
             if option == "Vsd":
                 self.VSDCalculation = self.dfcalculation
-                self.VSDSummary = self.summarize(self.VSDCalculation)
+                self.VSDSummary = self.__summarize(self.VSDCalculation)
                 self.VSDSummary.columns = [option]
             elif option == "Impeller":
                 self.ImpellerCalculation = self.dfcalculation
-                self.ImpellerSummary = self.summarize(self.ImpellerCalculation)
+                self.ImpellerSummary = self.__summarize(self.ImpellerCalculation)
                 self.ImpellerSummary.columns = [option]
 
         self.dfsummary = pd.concat([self.VSDSummary, self.ImpellerSummary], axis=1)
-        self._rename_columns()
+        self.__rename_columns()
 
-    def summarize(self, dfenergy):
+    def __summarize(self, dfenergy):
+        """
+        PRIVATE METHOD USED IN create_energy_calculation()
+
+        Creates summary dataframe for VSDCalculation and ImpellerCalculation dataframe
+        """
         columns = [
             "pump_tag",
             "rated_flowrate",
@@ -417,7 +481,7 @@ class Pump:
             "ghg_reduction_percent",
         ]
         dfsummary = pd.DataFrame(columns=columns, data=np.nan, index=[0])
-        dfsummary["pump_tag"] = self.process_data["tag_no"]["value"]
+        dfsummary["pump_tag"] = self.process_data["tag"]["value"]
         dfsummary["rated_flowrate"] = self.process_data["rated_flow"]["value"]
 
         dfsummary["selected_speed_variation"] = (
@@ -440,8 +504,55 @@ class Pump:
 
         return dfsummary
 
-    def _rename_columns(self):
+    def __rename_columns(self):
+        """
+        PRIVATE METHOD USED IN create_energy_calculation()
+
+        Renames the columns of all the dataframes from snake_case to Proper Case.
+        """
         dfs = [j for j in vars(self).values() if isinstance(j, pd.DataFrame)]
         for df in dfs:
             df.rename(columns=lambda x: x.replace("_", " ").title(), inplace=True)
         self.dfsummary.index = self.dfsummary.index.str.replace("_", " ").str.title()
+
+    def _get_output_path(self, output_folder, site, tag):
+        """
+        PRIVATE METHOD used in  write_to_excel()
+
+        Creates output path for excel file.
+        """
+        output_folder = Path(output_folder).resolve()
+        output_folder_path = os.path.join(output_folder, site)
+        os.makedirs(output_folder_path, exist_ok=True)
+        output_path = os.path.join(output_folder_path, tag + ".xlsx")
+        return output_path
+
+    def write_to_excel(self, output_folder, site, tag):
+        """
+        Creates excel file based on the output folder, site and tag.
+        Writes three dataframes to excel file.
+        1. dfsummary
+        2. VSDCalculation
+        3. ImpellerCalculation
+
+        """
+        try:
+            path = self._get_output_path(output_folder, site, tag)
+
+            if not os.path.isfile(path):
+                wb = xw.Book()
+            else:
+                wb = xw.Book(path)
+            with xw.App(visible=False) as app:
+                ws = wb.sheets[0]
+                ws.clear_contents()
+
+                for cell, df in zip(
+                    ["A1", "A13", "A25"],
+                    [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation],
+                ):
+                    ws.range(cell).options(index=False).value = df
+                wb.save(path)
+                wb.close()
+        except Exception as e:
+            raise Exception(e, "Error in writing to excel.")

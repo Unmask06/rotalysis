@@ -50,7 +50,6 @@ if __name__ == "__main__":
         window.ProgressBar.setValue(0)
 
         core = Core(*paths.values(),window = window)
-        core.intialize()
         core.process_task()
 
         print_to_output(

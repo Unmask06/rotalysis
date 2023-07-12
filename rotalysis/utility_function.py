@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from pathlib import Path
 import xlwings as xw
 
 
@@ -20,10 +21,10 @@ class UtilityFunction:
         return df
 
     @staticmethod
-    def get_excel_path(site, tag):
-        current_path = os.getcwd()
+    def get_excel_path(input_folder, site, tag):
+        current_path = Path(input_folder).resolve()
 
-        subfolder_path = os.path.join(current_path, "Input", site)
+        subfolder_path = os.path.join(current_path, site)
         # check if subfolder exists
 
         try:
@@ -104,19 +105,7 @@ class UtilityFunction:
                 else:
                     ws = wb.sheets.add(sheet_name)
                 ws.clear_contents()
-                ws.range(cell).options(index=True).value = dataframe
+                ws.range(cell).options(index=False).value = dataframe
                 wb.save(path)
         except Exception as e:
             raise Exception(e, "Error in writing to excel.")
-        
-    @staticmethod
-    def report_calculation(output_path, site, tag):
-        output_folder_path = os.path.join(os.getcwd(), output_path, site)
-        os.makedirs(output_folder_path, exist_ok=True)
-        output_file_path = os.path.join(output_folder_path, tag + ".xlsx")
-        uf.write_to_excel(output_file_path, option, dfenergy)
-        print("Output file saved to: ", output_file_path)
-
-        dfsummary = pd.concat(dfs)
-        dfsummary = dfsummary.transpose()
-        UtilityFunction.write_to_excel(output_file_path, "Summary", dfsummary)

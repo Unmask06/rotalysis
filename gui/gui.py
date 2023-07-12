@@ -27,8 +27,8 @@ class MainWindow(QMainWindow):
         default_values = {
             "tbox_config": "Config.xlsx",
             "tbox_tasklist": "TaskList.xlsx",
-            "tbox_InputFolder": "/Input",
-            "tbox_OutputFolder": "/Output",
+            "tbox_InputFolder": "Input",
+            "tbox_OutputFolder": "Output",
         }
 
         for widget_name, default_value in default_values.items():
