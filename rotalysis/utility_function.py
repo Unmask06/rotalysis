@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from pathlib import Path
 import xlwings as xw
 
 
@@ -20,26 +21,10 @@ class UtilityFunction:
         return df
 
     @staticmethod
-    def load_config_pump(config_path="config.xlsx", sheet_name="pump_config_1"):
-        pump_config = pd.read_excel(config_path, sheet_name=sheet_name, index_col=0).fillna("")
-        pump_config = pump_config.to_dict()
-        pump_config = pump_config["value"]
-        return pump_config
+    def get_excel_path(input_folder, site, tag):
+        current_path = Path(input_folder).resolve()
 
-    @staticmethod
-    def load_config_compressor(config_path="config.xlsx", sheet_name="compressor_config_1"):
-        compressor_config = pd.read_excel(config_path, sheet_name=sheet_name, index_col=0).fillna(
-            ""
-        )
-        compressor_config = compressor_config.to_dict()
-        compressor_config = compressor_config["value"]
-        return compressor_config
-
-    @staticmethod
-    def get_excel_path(site, tag):
-        current_path = os.getcwd()
-
-        subfolder_path = os.path.join(current_path, "Input", site)
+        subfolder_path = os.path.join(current_path, site)
         # check if subfolder exists
 
         try:
@@ -107,7 +92,7 @@ class UtilityFunction:
         return process_data, dfoperation, dfcurve, dfunit
 
     @staticmethod
-    def write_to_excel(path: str, sheet_name: str, dataframe: pd.DataFrame) -> None:
+    def write_to_excel(path: str, sheet_name: str, dataframe: pd.DataFrame, cell:str = "A1") -> None:
         try:
             if not os.path.isfile(path):
                 wb = xw.Book()
@@ -120,7 +105,7 @@ class UtilityFunction:
                 else:
                     ws = wb.sheets.add(sheet_name)
                 ws.clear_contents()
-                ws.range("A1").options(index=True).value = dataframe
+                ws.range(cell).options(index=False).value = dataframe
                 wb.save(path)
         except Exception as e:
             raise Exception(e, "Error in writing to excel.")

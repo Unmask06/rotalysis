@@ -68,10 +68,3 @@ class CompressorFunction:
         compressor_power = gas_power / poly_eff
 
         return compressor_power
-
-
-power = CompressorFunction.calculate_compressor_power(
-    Qm=260, Ps=260, Pd=4810, Ts=95, MW=19.2, k=1.325, poly_eff=0.795, Zs=0.894, Zd=0.948
-)
-
-print(power)

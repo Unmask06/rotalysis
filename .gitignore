@@ -1,5 +1,5 @@
 /.venv
-/__pycache__/
+**/__pycache__/
 /Input
 /Output
 /dist
@@ -7,7 +7,5 @@
 *.exe
 *.spec
 /.vscode
-/rotalysis/__pycache__
-/utils/__pycache__
 **/*trail*
 **/*test*
