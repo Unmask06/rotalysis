@@ -29,6 +29,7 @@ class Core:
                 p1 = Pump(config_path=self.config_path, data_path=excel_path)
 
                 p1.clean_non_numeric_data()
+                p1.remove_irrelevant_columns()
                 p1.remove_non_operating_rows()
                 p1.convert_default_unit()
                 p1.get_computed_columns()
