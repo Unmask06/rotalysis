@@ -11,7 +11,7 @@ import xlwings as xw
 
 from rotalysis import PumpFunction as PF
 from rotalysis import UtilityFunction as uf
-from utils import Logger
+from utils import logger
 
 
 class Pump:
@@ -93,7 +93,7 @@ class Pump:
         self.data_path = data_path
         self.config_path = config_path
         self.__set_data()
-        self.logger = Logger(name = "rotalysis")
+        self.logger = logger
         self.__set_config()
         self.__check_mandatory_columns()
 
@@ -154,6 +154,7 @@ class Pump:
             ** Method called from utlity function module.
         """
         self.dfoperation = uf.Clean_dataframe(self.dfoperation)
+        self.logger.info("Data cleaning completed")
 
     def remove_irrelevant_columns(self):
         irrelevant_columns = [
@@ -332,6 +333,8 @@ class Pump:
 
         self.__get_flowrate_percent()
 
+        
+
     def group_by_flowrate_percent(self):
         """
         - Group the dfoperation dataframe based on the flowrate percentage
@@ -457,6 +460,7 @@ class Pump:
 
         self.dfsummary = pd.concat([self.VSDSummary, self.ImpellerSummary], axis=1)
         self.__rename_columns()
+        self.logger.info("Energy calculation completed")
 
     def __summarize(self, dfenergy):
         """
@@ -576,5 +580,7 @@ class Pump:
                 wb.save(path)
                 wb.close()
                 self._remove_multiheader()
+
+                self.logger.info(f"Excel file created at {path}")
         except Exception as e:
             raise Exception(e, "Error in writing to excel.")

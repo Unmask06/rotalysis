@@ -4,6 +4,8 @@ from pathlib import Path
 import pandas as pd
 import xlwings as xw
 
+from utils import logger
+
 
 class UtilityFunction:
     excel_number_fomrat = {

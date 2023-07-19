@@ -7,17 +7,6 @@ from gui import MainWindow, SplashScreen
 from rotalysis import Core
 
 
-class RedirectOutput:
-    def __init__(self, printOccured):
-        self.printOccured = open("text.txt", "w")
-
-    def write(self, string):
-        self.printOccured.write(string)
-
-    def flush(self):
-        pass
-
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
 
@@ -49,7 +38,6 @@ if __name__ == "__main__":
     def run():
         for key in widget.keys():
             set_path(key)
-        print(paths)
 
         core = Core(*paths.values(), window=window)
         core.process_task()
@@ -59,5 +47,7 @@ if __name__ == "__main__":
     window.show()
 
     window.pbRun.clicked.connect(run)
+
+    
 
     sys.exit(app.exec())
