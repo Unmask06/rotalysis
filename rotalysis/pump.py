@@ -38,66 +38,64 @@ class Pump:
         - unit_converter.py in utils folder uses pint library for unit conversion
     """
 
+    # ** Columns with units in Class Level
+    mandatory_columns = {
+        "suction_pressure": "barg",
+        "discharge_pressure": "barg",
+        "discharge_flowrate": "m3/h",
+    }
+    optional_columns = {
+        "cv_opening": "%",
+        "downstream_pressure": "barg",
+        "motor_power": "kW",
+        "recirculation_flow": "m3/h",
+        "power_factor": "",
+        "run_status": "",
+        "speed": "rpm",
+        "motor_amp": "A",
+    }
+
+    computed_columns = {
+        "flowrate_percent": "%",
+        "differential_pressure": "bar",
+        "actual_cv": "gpm",
+        "calculated_cv_drop": "bar",
+        "measured_cv_drop": "bar",
+        "cv_pressure_drop": "bar",
+        "inherent_piping_loss": "bar",
+        "required_differential_pressure": "bar",
+        "required_speed_variation": "%",
+        "base_hydraulic_power": "MW",
+        "old_pump_efficiency": "%",
+        "old_motor_efficiency": "%",
+        "base_motor_power": "MW",
+        "working_hours": "h",
+        "working_percent": "%",
+    }
+    energy_columns = {
+        "selected_measure": "",
+        "selected_speed_variation": "%",
+        "new_pump_efficiency": "%",
+        "new_motor_efficiency": "%",
+        "base_case_energy_consumption": "MWh",
+        "proposed_case_energy_consumption": "MWh",
+        "annual_energy_saving": "MWh",
+    }
+    emission_columns = {
+        "base_case_emission": "tCO2e",
+        "proposed_case_emission": "tCO2e",
+        "ghg_reduction": "tCO2e",
+        "ghg_reduction_percent": "%",
+    }
+    relevant_columns = list(mandatory_columns.keys()) + list(optional_columns.keys())
+
     def __init__(self, config_path="Config.xlsx", data_path=None):
         self.data_path = data_path
         self.config_path = config_path
         self.__set_data()
-        self.logger = Logger(name=self.process_data["tag"]["value"])
+        self.logger = Logger(name = "rotalysis")
         self.__set_config()
-        self.__set_columns()
         self.__check_mandatory_columns()
-
-    def __set_columns(self):
-        mandatory_columns = ["suction_pressure", "discharge_pressure", "discharge_flowrate"]
-        optional_columns = [
-            "cv_opening",
-            "downstream_pressure",
-            "motor_power",
-            "recirculation_flow",
-            "power_factor",
-            "run_status",
-            "speed",
-            "motor_amp",
-        ]
-
-        relevant_columns = mandatory_columns + optional_columns
-        computed_columns = [
-            "flowrate_percent",
-            "differential_pressure",
-            "actual_cv",
-            "calculated_cv_drop",
-            "measured_cv_drop",
-            "cv_pressure_drop",
-            "inherent_piping_loss",
-            "required_differential_pressure",
-            "required_speed_variation",
-            "base_hydraulic_power",
-            "old_pump_efficiency",
-            "old_motor_efficiency",
-            "base_motor_power",
-        ]
-        energy_columns = [
-            "selected_measure",
-            "selected_speed_variation",
-            "new_pump_efficiency",
-            "new_motor_efficiency",
-            "base_case_energy_consumption",
-            "proposed_case_energy_consumption",
-            "annual_energy_saving",
-        ]
-        emission_columns = [
-            "base_case_emission",
-            "proposed_case_emission",
-            "annual_energy_savings",
-            "ghg_reduction",
-            "ghg_reduction_percent",
-        ]
-        self.mandatory_columns = mandatory_columns
-        self.optional_columns = optional_columns
-        self.relevant_columns = relevant_columns
-        self.computed_columns = computed_columns
-        self.energy_columns = energy_columns
-        self.emission_columns = emission_columns
 
     def __set_config(self):
         """
@@ -143,7 +141,7 @@ class Pump:
             ValueError: If the operational data excel sheet is missing the mandatory columns.
         """
         missing_columns = [
-            col for col in self.mandatory_columns if col not in self.dfoperation.columns
+            col for col in Pump.mandatory_columns if col not in self.dfoperation.columns
         ]
         if len(missing_columns) > 0:
             missing_columns_error = f"The operational data excel sheet is missing the following required columns: {', '.join(missing_columns)}."
@@ -159,7 +157,7 @@ class Pump:
 
     def remove_irrelevant_columns(self):
         irrelevant_columns = [
-            col for col in self.dfoperation.columns if col not in self.relevant_columns
+            col for col in self.dfoperation.columns if col not in Pump.relevant_columns
         ]
         self.dfoperation = self.dfoperation.drop(columns=irrelevant_columns)
 
@@ -187,8 +185,6 @@ class Pump:
             pressure_unit, 1
         )
 
-        return self.dfoperation
-
     def remove_non_operating_rows(self):
         """
         Remove rows non operating rows from dfoperationbasaed on the following criteria:
@@ -197,7 +193,7 @@ class Pump:
         3. downstream_pressure < discharge_pressure
 
         """
-        self.dfoperation.dropna(subset=self.mandatory_columns, inplace=True)
+        self.dfoperation.dropna(subset=Pump.mandatory_columns, inplace=True)
 
         calculation_method = self.process_data["calculation_method"]["value"]
 
@@ -261,7 +257,7 @@ class Pump:
 
         # Add computed columns to dataframe
         self.dfoperation = self.dfoperation.reindex(
-            columns=self.dfoperation.columns.tolist() + self.computed_columns
+            columns=self.dfoperation.columns.tolist() + list(Pump.computed_columns.keys())
         )
 
         self.dfoperation["differential_pressure"] = PF.get_differential_pressure(
@@ -366,11 +362,11 @@ class Pump:
         """
 
         self.dfcalculation.loc[
-            self.dfcalculation["selected_option"] == "Vsd", "selected_speed_variation"
+            self.dfcalculation["selected_measure"] == "Vsd", "selected_speed_variation"
         ] = self.dfcalculation["required_speed_variation"]
 
         self.dfcalculation.loc[
-            (self.dfcalculation["selected_option"] == "Impeller")
+            (self.dfcalculation["selected_measure"] == "Impeller")
             & (self.dfcalculation["working_percent"] > 0),
             "selected_speed_variation",
         ] = (
@@ -411,7 +407,7 @@ class Pump:
         )
 
         # calculate annual energy savings
-        self.dfcalculation["annual_energy_savings"] = (
+        self.dfcalculation["annual_energy_saving"] = (
             self.dfcalculation["base_case_energy_consumption"]
             - self.dfcalculation["proposed_case_energy_consumption"]
         )
@@ -445,17 +441,17 @@ class Pump:
         - Finally, renames the columns of all the dataframes from snake_case to Proper Case.
         """
         for option in ["Vsd", "Impeller"]:
-            self.dfcalculation["selected_option"] = option
+            self.dfcalculation["selected_measure"] = option
             self.__select_speed_reduction()
             self.__get_energy_columns()
             self.__get_emissions_columns()
 
             if option == "Vsd":
-                self.VSDCalculation = self.dfcalculation
+                self.VSDCalculation = self.dfcalculation.copy()
                 self.VSDSummary = self.__summarize(self.VSDCalculation)
                 self.VSDSummary.columns = [option]
             elif option == "Impeller":
-                self.ImpellerCalculation = self.dfcalculation
+                self.ImpellerCalculation = self.dfcalculation.copy()
                 self.ImpellerSummary = self.__summarize(self.ImpellerCalculation)
                 self.ImpellerSummary.columns = [option]
 
@@ -474,7 +470,7 @@ class Pump:
             "selected_speed_variation",
             "base_case_energy_consumption",
             "proposed_case_energy_consumption",
-            "annual_energy_savings",
+            "annual_energy_saving",
             "base_case_emission",
             "proposed_case_emission",
             "ghg_reduction",
@@ -493,7 +489,7 @@ class Pump:
         dfsummary["proposed_case_energy_consumption"] = dfenergy[
             "proposed_case_energy_consumption"
         ].sum()
-        dfsummary["annual_energy_savings"] = dfenergy["annual_energy_savings"].sum()
+        dfsummary["annual_energy_saving"] = dfenergy["annual_energy_saving"].sum()
         dfsummary["base_case_emission"] = dfenergy["base_case_emission"].sum()
         dfsummary["proposed_case_emission"] = dfenergy["proposed_case_emission"].sum()
         dfsummary["ghg_reduction"] = dfenergy["ghg_reduction"].sum()
@@ -514,6 +510,28 @@ class Pump:
         for df in dfs:
             df.rename(columns=lambda x: x.replace("_", " ").title(), inplace=True)
         self.dfsummary.index = self.dfsummary.index.str.replace("_", " ").str.title()
+
+    def _add_multiheader(self):
+        l1 = self.dfcalculation.columns.to_list()
+        d1 = {
+            **self.mandatory_columns,
+            **self.optional_columns,
+            **self.computed_columns,
+            **self.energy_columns,
+            **self.emission_columns,
+        }
+        multi_header = [(i, d1.get(i.replace(" ", "_").lower(), "")) for i in l1]
+
+        self.VSDCalculation.columns = pd.MultiIndex.from_tuples(multi_header)
+        self.ImpellerCalculation.columns = pd.MultiIndex.from_tuples(multi_header)
+
+        self.dfsummary["Unit"] = [
+            d1.get(i.replace(" ", "_").lower(), "") for i in self.dfsummary.index
+        ]
+
+    def _remove_multiheader(self):
+        self.VSDCalculation.columns = self.VSDCalculation.columns.droplevel(1)
+        self.ImpellerCalculation.columns = self.ImpellerCalculation.columns.droplevel(1)
 
     def _get_output_path(self, output_folder, site, tag):
         """
@@ -539,6 +557,8 @@ class Pump:
         try:
             path = self._get_output_path(output_folder, site, tag)
 
+            self._add_multiheader()
+
             if not os.path.isfile(path):
                 wb = xw.Book()
             else:
@@ -547,12 +567,14 @@ class Pump:
                 ws = wb.sheets[0]
                 ws.clear_contents()
 
-                for cell, df in zip(
-                    ["A1", "A13", "A25"],
+                for cell, df, bool in zip(
+                    ["A1", "A13", "A31"],
                     [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation],
+                    [True, False, False],
                 ):
-                    ws.range(cell).options(index=False).value = df
+                    ws.range(cell).options(index=bool).value = df
                 wb.save(path)
                 wb.close()
+                self._remove_multiheader()
         except Exception as e:
             raise Exception(e, "Error in writing to excel.")

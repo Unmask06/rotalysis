@@ -6,25 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>793</width>
-    <height>549</height>
+    <width>779</width>
+    <height>635</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Rotalysis</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>10</y>
+      <y>100</y>
       <width>781</width>
       <height>511</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabInput">
      <attribute name="title">
@@ -44,7 +44,7 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>10</y>
+        <y>140</y>
         <width>261</width>
         <height>16</height>
        </rect>
@@ -56,8 +56,8 @@
      <widget class="QPushButton" name="pbInputFolder">
       <property name="geometry">
        <rect>
-        <x>300</x>
-        <y>320</y>
+        <x>690</x>
+        <y>50</y>
         <width>81</width>
         <height>21</height>
        </rect>
@@ -70,7 +70,7 @@
       <property name="geometry">
        <rect>
         <x>690</x>
-        <y>50</y>
+        <y>180</y>
         <width>81</width>
         <height>21</height>
        </rect>
@@ -132,7 +132,7 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>40</y>
+        <y>170</y>
         <width>271</width>
         <height>41</height>
        </rect>
@@ -141,8 +141,8 @@
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>280</y>
+        <x>400</x>
+        <y>10</y>
         <width>261</width>
         <height>16</height>
        </rect>
@@ -167,8 +167,8 @@
      <widget class="QPlainTextEdit" name="tbox_InputFolder">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>310</y>
+        <x>400</x>
+        <y>40</y>
         <width>271</width>
         <height>41</height>
        </rect>
@@ -187,16 +187,11 @@
        <string>Run</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tabProcess">
-     <attribute name="title">
-      <string>Process</string>
-     </attribute>
      <widget class="QProgressBar" name="ProgressBar">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>120</y>
+        <x>230</x>
+        <y>300</y>
         <width>261</width>
         <height>31</height>
        </rect>
@@ -205,6 +200,11 @@
        <number>24</number>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="tabProcess">
+     <attribute name="title">
+      <string>Process</string>
+     </attribute>
     </widget>
     <widget class="QWidget" name="tabError">
      <attribute name="title">
@@ -231,8 +231,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>793</width>
-     <height>22</height>
+     <width>779</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

@@ -1,8 +1,11 @@
-from PyQt5 import QtWidgets , QtCore
 import sys
+import time
 
+from PyQt6 import QtCore, QtWidgets
+
+from gui import MainWindow, SplashScreen
 from rotalysis import Core
-from gui import MainWindow
+
 
 class RedirectOutput:
     def __init__(self, printOccured):
@@ -16,9 +19,13 @@ class RedirectOutput:
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QtWidgets.QApplication([])
 
     window = MainWindow()
+    splash_screen = SplashScreen()
+    splash_screen.show()
+    time.sleep(5)
+    splash_screen.finish(window)
 
     widget = {
         "Config": window.tbox_config,
@@ -38,30 +45,19 @@ if __name__ == "__main__":
     def set_path(field):
         paths[field] = get_path(field)
 
-    def print_to_output(message):
-        window.lbOutput.setText(window.lbOutput.text() + message)
-
 
     def run():
         for key in widget.keys():
             set_path(key)
         print(paths)
-        window.tabWidget.setCurrentIndex(1)
-        window.ProgressBar.setValue(0)
 
-        core = Core(*paths.values(),window = window)
+        core = Core(*paths.values(), window=window)
         core.process_task()
 
-        print_to_output(
-            "Program finished successfully! \
-            \nCheck the Error message and modify the input files accordingly and rerun the application."
-        )
         window.ProgressBar.setValue(100)
-        window.tabWidget.setCurrentIndex(1)
-
 
     window.show()
 
     window.pbRun.clicked.connect(run)
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

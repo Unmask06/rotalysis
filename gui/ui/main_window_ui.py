@@ -114,7 +114,7 @@ class Ui_MainWindow(object):
         self.pbRun.setText(QCoreApplication.translate("MainWindow", u"Run", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabInput), QCoreApplication.translate("MainWindow", u"Input", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabProcess), QCoreApplication.translate("MainWindow", u"Process", None))
-        self.lbOutput.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.lbOutput.setText("")
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabError), QCoreApplication.translate("MainWindow", u"Error", None))
     # retranslateUi
 
