@@ -1,26 +1,28 @@
-from PyQt5.QtWidgets import (
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import (
     QApplication,
-    QMainWindow,
-    QFileDialog,
     QDialogButtonBox,
-    QPushButton,
+    QFileDialog,
+    QLabel,
+    QMainWindow,
     QPlainTextEdit,
     QProgressBar,
-    QLabel
+    QPushButton,
+    QSplashScreen,
 )
-from PyQt5 import uic
+from PyQt6.uic import loadUi
 
 
-# load test.ui file
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("gui/main_window.ui", self)
+        loadUi("gui/ui/main_window.ui", self)
         self.set_default_values()
 
         self.connect_buttons()
         self.tabWidget.setCurrentIndex(0)
         self.ProgressBar = self.findChild(QProgressBar, "ProgressBar")
+        self.ProgressBar.setValue(0)
         self.lbOutput = self.findChild(QLabel, "lbOutput")
 
     def set_default_values(self):
@@ -34,7 +36,7 @@ class MainWindow(QMainWindow):
         for widget_name, default_value in default_values.items():
             widget = self.findChild(QPlainTextEdit, widget_name)
             widget.setPlainText(default_value)
-    
+
     def connect_buttons(self):
         buttons = {
             "pbConfig": {"dialog": QFileDialog.getOpenFileName, "widget": "tbox_config"},
@@ -80,4 +82,18 @@ class MainWindow(QMainWindow):
             folder_path = dialog_func(self, caption=button.text(), options=options, directory="")
             if folder_path:
                 widget.setPlainText(folder_path)
-        
+
+
+class SplashScreen(QSplashScreen):
+    def __init__(self):
+        super().__init__()
+        self.setPixmap(QPixmap("gui/resources/Rotalysis.png"))
+        self.setEnabled(False)
+        self.setGeometry(200, 150, 200, 150)
+        self.center()
+
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QApplication.primaryScreen().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.center())

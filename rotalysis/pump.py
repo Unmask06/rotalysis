@@ -93,7 +93,7 @@ class Pump:
         self.data_path = data_path
         self.config_path = config_path
         self.__set_data()
-        self.logger = Logger(name=self.process_data["tag"]["value"])
+        self.logger = Logger(name = "rotalysis")
         self.__set_config()
         self.__check_mandatory_columns()
 
@@ -568,7 +568,7 @@ class Pump:
                 ws.clear_contents()
 
                 for cell, df, bool in zip(
-                    ["A1", "A13", "A25"],
+                    ["A1", "A13", "A31"],
                     [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation],
                     [True, False, False],
                 ):

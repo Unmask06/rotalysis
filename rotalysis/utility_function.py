@@ -1,10 +1,18 @@
-import pandas as pd
 import os
 from pathlib import Path
+
+import pandas as pd
 import xlwings as xw
 
 
 class UtilityFunction:
+    excel_number_fomrat = {
+        "acc_dec": "_-* #,##0.0_-",
+        "acc_integer": "_-* #,##0_-",
+        "percent_int": "0%",
+        "percent_dec": "0.0%",
+    }
+
     @staticmethod
     def load_task_list(task_path="TaskList.xlsx", sheet_name="task_list_1"):
         task_list = pd.read_excel(task_path, sheet_name=sheet_name, header=0).fillna("")
@@ -25,7 +33,6 @@ class UtilityFunction:
         current_path = Path(input_folder).resolve()
 
         subfolder_path = os.path.join(current_path, site)
-        # check if subfolder exists
 
         try:
             if not os.path.exists(subfolder_path):
@@ -35,7 +42,10 @@ class UtilityFunction:
             excel_files = [
                 file
                 for file in files
-                if ((file.endswith(".xlsx") or file.endswith(".xls")) and tag in file)
+                if (
+                    (file.endswith(".xlsx") or file.endswith(".xls"))
+                    and tag in file.replace(" ", "")
+                )
             ]
 
             if len(excel_files) > 0:
@@ -92,7 +102,9 @@ class UtilityFunction:
         return process_data, dfoperation, dfcurve, dfunit
 
     @staticmethod
-    def write_to_excel(path: str, sheet_name: str, dataframe: pd.DataFrame, cell:str = "A1") -> None:
+    def write_to_excel(
+        path: str, sheet_name: str, dataframe: pd.DataFrame, cell: str = "A1"
+    ) -> None:
         try:
             if not os.path.isfile(path):
                 wb = xw.Book()

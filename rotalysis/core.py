@@ -38,7 +38,7 @@ class Core:
                 p1.write_to_excel(self.output_path, site, tag)
 
             except Exception as e:
-                print(traceback.format_exc())
+                # print(traceback.format_exc())
                 print(colored("Error occurred while processing: ", "red"), site, tag)
                 print("Error message saved to: erro.log")
 
