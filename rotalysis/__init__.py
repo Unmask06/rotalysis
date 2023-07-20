@@ -5,6 +5,7 @@ from .pump_function import PumpFunction
 
 from .compressor_function import CompressorFunction
 from .pump import Pump
+from .pump import CustomException
 
 
 from .core import Core

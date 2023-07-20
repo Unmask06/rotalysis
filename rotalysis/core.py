@@ -1,13 +1,13 @@
 # core.py in rotalysis folder
 import logging
 import time
-import traceback
 
-from termcolor import colored
 
-from rotalysis import Pump
+from rotalysis import Pump, CustomException
 from rotalysis import UtilityFunction as UF
 from utils import logger
+
+
 
 
 class Core:
@@ -19,15 +19,17 @@ class Core:
         self.dftask_list = UF.load_task_list(task_path=self.task_path)
         self.window = window
         self.logger = logger
-        self.success = False
+        self.success_count = 0
 
     def process_task(self):
         total_tasks = len(self.dftask_list)
 
-        self.logger.info("\n" + 25 * "*"+ "Welcome to Rotalysis"+ "\n" + 25 * "*")
-        self.logger.info(f"Total tasks to be processed: {total_tasks}")
+        self.logger.info("\n" + 30 * "*"+ "Welcome to Rotalysis"+ 30 * "*" + "\n")
+        self.logger.info(f"Total tasks to be processed: {total_tasks} \n")
 
         for i in range(total_tasks):
+            self.success = False
+            self.logger.info(f"Processing task {i+1} of {total_tasks}")
             try:
                 site, tag = self.dftask_list["Site"][i], self.dftask_list["Tag"][i]
                 self.logger.info(f"Searching Excel file for : {site}, {tag}")
@@ -46,18 +48,20 @@ class Core:
                 p1.create_energy_calculation()
                 p1.write_to_excel(self.output_path, site, tag)
                 self.success = True
+                self.success_count += 1
 
-            except Exception as e:
-                print(traceback.format_exc())
+            except (CustomException,Exception) as e:
                 self.logger.error(f"Error occurred while processing: {site}, {tag}")
+                self.logger.error(e)
 
             time.sleep(0.1)
 
             progress = int((i + 1) / total_tasks * 100)
             if self.window:
                 self.window.ProgressBar.setValue(progress)
-            self.logger.info("\n" + 25 * "-"+"\n")
+                self.logger.info("TASK COMPLETED!") if self.success else self.logger.critical("TASK FAILED!")
+                self.logger.info("\n" + 50 * "-"+"\n")
 
-        self.logger.info("Task completed!") if self.success else self.logger.error("Task failed!")
-        self.logger.info("Please check the output folder for the result.") if self.success else None
-        self.logger.info("\n" + 25 * "*"+ "Thanks for using Rotalysis"+ "\n" + 25 * "*")
+        self.logger.info("Please check the output folder for the result.")
+        self.logger.info(f"Total tasks processed: {self.success_count} out of {total_tasks}")
+        self.logger.info("\n" + 30 * "*"+ "Thanks for using Rotalysis"+ 30 * "*" + "\n")
