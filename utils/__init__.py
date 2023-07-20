@@ -1,2 +1,2 @@
 from .unit_convertor import UnitConvertor
-from .logger import Logger
+from .logger import logger

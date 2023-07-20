@@ -11,7 +11,11 @@ import xlwings as xw
 
 from rotalysis import PumpFunction as PF
 from rotalysis import UtilityFunction as uf
-from utils import Logger
+from utils import logger
+
+
+class CustomException(Exception):
+    pass
 
 
 class Pump:
@@ -93,7 +97,7 @@ class Pump:
         self.data_path = data_path
         self.config_path = config_path
         self.__set_data()
-        self.logger = Logger(name = "rotalysis")
+        self.logger = logger
         self.__set_config()
         self.__check_mandatory_columns()
 
@@ -141,11 +145,11 @@ class Pump:
             ValueError: If the operational data excel sheet is missing the mandatory columns.
         """
         missing_columns = [
-            col for col in Pump.mandatory_columns if col not in self.dfoperation.columns
+            col for col in list(Pump.mandatory_columns.keys()) if col not in self.dfoperation.columns
         ]
         if len(missing_columns) > 0:
             missing_columns_error = f"The operational data excel sheet is missing the following required columns: {', '.join(missing_columns)}."
-            raise ValueError(missing_columns_error)
+            raise CustomException(missing_columns_error)
 
     def clean_non_numeric_data(self):
         """
@@ -154,12 +158,14 @@ class Pump:
             ** Method called from utlity function module.
         """
         self.dfoperation = uf.Clean_dataframe(self.dfoperation)
+        self.logger.info("Data cleaning completed")
 
     def remove_irrelevant_columns(self):
         irrelevant_columns = [
             col for col in self.dfoperation.columns if col not in Pump.relevant_columns
         ]
         self.dfoperation = self.dfoperation.drop(columns=irrelevant_columns)
+        self.logger.info("Irrelevant columns removed")
 
     def convert_default_unit(self):
         flowrate_unit = self.unit["flowrate"]
@@ -184,6 +190,7 @@ class Pump:
         ] * pressure_conversion.get(
             pressure_unit, 1
         )
+        self.logger.info("unit conversion completed")
 
     def remove_non_operating_rows(self):
         """
@@ -193,37 +200,42 @@ class Pump:
         3. downstream_pressure < discharge_pressure
 
         """
-        self.dfoperation.dropna(subset=Pump.mandatory_columns, inplace=True)
+        try:
+            self.dfoperation.dropna(subset=list(Pump.mandatory_columns.keys()), inplace=True)
 
-        calculation_method = self.process_data["calculation_method"]["value"]
+            calculation_method = self.process_data["calculation_method"]["value"]
 
-        mask = pd.Series(True, index=self.dfoperation.index)  # Initialize mask as True for all rows
-        mask &= self.dfoperation["discharge_flowrate"] > 0
-        mask &= self.dfoperation["suction_pressure"] < self.dfoperation["discharge_pressure"]
-        mask &= ~(
-            (self.dfoperation["downstream_pressure"] > self.dfoperation["discharge_pressure"])
-            & (self.dfoperation["downstream_pressure"].notna())
-        )
-        if calculation_method == "":
-            raise ValueError("calculation_method is not defined in config file.")
+            mask = pd.Series(True, index=self.dfoperation.index)  # Initialize mask as True for all rows
+            mask &= self.dfoperation["discharge_flowrate"] > 0
+            mask &= self.dfoperation["suction_pressure"] < self.dfoperation["discharge_pressure"]
+            mask &= ~(
+                (self.dfoperation["downstream_pressure"] > self.dfoperation["discharge_pressure"])
+                & (self.dfoperation["downstream_pressure"].notna())
+            )
+            if calculation_method == "":
+                raise CustomException("calculation_method is not defined in config file.")
 
-        if (calculation_method == "downstream_pressure") and (
-            "downstream_pressure" in self.dfoperation.columns
-        ):
-            downstream_pressure = pd.to_numeric(
-                self.dfoperation["downstream_pressure"], errors="coerce"
-            ).notna()
-            mask &= (
-                self.dfoperation["downstream_pressure"] < self.dfoperation["discharge_pressure"]
-            ) & (downstream_pressure)
+            if (calculation_method == "downstream_pressure") and (
+                "downstream_pressure" in self.dfoperation.columns
+            ):
+                downstream_pressure = pd.to_numeric(
+                    self.dfoperation["downstream_pressure"], errors="coerce"
+                ).notna()
+                mask &= (
+                    self.dfoperation["downstream_pressure"] < self.dfoperation["discharge_pressure"]
+                ) & (downstream_pressure)
 
-        elif calculation_method == "cv_opening" and "cv_opening" in self.dfoperation.columns:
-            cv_opening = pd.to_numeric(self.dfoperation["cv_opening"], errors="coerce")
-            mask &= (cv_opening.notna()) & (cv_opening > self.config["cv_opening_min"]["value"])
-        else:
-            raise ValueError("Invalid calculation method passed in the configuration file.")
+            elif calculation_method == "cv_opening" and "cv_opening" in self.dfoperation.columns:
+                cv_opening = pd.to_numeric(self.dfoperation["cv_opening"], errors="coerce")
+                mask &= (cv_opening.notna()) & (cv_opening > self.config["cv_opening_min"]["value"])
+            else:
+                raise CustomException("Invalid calculation method passed in the configuration file.")
 
-        self.dfoperation = self.dfoperation.loc[mask].reset_index(drop=True)
+            self.dfoperation = self.dfoperation.loc[mask].reset_index(drop=True)
+
+        except (CustomException, KeyError) as e:
+            error_msg = f"Error occurred while removing non operating rows: {e}"
+            raise CustomException(error_msg)
 
     def __get_flowrate_percent(self):
         """
@@ -331,6 +343,8 @@ class Pump:
         )
 
         self.__get_flowrate_percent()
+
+        self.logger.info("Computed columns added")
 
     def group_by_flowrate_percent(self):
         """
@@ -457,6 +471,7 @@ class Pump:
 
         self.dfsummary = pd.concat([self.VSDSummary, self.ImpellerSummary], axis=1)
         self.__rename_columns()
+        self.logger.info("Energy calculation completed")
 
     def __summarize(self, dfenergy):
         """
@@ -559,22 +574,24 @@ class Pump:
 
             self._add_multiheader()
 
-            if not os.path.isfile(path):
-                wb = xw.Book()
-            else:
-                wb = xw.Book(path)
             with xw.App(visible=False) as app:
-                ws = wb.sheets[0]
-                ws.clear_contents()
+                if not os.path.isfile(path):
+                    wb = xw.Book()
+                else:
+                    wb = xw.Book(path)
+                    ws = wb.sheets[0]
+                    ws.clear_contents()
 
-                for cell, df, bool in zip(
-                    ["A1", "A13", "A31"],
-                    [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation],
-                    [True, False, False],
-                ):
-                    ws.range(cell).options(index=bool).value = df
-                wb.save(path)
-                wb.close()
+                    for cell, df, bool in zip(
+                        ["A1", "A13", "A31"],
+                        [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation],
+                        [True, False, False],
+                    ):
+                        ws.range(cell).options(index=bool).value = df
+                    wb.save(path)
+
                 self._remove_multiheader()
+
+                self.logger.info(f"Excel file created at {path}")
         except Exception as e:
-            raise Exception(e, "Error in writing to excel.")
+            raise CustomException(e, "Error in writing to excel.")

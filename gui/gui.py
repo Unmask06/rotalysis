@@ -67,19 +67,14 @@ class MainWindow(QMainWindow):
                 print(e, button_name)
 
     def handle_button_click(self, button, dialog_func, widget):
-        options = QFileDialog.Options()
         if dialog_func == QFileDialog.getOpenFileName:
             file_path, _ = dialog_func(
-                self,
-                caption=button.text(),
-                options=options,
-                filter="Excel Files (*.xlsx)",
-                directory="",
+                self, caption=button.text(), filter="Excel Files (*.xlsx)", directory=""
             )
             if file_path:
                 widget.setPlainText(file_path)
         elif dialog_func == QFileDialog.getExistingDirectory:
-            folder_path = dialog_func(self, caption=button.text(), options=options, directory="")
+            folder_path = dialog_func(self, caption=button.text(), directory="")
             if folder_path:
                 widget.setPlainText(folder_path)
 
