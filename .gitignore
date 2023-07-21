@@ -5,7 +5,6 @@
 /dist
 /build
 *.exe
-*.spec
 /.vscode
 **/*trail*
 **/*test*

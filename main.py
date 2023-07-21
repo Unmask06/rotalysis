@@ -1,7 +1,7 @@
 import sys
 import time
 
-from PyQt6 import QtCore, QtWidgets
+from PyQt6 import QtCore, QtWidgets, QtGui
 
 from gui import MainWindow, SplashScreen
 from rotalysis import Core
@@ -9,11 +9,12 @@ from rotalysis import Core
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
+    app.setWindowIcon(QtGui.QIcon("icon.ico"))
 
     window = MainWindow()
     splash_screen = SplashScreen()
     splash_screen.show()
-    time.sleep(5)
+    time.sleep(2)
     splash_screen.finish(window)
 
     widget = {
