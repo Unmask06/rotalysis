@@ -1,3 +1,6 @@
+import os
+import sys
+
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import (
     QApplication,
@@ -12,11 +15,14 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.uic import loadUi
 
+from utils import get_app_path
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("gui/ui/main_window.ui", self)
+        ui_file = os.path.join(get_app_path(), "gui/ui/main_window.ui")
+        loadUi(ui_file, self)
         self.set_default_values()
 
         self.connect_buttons()
@@ -82,7 +88,8 @@ class MainWindow(QMainWindow):
 class SplashScreen(QSplashScreen):
     def __init__(self):
         super().__init__()
-        self.setPixmap(QPixmap("gui/resources/Rotalysis.png"))
+        splash_screen_image = os.path.join(get_app_path(), "gui/resources/Rotalysis.png")
+        self.setPixmap(QPixmap(splash_screen_image).scaledToWidth(200))
         self.setEnabled(False)
         self.setGeometry(200, 150, 200, 150)
         self.center()
