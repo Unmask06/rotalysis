@@ -145,7 +145,9 @@ class Pump:
             ValueError: If the operational data excel sheet is missing the mandatory columns.
         """
         missing_columns = [
-            col for col in list(Pump.mandatory_columns.keys()) if col not in self.dfoperation.columns
+            col
+            for col in list(Pump.mandatory_columns.keys())
+            if col not in self.dfoperation.columns
         ]
         if len(missing_columns) > 0:
             missing_columns_error = f"The operational data excel sheet is missing the following required columns: {', '.join(missing_columns)}."
@@ -205,7 +207,9 @@ class Pump:
 
             calculation_method = self.process_data["calculation_method"]["value"]
 
-            mask = pd.Series(True, index=self.dfoperation.index)  # Initialize mask as True for all rows
+            mask = pd.Series(
+                True, index=self.dfoperation.index
+            )  # Initialize mask as True for all rows
             mask &= self.dfoperation["discharge_flowrate"] > 0
             mask &= self.dfoperation["suction_pressure"] < self.dfoperation["discharge_pressure"]
             mask &= ~(
@@ -229,7 +233,9 @@ class Pump:
                 cv_opening = pd.to_numeric(self.dfoperation["cv_opening"], errors="coerce")
                 mask &= (cv_opening.notna()) & (cv_opening > self.config["cv_opening_min"]["value"])
             else:
-                raise CustomException("Invalid calculation method passed in the configuration file.")
+                raise CustomException(
+                    "Invalid calculation method passed in the configuration file."
+                )
 
             self.dfoperation = self.dfoperation.loc[mask].reset_index(drop=True)
 
@@ -318,16 +324,24 @@ class Pump:
         )
 
         # calculate old pump efficiency
-        BEP_flowrate = (
-            self.process_data["rated_flow"]["value"]
-            if self.process_data["BEP_flowrate"]["value"] == "" or (np.nan or None)
-            else self.process_data["BEP_flowrate"]["value"]
-        )
-        BEP_efficiency = (
-            self.config["pump_efficiency"]["value"]
-            if self.process_data["BEP_efficiency"]["value"] == ""
-            else self.process_data["BEP_efficiency"]["value"]
-        )
+        if self.process_data["BEP_flowrate"]["value"] == ("" or (np.nan or None)):
+            BEP_flowrate = self.process_data["rated_flow"]["value"]
+        elif isinstance(self.process_data["BEP_flowrate"]["value"], str):
+            BEP_flowrate = self.process_data["rated_flow"]["value"]
+            self.logger.warning(
+                f"BEP_flowrate should be empty or numeric. Please don't string values next time. \nRated flowrate is used as BEP_flowrate."
+            )
+        else:
+            BEP_flowrate = self.process_data["BEP_flowrate"]["value"]
+
+        if self.process_data["BEP_efficiency"]["value"] == "" or (np.nan or None):
+            BEP_efficiency = self.config["pump_efficiency"]["value"]
+        elif isinstance(self.process_data["BEP_efficiency"]["value"], str):
+            BEP_efficiency = self.config["pump_efficiency"]["value"]
+            self.logger.warning(
+                f"BEP_efficiency should be empty or numeric. Please don't string values next time. \nDefault pump efficiency is used as BEP_efficiency."
+            )
+
         self.dfoperation["old_pump_efficiency"] = PF.get_pump_efficiency(
             BEP_flowrate, BEP_efficiency, self.dfoperation["discharge_flowrate"]
         )
