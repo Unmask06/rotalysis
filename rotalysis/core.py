@@ -64,8 +64,8 @@ class Core:
                     ("N", "Success") if self.success else ("Y", "Failed")
                 )
                 self.logger.info("\n" + 50 * "-" + "\n")
-                self.dftask_list.to_excel(self.task_path, index=False)
 
         self.logger.info("Please check the output folder for the result.")
         self.logger.info(f"Total tasks processed: {self.success_count} out of {total_tasks}")
+        UF.write_to_excel(self.task_path, self.dftask_list)
         self.logger.info("\n" + 30 * "*" + "Thanks for using Rotalysis" + 30 * "*" + "\n")

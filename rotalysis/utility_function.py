@@ -104,22 +104,16 @@ class UtilityFunction:
         return process_data, dfoperation, dfcurve, dfunit
 
     @staticmethod
-    def write_to_excel(
-        path: str, sheet_name: str, dataframe: pd.DataFrame, cell: str = "A1"
-    ) -> None:
+    def write_to_excel(path: str, dataframe, sheet_name=0, cell: str = "A1") -> None:
         try:
-            if not os.path.isfile(path):
-                wb = xw.Book()
-            else:
-                wb = xw.Book(path)
             with xw.App(visible=False) as app:
-                sheet_names = [sheet.name for sheet in wb.sheets]
-                if sheet_name in sheet_names:
-                    ws = wb.sheets[sheet_name]
+                if not os.path.isfile(path):
+                    wb = xw.Book()
                 else:
-                    ws = wb.sheets.add(sheet_name)
-                ws.clear_contents()
-                ws.range(cell).options(index=False).value = dataframe
-                wb.save(path)
+                    wb = xw.Book(path)
+                    ws = wb.sheets[sheet_name]
+                    ws.clear_contents()
+                    ws.range(cell).options(index=False).value = dataframe
+                    wb.save(path)
         except Exception as e:
             raise Exception(e, "Error in writing to excel.")
