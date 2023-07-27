@@ -2,6 +2,7 @@
 import os
 import sys
 from pathlib import Path
+import traceback
 
 sys.path.append("..")
 
@@ -110,6 +111,7 @@ class Pump:
         dfconfig = dfconfig.iloc[:, :3].dropna(subset=["parameter"])
         dfconfig.set_index("parameter", inplace=True)
         self.config = dfconfig.to_dict("index")
+        # check if ratedflow and density are number
 
     def __set_data(self):
         """
@@ -135,15 +137,24 @@ class Pump:
         # Set Pump unit
         dfunit = pd.read_excel(self.data_path, sheet_name="unit", header=0)
         dfunit = dfunit.iloc[:, :2].dropna(subset=["unit"])
+        #change dfunit to lower case
+        dfunit["parameter"] = dfunit["parameter"].str.lower()
         self.unit = dict(zip(dfunit["parameter"], dfunit["unit"]))
 
     def __check_mandatory_columns(self):
         """
-        INIT METHOD - Checks if the operational data excel sheet contains the mandatory columns.
+        INIT METHOD - Checks if
+        - rated flowrate and density are numeric.
+        - operational data excel sheet contains the mandatory columns.
 
         Raises:
-            ValueError: If the operational data excel sheet is missing the mandatory columns.
+            ValueError: If the these data are missing.
         """
+        if not isinstance(self.process_data["rated_flow"]["value"], (int, float)):
+            raise CustomException("Rated flowrate should be provided.")
+        if not isinstance(self.process_data["density"]["value"], (int, float)):
+            raise CustomException("Density should be provided.")
+
         missing_columns = [
             col
             for col in list(Pump.mandatory_columns.keys())
@@ -174,9 +185,9 @@ class Pump:
         flowrate_conversion = {
             "m3/hr": 1,
             "default": 1,
-            "BPD": 0.0066245,
+            "bpd": 0.0066245,
             "gpm": 0.22712,
-            "BPH": 0.15899,
+            "bph": 0.15899,
         }
         self.dfoperation["discharge_flowrate"] = self.dfoperation[
             "discharge_flowrate"
@@ -241,6 +252,7 @@ class Pump:
 
         except (CustomException, KeyError) as e:
             error_msg = f"Error occurred while removing non operating rows: {e}"
+            print(traceback.format_exc())
             raise CustomException(error_msg)
 
     def __get_flowrate_percent(self):

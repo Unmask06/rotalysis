@@ -1,0 +1,86 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rotalysis Web App</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<h1>Rotalysis Web App</h1>
+<form onsubmit="return false;">
+    <label for="config_file">Enter Configuration excel file path:</label>
+    <div>
+        <input type="text" name="config_file" id="config_file">
+        <button type="button" onclick="document.getElementById('config_file').value = ''">Clear</button>
+    </div>
+
+    <label for="input_folder">Enter Input Folder path:</label>
+    <div>
+        <input type="text" name="input_folder" id="input_folder">
+        <button type="button" onclick="document.getElementById('input_folder').value = ''">Clear</button>
+    </div>
+
+    <label for="output_folder">Enter Output Folder path:</label>
+    <div>
+        <input type="text" name="output_folder" id="output_folder">
+        <button type="button" onclick="document.getElementById('output_folder').value = ''">Clear</button>
+    </div>
+
+    <label for="tasklist_file">Enter Task List excel file path:</label>
+    <div>
+        <input type="text" name="tasklist_file" id="tasklist_file">
+        <button type="button" onclick="document.getElementById('tasklist_file').value = ''">Clear</button>
+    </div>
+
+    <button onclick="runRotalysis()">Run</button>
+</form>
+
+<script>
+        function showFilePath(inputElement) {
+            const filePath = inputElement.value;
+            const fileNameSpan = inputElement.nextElementSibling;
+            fileNameSpan.textContent = filePath;
+    }
+
+        function showFolderPath(inputElement) {
+            const folderPath = inputElement.value;
+            const folderNameSpan = inputElement.nextElementSibling;
+            folderNameSpan.textContent = folderPath;
+        }
+        function runRotalysis() {
+            // Get the values from the input fields
+            const configFilePath = document.getElementById('config_file').value;
+            const inputFolderPath = document.getElementById('input_folder').value;
+            const outputFolderPath = document.getElementById('output_folder').value;
+            const tasklistFilePath = document.getElementById('tasklist_file').value;
+
+            // Create an object with the data to be sent to the server
+            const data = {
+                'config_file': configFilePath,
+                'input_folder': inputFolderPath,
+                'output_folder': outputFolderPath,
+                'tasklist_file': tasklistFilePath
+            };
+
+            // Send the data to the server using AJAX
+            fetch('/run', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                // Handle the response as needed (e.g., show success message or redirect)
+                // For simplicity, we'll just reload the page to show the 'result.html'
+                location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle errors here (e.g., show an error message to the user)
+            });
+        }
+</script>
+
+</body>
+</html>

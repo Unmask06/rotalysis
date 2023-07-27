@@ -37,6 +37,8 @@ if __name__ == "__main__":
 
 
     def run():
+        window.pbRun.setEnabled(False)
+        window.pbRun.setText("Running...")
         for key in widget.keys():
             set_path(key)
 
@@ -44,6 +46,8 @@ if __name__ == "__main__":
         core.process_task()
 
         window.ProgressBar.setValue(100)
+        window.pbRun.setText("Run")
+        window.pbRun.setEnabled(True)
 
     window.show()
 

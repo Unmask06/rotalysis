@@ -1,0 +1,1161 @@
+25-07-2023 13:29:39: INFO: 
+******************************Welcome to Rotalysis******************************
+
+25-07-2023 13:29:39: INFO: Total tasks to be processed: 46 
+
+25-07-2023 13:29:39: INFO: Processing task 1 of 46
+25-07-2023 13:29:39: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302A
+25-07-2023 13:29:39: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\08.7-HSR3-J-302A Data.xlsx
+25-07-2023 13:29:40: ERROR: Error occurred while processing: DAS, 08.7-HSR3-J-302A
+25-07-2023 13:29:40: ERROR: Rated flowrate should be provided.
+25-07-2023 13:29:40: CRITICAL: TASK FAILED!
+25-07-2023 13:29:40: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:40: INFO: Processing task 2 of 46
+25-07-2023 13:29:40: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302B
+25-07-2023 13:29:40: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\08.7-HSR3-J-302B Data .xlsx
+25-07-2023 13:29:42: ERROR: Error occurred while processing: DAS, 08.7-HSR3-J-302B
+25-07-2023 13:29:42: ERROR: Rated flowrate should be provided.
+25-07-2023 13:29:42: CRITICAL: TASK FAILED!
+25-07-2023 13:29:42: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:42: INFO: Processing task 3 of 46
+25-07-2023 13:29:42: INFO: Searching Excel file for : DAS, 15.0-P-J11
+25-07-2023 13:29:42: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J11 Data .xlsx
+25-07-2023 13:29:43: INFO: Data cleaning completed
+25-07-2023 13:29:43: INFO: Irrelevant columns removed
+25-07-2023 13:29:43: ERROR: Error occurred while processing: DAS, 15.0-P-J11
+25-07-2023 13:29:43: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+25-07-2023 13:29:43: CRITICAL: TASK FAILED!
+25-07-2023 13:29:43: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:43: INFO: Processing task 4 of 46
+25-07-2023 13:29:43: INFO: Searching Excel file for : DAS, 15.0-P-J12
+25-07-2023 13:29:43: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J12 Data .xlsx
+25-07-2023 13:29:44: INFO: Data cleaning completed
+25-07-2023 13:29:44: INFO: Irrelevant columns removed
+25-07-2023 13:29:44: ERROR: Error occurred while processing: DAS, 15.0-P-J12
+25-07-2023 13:29:44: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+25-07-2023 13:29:44: CRITICAL: TASK FAILED!
+25-07-2023 13:29:44: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:44: INFO: Processing task 5 of 46
+25-07-2023 13:29:44: INFO: Searching Excel file for : DAS, 15.22-P-J5
+25-07-2023 13:29:44: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.22-P- J5 Data.xlsx
+25-07-2023 13:29:45: INFO: Data cleaning completed
+25-07-2023 13:29:45: INFO: Irrelevant columns removed
+25-07-2023 13:29:45: ERROR: Error occurred while processing: DAS, 15.22-P-J5
+25-07-2023 13:29:45: ERROR: Error occurred while removing non operating rows: ['discharge_flowrate']
+25-07-2023 13:29:45: CRITICAL: TASK FAILED!
+25-07-2023 13:29:45: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:45: INFO: Processing task 6 of 46
+25-07-2023 13:29:45: INFO: Searching Excel file for : DAS, 90-P-2011
+25-07-2023 13:29:45: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\90-P-2011 Data.xlsx
+25-07-2023 13:29:47: INFO: Data cleaning completed
+25-07-2023 13:29:47: INFO: Irrelevant columns removed
+25-07-2023 13:29:47: ERROR: Error occurred while processing: DAS, 90-P-2011
+25-07-2023 13:29:47: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+25-07-2023 13:29:47: CRITICAL: TASK FAILED!
+25-07-2023 13:29:47: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:47: INFO: Processing task 7 of 46
+25-07-2023 13:29:47: INFO: Searching Excel file for : DAS, 90-P-2012
+25-07-2023 13:29:47: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\90-P-2012 Data.xlsx
+25-07-2023 13:29:48: INFO: Data cleaning completed
+25-07-2023 13:29:48: INFO: Irrelevant columns removed
+25-07-2023 13:29:48: ERROR: Error occurred while processing: DAS, 90-P-2012
+25-07-2023 13:29:48: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+25-07-2023 13:29:48: CRITICAL: TASK FAILED!
+25-07-2023 13:29:48: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:48: INFO: Processing task 8 of 46
+25-07-2023 13:29:48: INFO: Searching Excel file for : DAS, CDD-J180
+25-07-2023 13:29:48: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J180 Data .xlsx
+25-07-2023 13:29:49: ERROR: Error occurred while processing: DAS, CDD-J180
+25-07-2023 13:29:49: ERROR: Density should be provided.
+25-07-2023 13:29:49: CRITICAL: TASK FAILED!
+25-07-2023 13:29:49: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:49: INFO: Processing task 9 of 46
+25-07-2023 13:29:49: INFO: Searching Excel file for : DAS, CDD-J181
+25-07-2023 13:29:49: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J181 Data .xlsx
+25-07-2023 13:29:50: ERROR: Error occurred while processing: DAS, CDD-J181
+25-07-2023 13:29:50: ERROR: Density should be provided.
+25-07-2023 13:29:50: CRITICAL: TASK FAILED!
+25-07-2023 13:29:50: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:50: INFO: Processing task 10 of 46
+25-07-2023 13:29:50: INFO: Searching Excel file for : DAS, CDD-J182
+25-07-2023 13:29:50: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J182 Data.xlsx
+25-07-2023 13:29:51: ERROR: Error occurred while processing: DAS, CDD-J182
+25-07-2023 13:29:51: ERROR: Density should be provided.
+25-07-2023 13:29:51: CRITICAL: TASK FAILED!
+25-07-2023 13:29:51: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:51: INFO: Processing task 11 of 46
+25-07-2023 13:29:51: INFO: Searching Excel file for : DAS, CDD-J183
+25-07-2023 13:29:51: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J183 Data .xlsx
+25-07-2023 13:29:52: ERROR: Error occurred while processing: DAS, CDD-J183
+25-07-2023 13:29:52: ERROR: Density should be provided.
+25-07-2023 13:29:52: CRITICAL: TASK FAILED!
+25-07-2023 13:29:52: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:52: INFO: Processing task 12 of 46
+25-07-2023 13:29:52: INFO: Searching Excel file for : UAD, CPP-P-004A
+25-07-2023 13:29:52: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 A Data .xlsx
+25-07-2023 13:29:54: INFO: Data cleaning completed
+25-07-2023 13:29:54: INFO: Irrelevant columns removed
+25-07-2023 13:29:54: ERROR: Error occurred while processing: UAD, CPP-P-004A
+25-07-2023 13:29:54: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+25-07-2023 13:29:54: CRITICAL: TASK FAILED!
+25-07-2023 13:29:54: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:54: INFO: Processing task 13 of 46
+25-07-2023 13:29:54: INFO: Searching Excel file for : UAD, CPP-P-004B
+25-07-2023 13:29:54: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 B Data .xlsx
+25-07-2023 13:29:56: INFO: Data cleaning completed
+25-07-2023 13:29:56: INFO: Irrelevant columns removed
+25-07-2023 13:29:56: ERROR: Error occurred while processing: UAD, CPP-P-004B
+25-07-2023 13:29:56: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+25-07-2023 13:29:56: CRITICAL: TASK FAILED!
+25-07-2023 13:29:56: INFO: 
+--------------------------------------------------
+
+25-07-2023 13:29:56: INFO: Processing task 14 of 46
+25-07-2023 13:29:56: INFO: Searching Excel file for : UAD, CPP-P-004C
+25-07-2023 13:29:56: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 C Data .xlsx
+26-07-2023 17:48:07: INFO: 
+******************************Welcome to Rotalysis******************************
+
+26-07-2023 17:48:07: INFO: Total tasks to be processed: 1 
+
+26-07-2023 17:48:07: INFO: Processing task 1 of 1
+26-07-2023 17:48:07: INFO: Searching Excel file for : DAS, 15.0-P-J11
+26-07-2023 17:48:07: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J11 Data .xlsx
+26-07-2023 17:48:08: INFO: Data cleaning completed
+26-07-2023 17:48:08: INFO: Irrelevant columns removed
+26-07-2023 17:48:08: ERROR: Error occurred while processing: DAS, 15.0-P-J11
+26-07-2023 17:48:08: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+26-07-2023 17:48:09: CRITICAL: TASK FAILED!
+26-07-2023 17:48:09: INFO: 
+--------------------------------------------------
+
+26-07-2023 17:48:09: INFO: Please check the output folder for the result.
+26-07-2023 17:48:09: INFO: Total tasks processed: 0 out of 1
+26-07-2023 17:48:10: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+26-07-2023 17:50:45: INFO: 
+******************************Welcome to Rotalysis******************************
+
+26-07-2023 17:50:45: INFO: Total tasks to be processed: 1 
+
+26-07-2023 17:50:45: INFO: Processing task 1 of 1
+26-07-2023 17:50:45: INFO: Searching Excel file for : DAS, 15.0-P-J11
+26-07-2023 17:50:45: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J11 Data .xlsx
+26-07-2023 17:50:49: INFO: Data cleaning completed
+26-07-2023 17:50:49: INFO: Irrelevant columns removed
+26-07-2023 17:52:47: INFO: 
+******************************Welcome to Rotalysis******************************
+
+26-07-2023 17:52:47: INFO: Total tasks to be processed: 1 
+
+26-07-2023 17:52:47: INFO: Processing task 1 of 1
+26-07-2023 17:52:47: INFO: Searching Excel file for : DAS, 15.0-P-J11
+26-07-2023 17:52:47: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J11 Data .xlsx
+26-07-2023 17:52:48: INFO: Data cleaning completed
+26-07-2023 17:52:48: INFO: Irrelevant columns removed
+26-07-2023 17:52:48: ERROR: Error occurred while processing: DAS, 15.0-P-J11
+26-07-2023 17:52:48: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+26-07-2023 17:52:48: CRITICAL: TASK FAILED!
+26-07-2023 17:52:48: INFO: 
+--------------------------------------------------
+
+26-07-2023 17:52:48: INFO: Please check the output folder for the result.
+26-07-2023 17:52:48: INFO: Total tasks processed: 0 out of 1
+26-07-2023 17:52:49: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+27-07-2023 09:57:23: INFO: 
+******************************Welcome to Rotalysis******************************
+
+27-07-2023 09:57:23: INFO: Total tasks to be processed: 1 
+
+27-07-2023 09:57:23: INFO: Processing task 1 of 1
+27-07-2023 09:57:23: INFO: Searching Excel file for : DAS, 15.0-P-J11
+27-07-2023 09:57:23: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J11 Data .xlsx
+27-07-2023 09:57:27: INFO: Data cleaning completed
+27-07-2023 09:57:27: INFO: Irrelevant columns removed
+27-07-2023 09:57:41: ERROR: Error occurred while processing: DAS, 15.0-P-J11
+27-07-2023 09:57:41: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 09:57:42: INFO: Please check the output folder for the result.
+27-07-2023 09:57:42: INFO: Total tasks processed: 0 out of 1
+27-07-2023 09:57:43: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+27-07-2023 10:12:00: INFO: 
+******************************Welcome to Rotalysis******************************
+
+27-07-2023 10:12:00: INFO: Total tasks to be processed: 61 
+
+27-07-2023 10:12:00: INFO: Processing task 1 of 61
+27-07-2023 10:12:00: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302A
+27-07-2023 10:12:00: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\08.7-HSR3-J-302A Data.xlsx
+27-07-2023 10:12:02: ERROR: Error occurred while processing: DAS, 08.7-HSR3-J-302A
+27-07-2023 10:12:02: ERROR: Rated flowrate should be provided.
+27-07-2023 10:12:02: INFO: Processing task 2 of 61
+27-07-2023 10:12:02: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302B
+27-07-2023 10:12:02: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\08.7-HSR3-J-302B Data .xlsx
+27-07-2023 10:12:03: ERROR: Error occurred while processing: DAS, 08.7-HSR3-J-302B
+27-07-2023 10:12:03: ERROR: Rated flowrate should be provided.
+27-07-2023 10:12:03: INFO: Processing task 3 of 61
+27-07-2023 10:12:03: INFO: Searching Excel file for : DAS, 15.0-P-J11
+27-07-2023 10:12:03: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J11 Data .xlsx
+27-07-2023 10:12:04: INFO: Data cleaning completed
+27-07-2023 10:12:04: INFO: Irrelevant columns removed
+27-07-2023 10:12:04: ERROR: Error occurred while processing: DAS, 15.0-P-J11
+27-07-2023 10:12:04: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:12:04: INFO: Processing task 4 of 61
+27-07-2023 10:12:04: INFO: Searching Excel file for : DAS, 15.0-P-J12
+27-07-2023 10:12:04: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J12 Data .xlsx
+27-07-2023 10:12:05: INFO: Data cleaning completed
+27-07-2023 10:12:05: INFO: Irrelevant columns removed
+27-07-2023 10:12:05: ERROR: Error occurred while processing: DAS, 15.0-P-J12
+27-07-2023 10:12:05: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:12:06: INFO: Processing task 5 of 61
+27-07-2023 10:12:06: INFO: Searching Excel file for : DAS, 15.22-P-J5
+27-07-2023 10:12:06: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.22-P- J5 Data.xlsx
+27-07-2023 10:12:07: INFO: Data cleaning completed
+27-07-2023 10:12:07: INFO: Irrelevant columns removed
+27-07-2023 10:12:07: ERROR: Error occurred while processing: DAS, 15.22-P-J5
+27-07-2023 10:12:07: ERROR: Error occurred while removing non operating rows: ['discharge_flowrate']
+27-07-2023 10:12:07: INFO: Processing task 6 of 61
+27-07-2023 10:12:07: INFO: Searching Excel file for : DAS, 90-P-2011
+27-07-2023 10:12:07: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\90-P-2011 Data.xlsx
+27-07-2023 10:12:08: INFO: Data cleaning completed
+27-07-2023 10:12:08: INFO: Irrelevant columns removed
+27-07-2023 10:12:08: ERROR: Error occurred while processing: DAS, 90-P-2011
+27-07-2023 10:12:08: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:12:08: INFO: Processing task 7 of 61
+27-07-2023 10:12:08: INFO: Searching Excel file for : DAS, 90-P-2012
+27-07-2023 10:12:08: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\90-P-2012 Data.xlsx
+27-07-2023 10:12:09: INFO: Data cleaning completed
+27-07-2023 10:12:09: INFO: Irrelevant columns removed
+27-07-2023 10:12:09: ERROR: Error occurred while processing: DAS, 90-P-2012
+27-07-2023 10:12:09: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:12:09: INFO: Processing task 8 of 61
+27-07-2023 10:12:09: INFO: Searching Excel file for : DAS, 90-P-2013
+27-07-2023 10:12:09: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\90-P-2013 Data.xlsx
+27-07-2023 10:12:11: INFO: Data cleaning completed
+27-07-2023 10:12:11: INFO: Irrelevant columns removed
+27-07-2023 10:12:11: INFO: unit conversion completed
+27-07-2023 10:12:11: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:12:11: INFO: Computed columns added
+27-07-2023 10:12:11: INFO: Energy calculation completed
+27-07-2023 10:12:11: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\DAS\90-P-2013.xlsx
+27-07-2023 10:12:12: INFO: Processing task 9 of 61
+27-07-2023 10:12:12: INFO: Searching Excel file for : DAS, CDD-J180
+27-07-2023 10:12:12: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J180 Data .xlsx
+27-07-2023 10:12:13: ERROR: Error occurred while processing: DAS, CDD-J180
+27-07-2023 10:12:13: ERROR: Density should be provided.
+27-07-2023 10:12:13: INFO: Processing task 10 of 61
+27-07-2023 10:12:13: INFO: Searching Excel file for : DAS, CDD-J181
+27-07-2023 10:12:13: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J181 Data .xlsx
+27-07-2023 10:12:14: ERROR: Error occurred while processing: DAS, CDD-J181
+27-07-2023 10:12:14: ERROR: Density should be provided.
+27-07-2023 10:12:14: INFO: Processing task 11 of 61
+27-07-2023 10:12:14: INFO: Searching Excel file for : DAS, CDD-J182
+27-07-2023 10:12:14: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J182 Data.xlsx
+27-07-2023 10:12:15: ERROR: Error occurred while processing: DAS, CDD-J182
+27-07-2023 10:12:15: ERROR: Density should be provided.
+27-07-2023 10:12:15: INFO: Processing task 12 of 61
+27-07-2023 10:12:15: INFO: Searching Excel file for : DAS, CDD-J183
+27-07-2023 10:12:15: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\CDD-J183 Data .xlsx
+27-07-2023 10:12:16: ERROR: Error occurred while processing: DAS, CDD-J183
+27-07-2023 10:12:16: ERROR: Density should be provided.
+27-07-2023 10:12:16: INFO: Processing task 13 of 61
+27-07-2023 10:12:16: INFO: Searching Excel file for : NASR, 713-P-1101A
+27-07-2023 10:12:16: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 A Data.xlsx
+27-07-2023 10:12:18: INFO: Data cleaning completed
+27-07-2023 10:12:18: INFO: Irrelevant columns removed
+27-07-2023 10:12:18: INFO: unit conversion completed
+27-07-2023 10:12:18: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:12:18: INFO: Computed columns added
+27-07-2023 10:12:18: INFO: Energy calculation completed
+27-07-2023 10:12:19: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101A.xlsx
+27-07-2023 10:12:19: INFO: Processing task 14 of 61
+27-07-2023 10:12:19: INFO: Searching Excel file for : NASR, 713-P-1101B
+27-07-2023 10:12:19: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 B Data .xlsx
+27-07-2023 10:12:21: INFO: Data cleaning completed
+27-07-2023 10:12:21: INFO: Irrelevant columns removed
+27-07-2023 10:12:21: INFO: unit conversion completed
+27-07-2023 10:12:21: INFO: Computed columns added
+27-07-2023 10:12:21: INFO: Energy calculation completed
+27-07-2023 10:12:22: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101B.xlsx
+27-07-2023 10:12:23: INFO: Processing task 15 of 61
+27-07-2023 10:12:23: INFO: Searching Excel file for : NASR, 713-P-1200A
+27-07-2023 10:12:23: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 A Data.xlsx
+27-07-2023 10:12:24: INFO: Data cleaning completed
+27-07-2023 10:12:24: INFO: Irrelevant columns removed
+27-07-2023 10:12:24: INFO: unit conversion completed
+27-07-2023 10:12:24: INFO: Computed columns added
+27-07-2023 10:12:24: INFO: Energy calculation completed
+27-07-2023 10:12:25: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200A.xlsx
+27-07-2023 10:12:26: INFO: Processing task 16 of 61
+27-07-2023 10:12:26: INFO: Searching Excel file for : NASR, 713-P-1200B
+27-07-2023 10:12:26: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 B Data .xlsx
+27-07-2023 10:12:28: INFO: Data cleaning completed
+27-07-2023 10:12:28: INFO: Irrelevant columns removed
+27-07-2023 10:12:28: INFO: unit conversion completed
+27-07-2023 10:12:28: INFO: Computed columns added
+27-07-2023 10:12:28: INFO: Energy calculation completed
+27-07-2023 10:12:28: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200B.xlsx
+27-07-2023 10:12:29: INFO: Processing task 17 of 61
+27-07-2023 10:12:29: INFO: Searching Excel file for : NASR, 713-P-1200C
+27-07-2023 10:12:29: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 C Data .xlsx
+27-07-2023 10:12:31: INFO: Data cleaning completed
+27-07-2023 10:12:31: INFO: Irrelevant columns removed
+27-07-2023 10:12:31: INFO: unit conversion completed
+27-07-2023 10:12:31: INFO: Computed columns added
+27-07-2023 10:12:31: INFO: Energy calculation completed
+27-07-2023 10:12:31: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200C.xlsx
+27-07-2023 10:12:32: INFO: Processing task 18 of 61
+27-07-2023 10:12:32: INFO: Searching Excel file for : UAD, CPP-P-004A
+27-07-2023 10:12:32: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 A Data .xlsx
+27-07-2023 10:12:33: INFO: Data cleaning completed
+27-07-2023 10:12:33: INFO: Irrelevant columns removed
+27-07-2023 10:12:33: ERROR: Error occurred while processing: UAD, CPP-P-004A
+27-07-2023 10:12:33: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:12:34: INFO: Processing task 19 of 61
+27-07-2023 10:12:34: INFO: Searching Excel file for : UAD, CPP-P-004B
+27-07-2023 10:12:34: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 B Data .xlsx
+27-07-2023 10:12:35: INFO: Data cleaning completed
+27-07-2023 10:12:35: INFO: Irrelevant columns removed
+27-07-2023 10:12:35: ERROR: Error occurred while processing: UAD, CPP-P-004B
+27-07-2023 10:12:35: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:12:35: INFO: Processing task 20 of 61
+27-07-2023 10:12:35: INFO: Searching Excel file for : UAD, CPP-P-004C
+27-07-2023 10:12:35: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 C Data .xlsx
+27-07-2023 10:12:37: INFO: Data cleaning completed
+27-07-2023 10:12:37: INFO: Irrelevant columns removed
+27-07-2023 10:12:37: ERROR: Error occurred while processing: UAD, CPP-P-004C
+27-07-2023 10:12:37: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:12:37: INFO: Processing task 21 of 61
+27-07-2023 10:12:37: INFO: Searching Excel file for : UAD, CPP-P-005A
+27-07-2023 10:12:37: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 A Data .xlsx
+27-07-2023 10:12:39: INFO: Data cleaning completed
+27-07-2023 10:12:39: INFO: Irrelevant columns removed
+27-07-2023 10:12:39: INFO: unit conversion completed
+27-07-2023 10:12:39: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:12:39: INFO: Computed columns added
+27-07-2023 10:12:39: INFO: Energy calculation completed
+27-07-2023 10:12:40: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005A.xlsx
+27-07-2023 10:12:40: INFO: Processing task 22 of 61
+27-07-2023 10:12:40: INFO: Searching Excel file for : UAD, CPP-P-005B
+27-07-2023 10:12:40: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 B Data .xlsx
+27-07-2023 10:12:42: INFO: Data cleaning completed
+27-07-2023 10:12:42: INFO: Irrelevant columns removed
+27-07-2023 10:12:42: INFO: unit conversion completed
+27-07-2023 10:12:42: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:12:42: INFO: Computed columns added
+27-07-2023 10:12:42: INFO: Energy calculation completed
+27-07-2023 10:12:42: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005B.xlsx
+27-07-2023 10:12:43: INFO: Processing task 23 of 61
+27-07-2023 10:12:43: INFO: Searching Excel file for : UAD, CPP-P-005C
+27-07-2023 10:12:43: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 C Data.xlsx
+27-07-2023 10:12:45: INFO: Data cleaning completed
+27-07-2023 10:12:45: INFO: Irrelevant columns removed
+27-07-2023 10:12:45: INFO: unit conversion completed
+27-07-2023 10:12:45: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:12:45: INFO: Computed columns added
+27-07-2023 10:12:45: INFO: Energy calculation completed
+27-07-2023 10:12:45: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005C.xlsx
+27-07-2023 10:12:46: INFO: Processing task 24 of 61
+27-07-2023 10:12:46: INFO: Searching Excel file for : UAD, CPP-P-026A
+27-07-2023 10:12:46: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-026 A Data.xlsx
+27-07-2023 10:12:48: INFO: Data cleaning completed
+27-07-2023 10:12:48: INFO: Irrelevant columns removed
+27-07-2023 10:12:48: ERROR: Error occurred while processing: UAD, CPP-P-026A
+27-07-2023 10:12:48: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:12:48: INFO: Processing task 25 of 61
+27-07-2023 10:12:48: INFO: Searching Excel file for : UAD, CPP-P-026B
+27-07-2023 10:12:48: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-026 B Data .xlsx
+27-07-2023 10:12:50: INFO: Data cleaning completed
+27-07-2023 10:12:50: INFO: Irrelevant columns removed
+27-07-2023 10:12:50: ERROR: Error occurred while processing: UAD, CPP-P-026B
+27-07-2023 10:12:50: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:12:50: INFO: Processing task 26 of 61
+27-07-2023 10:12:50: INFO: Searching Excel file for : UL, 570-P-2900
+27-07-2023 10:12:50: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2900.xlsx
+27-07-2023 10:12:52: INFO: Data cleaning completed
+27-07-2023 10:12:52: INFO: Irrelevant columns removed
+27-07-2023 10:12:52: INFO: unit conversion completed
+27-07-2023 10:12:52: INFO: Computed columns added
+27-07-2023 10:12:52: INFO: Energy calculation completed
+27-07-2023 10:12:53: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+27-07-2023 10:12:53: INFO: Processing task 27 of 61
+27-07-2023 10:12:53: INFO: Searching Excel file for : UL, 570-P-2901
+27-07-2023 10:12:53: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2901.xlsx
+27-07-2023 10:12:55: INFO: Data cleaning completed
+27-07-2023 10:12:55: INFO: Irrelevant columns removed
+27-07-2023 10:12:55: INFO: unit conversion completed
+27-07-2023 10:12:55: INFO: Computed columns added
+27-07-2023 10:12:55: INFO: Energy calculation completed
+27-07-2023 10:12:56: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2901.xlsx
+27-07-2023 10:12:56: INFO: Processing task 28 of 61
+27-07-2023 10:12:56: INFO: Searching Excel file for : UL, 570-P-2928A
+27-07-2023 10:12:56: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2928 A.xlsx
+27-07-2023 10:12:58: INFO: Data cleaning completed
+27-07-2023 10:12:58: INFO: Irrelevant columns removed
+27-07-2023 10:12:58: INFO: unit conversion completed
+27-07-2023 10:12:58: INFO: Computed columns added
+27-07-2023 10:12:58: INFO: Energy calculation completed
+27-07-2023 10:12:59: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2928A.xlsx
+27-07-2023 10:12:59: INFO: Processing task 29 of 61
+27-07-2023 10:12:59: INFO: Searching Excel file for : UL, 570-P-2928B
+27-07-2023 10:12:59: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2928 B.xlsx
+27-07-2023 10:13:02: INFO: Data cleaning completed
+27-07-2023 10:13:02: INFO: Irrelevant columns removed
+27-07-2023 10:13:02: INFO: unit conversion completed
+27-07-2023 10:13:02: INFO: Computed columns added
+27-07-2023 10:13:02: INFO: Energy calculation completed
+27-07-2023 10:13:02: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2928B.xlsx
+27-07-2023 10:13:03: INFO: Processing task 30 of 61
+27-07-2023 10:13:03: INFO: Searching Excel file for : UL, 570-P-2935A
+27-07-2023 10:13:03: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2935 A.xlsx
+27-07-2023 10:13:05: INFO: Data cleaning completed
+27-07-2023 10:13:05: INFO: Irrelevant columns removed
+27-07-2023 10:13:05: INFO: unit conversion completed
+27-07-2023 10:13:05: INFO: Computed columns added
+27-07-2023 10:13:05: INFO: Energy calculation completed
+27-07-2023 10:13:06: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2935A.xlsx
+27-07-2023 10:13:06: INFO: Processing task 31 of 61
+27-07-2023 10:13:06: INFO: Searching Excel file for : UL, 570-P-2935B
+27-07-2023 10:13:06: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2935 B.xlsx
+27-07-2023 10:13:08: INFO: Data cleaning completed
+27-07-2023 10:13:08: INFO: Irrelevant columns removed
+27-07-2023 10:13:08: INFO: unit conversion completed
+27-07-2023 10:13:08: INFO: Computed columns added
+27-07-2023 10:13:08: INFO: Energy calculation completed
+27-07-2023 10:13:09: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2935B.xlsx
+27-07-2023 10:13:10: INFO: Processing task 32 of 61
+27-07-2023 10:13:10: INFO: Searching Excel file for : US, 3203-011
+27-07-2023 10:13:10: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-011 Data .xlsx
+27-07-2023 10:13:11: INFO: Data cleaning completed
+27-07-2023 10:13:11: INFO: Irrelevant columns removed
+27-07-2023 10:13:11: ERROR: Error occurred while processing: US, 3203-011
+27-07-2023 10:13:11: ERROR: Error occurred while removing non operating rows: ['discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:11: INFO: Processing task 33 of 61
+27-07-2023 10:13:11: INFO: Searching Excel file for : US, 3203-012
+27-07-2023 10:13:11: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-012 Data .xlsx
+27-07-2023 10:13:12: INFO: Data cleaning completed
+27-07-2023 10:13:12: INFO: Irrelevant columns removed
+27-07-2023 10:13:12: ERROR: Error occurred while processing: US, 3203-012
+27-07-2023 10:13:12: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_flowrate']
+27-07-2023 10:13:12: INFO: Processing task 34 of 61
+27-07-2023 10:13:12: INFO: Searching Excel file for : US, 3203-021
+27-07-2023 10:13:12: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-021 Data .xlsx
+27-07-2023 10:13:13: INFO: Data cleaning completed
+27-07-2023 10:13:13: INFO: Irrelevant columns removed
+27-07-2023 10:13:13: ERROR: Error occurred while processing: US, 3203-021
+27-07-2023 10:13:13: ERROR: Error occurred while removing non operating rows: ['discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:13: INFO: Processing task 35 of 61
+27-07-2023 10:13:13: INFO: Searching Excel file for : US, 3203-031
+27-07-2023 10:13:13: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-031 Data .xlsx
+27-07-2023 10:13:15: INFO: Data cleaning completed
+27-07-2023 10:13:15: INFO: Irrelevant columns removed
+27-07-2023 10:13:15: ERROR: Error occurred while processing: US, 3203-031
+27-07-2023 10:13:15: ERROR: Error occurred while removing non operating rows: ['discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:15: INFO: Processing task 36 of 61
+27-07-2023 10:13:15: INFO: Searching Excel file for : US, 3203-032
+27-07-2023 10:13:15: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-032 Data.xlsx
+27-07-2023 10:13:16: INFO: Data cleaning completed
+27-07-2023 10:13:16: INFO: Irrelevant columns removed
+27-07-2023 10:13:16: ERROR: Error occurred while processing: US, 3203-032
+27-07-2023 10:13:16: ERROR: Error occurred while removing non operating rows: ['discharge_flowrate']
+27-07-2023 10:13:16: INFO: Processing task 37 of 61
+27-07-2023 10:13:16: INFO: Searching Excel file for : US, 3203-041
+27-07-2023 10:13:16: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-041 Data.xlsx
+27-07-2023 10:13:17: INFO: Data cleaning completed
+27-07-2023 10:13:17: INFO: Irrelevant columns removed
+27-07-2023 10:13:17: ERROR: Error occurred while processing: US, 3203-041
+27-07-2023 10:13:17: ERROR: Error occurred while removing non operating rows: ['discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:17: INFO: Processing task 38 of 61
+27-07-2023 10:13:17: INFO: Searching Excel file for : US, 3203-042
+27-07-2023 10:13:17: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-042 Data.xlsx
+27-07-2023 10:13:19: INFO: Data cleaning completed
+27-07-2023 10:13:19: INFO: Irrelevant columns removed
+27-07-2023 10:13:19: ERROR: Error occurred while processing: US, 3203-042
+27-07-2023 10:13:19: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_flowrate']
+27-07-2023 10:13:19: INFO: Processing task 39 of 61
+27-07-2023 10:13:19: INFO: Searching Excel file for : US, 3203-051
+27-07-2023 10:13:19: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-051 Data .xlsx
+27-07-2023 10:13:20: INFO: Data cleaning completed
+27-07-2023 10:13:20: INFO: Irrelevant columns removed
+27-07-2023 10:13:20: ERROR: Error occurred while processing: US, 3203-051
+27-07-2023 10:13:20: ERROR: Error occurred while removing non operating rows: ['discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:20: INFO: Processing task 40 of 61
+27-07-2023 10:13:20: INFO: Searching Excel file for : US, 3203-052
+27-07-2023 10:13:20: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\3203-052 Data .xlsx
+27-07-2023 10:13:21: INFO: Data cleaning completed
+27-07-2023 10:13:21: INFO: Irrelevant columns removed
+27-07-2023 10:13:21: ERROR: Error occurred while processing: US, 3203-052
+27-07-2023 10:13:21: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:21: INFO: Processing task 41 of 61
+27-07-2023 10:13:21: INFO: Searching Excel file for : US, 531-P-2142A
+27-07-2023 10:13:21: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\531-P-2142 A Data .xlsx
+27-07-2023 10:13:22: INFO: Data cleaning completed
+27-07-2023 10:13:22: INFO: Irrelevant columns removed
+27-07-2023 10:13:22: ERROR: Error occurred while processing: US, 531-P-2142A
+27-07-2023 10:13:22: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:23: INFO: Processing task 42 of 61
+27-07-2023 10:13:23: INFO: Searching Excel file for : US, 531-P-2142B
+27-07-2023 10:13:23: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\531-P-2142 B Data.xlsx
+27-07-2023 10:13:24: INFO: Data cleaning completed
+27-07-2023 10:13:24: INFO: Irrelevant columns removed
+27-07-2023 10:13:24: ERROR: Error occurred while processing: US, 531-P-2142B
+27-07-2023 10:13:24: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:24: INFO: Processing task 43 of 61
+27-07-2023 10:13:24: INFO: Searching Excel file for : US, 531-P-2142C
+27-07-2023 10:13:24: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\US\531-P-2142 C Data .xlsx
+27-07-2023 10:13:25: INFO: Data cleaning completed
+27-07-2023 10:13:25: INFO: Irrelevant columns removed
+27-07-2023 10:13:25: ERROR: Error occurred while processing: US, 531-P-2142C
+27-07-2023 10:13:25: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:13:25: INFO: Processing task 44 of 61
+27-07-2023 10:13:25: INFO: Searching Excel file for : ZIRKU, 401-P-101A
+27-07-2023 10:13:25: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-101 A Data .xlsx
+27-07-2023 10:13:26: INFO: Data cleaning completed
+27-07-2023 10:13:26: INFO: Irrelevant columns removed
+27-07-2023 10:13:26: ERROR: Error occurred while processing: ZIRKU, 401-P-101A
+27-07-2023 10:13:26: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:27: INFO: Processing task 45 of 61
+27-07-2023 10:13:27: INFO: Searching Excel file for : ZIRKU, 401-P-101B
+27-07-2023 10:13:27: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-101 B Data .xlsx
+27-07-2023 10:13:28: INFO: Data cleaning completed
+27-07-2023 10:13:28: INFO: Irrelevant columns removed
+27-07-2023 10:13:28: ERROR: Error occurred while processing: ZIRKU, 401-P-101B
+27-07-2023 10:13:28: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:28: INFO: Processing task 46 of 61
+27-07-2023 10:13:28: INFO: Searching Excel file for : ZIRKU, 401-P-102A
+27-07-2023 10:13:28: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-102 A Data.xlsx
+27-07-2023 10:13:29: INFO: Data cleaning completed
+27-07-2023 10:13:29: INFO: Irrelevant columns removed
+27-07-2023 10:13:29: ERROR: Error occurred while processing: ZIRKU, 401-P-102A
+27-07-2023 10:13:29: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:29: INFO: Processing task 47 of 61
+27-07-2023 10:13:29: INFO: Searching Excel file for : ZIRKU, 401-P-102B
+27-07-2023 10:13:29: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-102 B Data.xlsx
+27-07-2023 10:13:31: INFO: Data cleaning completed
+27-07-2023 10:13:31: INFO: Irrelevant columns removed
+27-07-2023 10:13:31: ERROR: Error occurred while processing: ZIRKU, 401-P-102B
+27-07-2023 10:13:31: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:31: INFO: Processing task 48 of 61
+27-07-2023 10:13:31: INFO: Searching Excel file for : ZIRKU, 401-P-201A
+27-07-2023 10:13:31: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-201 A Data .xlsx
+27-07-2023 10:13:32: INFO: Data cleaning completed
+27-07-2023 10:13:32: INFO: Irrelevant columns removed
+27-07-2023 10:13:32: ERROR: Error occurred while processing: ZIRKU, 401-P-201A
+27-07-2023 10:13:32: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:32: INFO: Processing task 49 of 61
+27-07-2023 10:13:32: INFO: Searching Excel file for : ZIRKU, 401-P-201B
+27-07-2023 10:13:32: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-201 B Data .xlsx
+27-07-2023 10:13:34: INFO: Data cleaning completed
+27-07-2023 10:13:34: INFO: Irrelevant columns removed
+27-07-2023 10:13:34: ERROR: Error occurred while processing: ZIRKU, 401-P-201B
+27-07-2023 10:13:34: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:34: INFO: Processing task 50 of 61
+27-07-2023 10:13:34: INFO: Searching Excel file for : ZIRKU, 401-P-202A
+27-07-2023 10:13:34: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-202 A Data.xlsx
+27-07-2023 10:13:35: INFO: Data cleaning completed
+27-07-2023 10:13:35: INFO: Irrelevant columns removed
+27-07-2023 10:13:35: ERROR: Error occurred while processing: ZIRKU, 401-P-202A
+27-07-2023 10:13:35: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:35: INFO: Processing task 51 of 61
+27-07-2023 10:13:35: INFO: Searching Excel file for : ZIRKU, 401-P-202B
+27-07-2023 10:13:35: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-202 B Data.xlsx
+27-07-2023 10:13:36: INFO: Data cleaning completed
+27-07-2023 10:13:36: INFO: Irrelevant columns removed
+27-07-2023 10:13:36: ERROR: Error occurred while processing: ZIRKU, 401-P-202B
+27-07-2023 10:13:36: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:36: INFO: Processing task 52 of 61
+27-07-2023 10:13:36: INFO: Searching Excel file for : ZIRKU, 401-P-301A
+27-07-2023 10:13:36: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-301 A Data .xlsx
+27-07-2023 10:13:38: INFO: Data cleaning completed
+27-07-2023 10:13:38: INFO: Irrelevant columns removed
+27-07-2023 10:13:38: ERROR: Error occurred while processing: ZIRKU, 401-P-301A
+27-07-2023 10:13:38: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:38: INFO: Processing task 53 of 61
+27-07-2023 10:13:38: INFO: Searching Excel file for : ZIRKU, 401-P-301B
+27-07-2023 10:13:38: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-301 B Data .xlsx
+27-07-2023 10:13:39: INFO: Data cleaning completed
+27-07-2023 10:13:39: INFO: Irrelevant columns removed
+27-07-2023 10:13:39: ERROR: Error occurred while processing: ZIRKU, 401-P-301B
+27-07-2023 10:13:39: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:39: INFO: Processing task 54 of 61
+27-07-2023 10:13:39: INFO: Searching Excel file for : ZIRKU, 401-P-302A
+27-07-2023 10:13:39: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-302 A Data.xlsx
+27-07-2023 10:13:41: INFO: Data cleaning completed
+27-07-2023 10:13:41: INFO: Irrelevant columns removed
+27-07-2023 10:13:41: ERROR: Error occurred while processing: ZIRKU, 401-P-302A
+27-07-2023 10:13:41: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:41: INFO: Processing task 55 of 61
+27-07-2023 10:13:41: INFO: Searching Excel file for : ZIRKU, 401-P-302B
+27-07-2023 10:13:41: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-302 B Data.xlsx
+27-07-2023 10:13:42: INFO: Data cleaning completed
+27-07-2023 10:13:42: INFO: Irrelevant columns removed
+27-07-2023 10:13:42: ERROR: Error occurred while processing: ZIRKU, 401-P-302B
+27-07-2023 10:13:42: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:42: INFO: Processing task 56 of 61
+27-07-2023 10:13:42: INFO: Searching Excel file for : ZIRKU, 401-P-401A
+27-07-2023 10:13:42: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-401 A Data .xlsx
+27-07-2023 10:13:44: INFO: Data cleaning completed
+27-07-2023 10:13:44: INFO: Irrelevant columns removed
+27-07-2023 10:13:44: ERROR: Error occurred while processing: ZIRKU, 401-P-401A
+27-07-2023 10:13:44: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:44: INFO: Processing task 57 of 61
+27-07-2023 10:13:44: INFO: Searching Excel file for : ZIRKU, 401-P-401B
+27-07-2023 10:13:44: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-401 B Data .xlsx
+27-07-2023 10:13:45: INFO: Data cleaning completed
+27-07-2023 10:13:45: INFO: Irrelevant columns removed
+27-07-2023 10:13:45: ERROR: Error occurred while processing: ZIRKU, 401-P-401B
+27-07-2023 10:13:45: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:45: INFO: Processing task 58 of 61
+27-07-2023 10:13:45: INFO: Searching Excel file for : ZIRKU, 401-P-402A
+27-07-2023 10:13:45: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-402 A Data .xlsx
+27-07-2023 10:13:46: INFO: Data cleaning completed
+27-07-2023 10:13:46: INFO: Irrelevant columns removed
+27-07-2023 10:13:46: ERROR: Error occurred while processing: ZIRKU, 401-P-402A
+27-07-2023 10:13:46: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:46: INFO: Processing task 59 of 61
+27-07-2023 10:13:47: INFO: Searching Excel file for : ZIRKU, 401-P-402B
+27-07-2023 10:13:47: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-402 B Data .xlsx
+27-07-2023 10:13:48: INFO: Data cleaning completed
+27-07-2023 10:13:48: INFO: Irrelevant columns removed
+27-07-2023 10:13:48: ERROR: Error occurred while processing: ZIRKU, 401-P-402B
+27-07-2023 10:13:48: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:13:48: INFO: Processing task 60 of 61
+27-07-2023 10:13:48: INFO: Searching Excel file for : ZIRKU, 429-P-011A
+27-07-2023 10:13:48: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\429-P-011 A Data  .xlsx
+27-07-2023 10:13:49: ERROR: Error occurred while processing: ZIRKU, 429-P-011A
+27-07-2023 10:13:49: ERROR: Rated flowrate should be provided.
+27-07-2023 10:13:49: INFO: Processing task 61 of 61
+27-07-2023 10:13:49: INFO: Searching Excel file for : ZIRKU, 429-P-011B
+27-07-2023 10:13:49: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\429-P-011 B Data  .xlsx
+27-07-2023 10:13:51: ERROR: Error occurred while processing: ZIRKU, 429-P-011B
+27-07-2023 10:13:51: ERROR: Rated flowrate should be provided.
+27-07-2023 10:13:51: INFO: Please check the output folder for the result.
+27-07-2023 10:13:51: INFO: Total tasks processed: 15 out of 61
+27-07-2023 10:13:52: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+27-07-2023 10:29:40: INFO: 
+******************************Welcome to Rotalysis******************************
+
+27-07-2023 10:29:40: INFO: Total tasks to be processed: 53 
+
+27-07-2023 10:29:40: INFO: Processing task 1 of 53
+27-07-2023 10:29:40: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302A
+27-07-2023 10:29:40: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\08.7-HSR3-J-302A Data.xlsx
+27-07-2023 10:29:42: INFO: Data cleaning completed
+27-07-2023 10:29:42: INFO: Irrelevant columns removed
+27-07-2023 10:29:42: ERROR: Error occurred while processing: DAS, 08.7-HSR3-J-302A
+27-07-2023 10:29:42: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:29:42: INFO: Processing task 2 of 53
+27-07-2023 10:29:42: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302B
+27-07-2023 10:29:42: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\08.7-HSR3-J-302B Data .xlsx
+27-07-2023 10:29:43: INFO: Data cleaning completed
+27-07-2023 10:29:43: INFO: Irrelevant columns removed
+27-07-2023 10:29:43: ERROR: Error occurred while processing: DAS, 08.7-HSR3-J-302B
+27-07-2023 10:29:43: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:29:43: INFO: Processing task 3 of 53
+27-07-2023 10:29:43: INFO: Searching Excel file for : DAS, 15.0-P-J11
+27-07-2023 10:29:43: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\15.0-P- J11 Data .xlsx
+27-07-2023 10:29:44: INFO: Data cleaning completed
+27-07-2023 10:29:44: INFO: Irrelevant columns removed
+27-07-2023 10:29:44: ERROR: Error occurred while processing: DAS, 15.0-P-J11
+27-07-2023 10:29:44: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:29:45: INFO: Processing task 4 of 53
+27-07-2023 10:29:45: INFO: Searching Excel file for : DAS, 15.0-P-J12
+27-07-2023 10:29:45: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\15.0-P- J12 Data .xlsx
+27-07-2023 10:29:46: INFO: Data cleaning completed
+27-07-2023 10:29:46: INFO: Irrelevant columns removed
+27-07-2023 10:29:46: ERROR: Error occurred while processing: DAS, 15.0-P-J12
+27-07-2023 10:29:46: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:29:46: INFO: Processing task 5 of 53
+27-07-2023 10:29:46: INFO: Searching Excel file for : DAS, 15.22-P-J5
+27-07-2023 10:29:46: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\15.22-P- J5 Data.xlsx
+27-07-2023 10:29:46: ERROR: Error occurred while processing: DAS, 15.22-P-J5
+27-07-2023 10:29:46: ERROR: header must be integer or list of integers
+27-07-2023 10:29:46: INFO: Processing task 6 of 53
+27-07-2023 10:29:46: INFO: Searching Excel file for : DAS, CDD-J180
+27-07-2023 10:29:46: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\CDD-J180 Data .xlsx
+27-07-2023 10:29:47: INFO: Data cleaning completed
+27-07-2023 10:29:47: INFO: Irrelevant columns removed
+27-07-2023 10:29:47: ERROR: Error occurred while processing: DAS, CDD-J180
+27-07-2023 10:29:47: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:29:47: INFO: Processing task 7 of 53
+27-07-2023 10:29:47: INFO: Searching Excel file for : DAS, CDD-J181
+27-07-2023 10:29:47: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\CDD-J181 Data .xlsx
+27-07-2023 10:29:49: INFO: Data cleaning completed
+27-07-2023 10:29:49: INFO: Irrelevant columns removed
+27-07-2023 10:29:49: ERROR: Error occurred while processing: DAS, CDD-J181
+27-07-2023 10:29:49: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:29:49: INFO: Processing task 8 of 53
+27-07-2023 10:29:49: INFO: Searching Excel file for : DAS, CDD-J182
+27-07-2023 10:29:49: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\CDD-J182 Data.xlsx
+27-07-2023 10:29:50: INFO: Data cleaning completed
+27-07-2023 10:29:50: INFO: Irrelevant columns removed
+27-07-2023 10:29:50: ERROR: Error occurred while processing: DAS, CDD-J182
+27-07-2023 10:29:50: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:29:50: INFO: Processing task 9 of 53
+27-07-2023 10:29:50: INFO: Searching Excel file for : DAS, CDD-J183
+27-07-2023 10:29:50: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\CDD-J183 Data .xlsx
+27-07-2023 10:29:51: INFO: Data cleaning completed
+27-07-2023 10:29:51: INFO: Irrelevant columns removed
+27-07-2023 10:29:51: ERROR: Error occurred while processing: DAS, CDD-J183
+27-07-2023 10:29:51: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:29:52: INFO: Processing task 10 of 53
+27-07-2023 10:29:52: INFO: Searching Excel file for : UAD, CPP-P-004A
+27-07-2023 10:29:52: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\UAD\CPP-P-004 A Data .xlsx
+27-07-2023 10:29:53: INFO: Data cleaning completed
+27-07-2023 10:29:53: INFO: Irrelevant columns removed
+27-07-2023 10:29:53: ERROR: Error occurred while processing: UAD, CPP-P-004A
+27-07-2023 10:29:53: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:29:54: INFO: Processing task 11 of 53
+27-07-2023 10:29:54: INFO: Searching Excel file for : UAD, CPP-P-004B
+27-07-2023 10:29:54: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\UAD\CPP-P-004 B Data .xlsx
+27-07-2023 10:29:55: INFO: Data cleaning completed
+27-07-2023 10:29:55: INFO: Irrelevant columns removed
+27-07-2023 10:29:55: ERROR: Error occurred while processing: UAD, CPP-P-004B
+27-07-2023 10:29:55: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:29:55: INFO: Processing task 12 of 53
+27-07-2023 10:29:55: INFO: Searching Excel file for : UAD, CPP-P-004C
+27-07-2023 10:29:56: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\UAD\CPP-P-004 C Data .xlsx
+27-07-2023 10:29:58: INFO: Data cleaning completed
+27-07-2023 10:29:58: INFO: Irrelevant columns removed
+27-07-2023 10:29:58: ERROR: Error occurred while processing: UAD, CPP-P-004C
+27-07-2023 10:29:58: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:29:58: INFO: Processing task 13 of 53
+27-07-2023 10:29:58: INFO: Searching Excel file for : UAD, CPP-P-026A
+27-07-2023 10:29:58: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\UAD\CPP-P-026 A Data.xlsx
+27-07-2023 10:30:00: INFO: Data cleaning completed
+27-07-2023 10:30:00: INFO: Irrelevant columns removed
+27-07-2023 10:30:00: ERROR: Error occurred while processing: UAD, CPP-P-026A
+27-07-2023 10:30:00: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:30:00: INFO: Processing task 14 of 53
+27-07-2023 10:30:00: INFO: Searching Excel file for : UAD, CPP-P-026B
+27-07-2023 10:30:00: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\UAD\CPP-P-026 B Data .xlsx
+27-07-2023 10:30:02: INFO: Data cleaning completed
+27-07-2023 10:30:02: INFO: Irrelevant columns removed
+27-07-2023 10:30:02: ERROR: Error occurred while processing: UAD, CPP-P-026B
+27-07-2023 10:30:02: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:30:02: INFO: Processing task 15 of 53
+27-07-2023 10:30:02: INFO: Searching Excel file for : US, 3203-011
+27-07-2023 10:30:02: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-011 Data .xlsx
+27-07-2023 10:30:22: INFO: Data cleaning completed
+27-07-2023 10:30:22: INFO: Irrelevant columns removed
+27-07-2023 10:30:22: ERROR: Error occurred while processing: US, 3203-011
+27-07-2023 10:30:22: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:30:22: INFO: Processing task 16 of 53
+27-07-2023 10:30:22: INFO: Searching Excel file for : US, 3203-012
+27-07-2023 10:30:22: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-012 Data .xlsx
+27-07-2023 10:30:42: INFO: Data cleaning completed
+27-07-2023 10:30:42: INFO: Irrelevant columns removed
+27-07-2023 10:30:42: ERROR: Error occurred while processing: US, 3203-012
+27-07-2023 10:30:42: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:30:42: INFO: Processing task 17 of 53
+27-07-2023 10:30:42: INFO: Searching Excel file for : US, 3203-021
+27-07-2023 10:30:42: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-021 Data .xlsx
+27-07-2023 10:31:03: INFO: Data cleaning completed
+27-07-2023 10:31:03: INFO: Irrelevant columns removed
+27-07-2023 10:31:03: ERROR: Error occurred while processing: US, 3203-021
+27-07-2023 10:31:03: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:31:03: INFO: Processing task 18 of 53
+27-07-2023 10:31:03: INFO: Searching Excel file for : US, 3203-031
+27-07-2023 10:31:03: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-031 Data .xlsx
+27-07-2023 10:31:23: INFO: Data cleaning completed
+27-07-2023 10:31:23: INFO: Irrelevant columns removed
+27-07-2023 10:31:23: ERROR: Error occurred while processing: US, 3203-031
+27-07-2023 10:31:23: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:31:23: INFO: Processing task 19 of 53
+27-07-2023 10:31:23: INFO: Searching Excel file for : US, 3203-032
+27-07-2023 10:31:23: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-032 Data.xlsx
+27-07-2023 10:31:24: INFO: Data cleaning completed
+27-07-2023 10:31:24: INFO: Irrelevant columns removed
+27-07-2023 10:31:24: ERROR: Error occurred while processing: US, 3203-032
+27-07-2023 10:31:24: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:31:25: INFO: Processing task 20 of 53
+27-07-2023 10:31:25: INFO: Searching Excel file for : US, 3203-041
+27-07-2023 10:31:25: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-041 Data.xlsx
+27-07-2023 10:31:26: INFO: Data cleaning completed
+27-07-2023 10:31:26: INFO: Irrelevant columns removed
+27-07-2023 10:31:26: ERROR: Error occurred while processing: US, 3203-041
+27-07-2023 10:31:26: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:31:26: INFO: Processing task 21 of 53
+27-07-2023 10:31:26: INFO: Searching Excel file for : US, 3203-042
+27-07-2023 10:31:26: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-042 Data.xlsx
+27-07-2023 10:31:27: INFO: Data cleaning completed
+27-07-2023 10:31:27: INFO: Irrelevant columns removed
+27-07-2023 10:31:27: ERROR: Error occurred while processing: US, 3203-042
+27-07-2023 10:31:27: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:31:27: INFO: Processing task 22 of 53
+27-07-2023 10:31:27: INFO: Searching Excel file for : US, 3203-051
+27-07-2023 10:31:27: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-051 Data .xlsx
+27-07-2023 10:31:29: INFO: Data cleaning completed
+27-07-2023 10:31:29: INFO: Irrelevant columns removed
+27-07-2023 10:31:29: ERROR: Error occurred while processing: US, 3203-051
+27-07-2023 10:31:29: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:31:29: INFO: Processing task 23 of 53
+27-07-2023 10:31:29: INFO: Searching Excel file for : US, 3203-052
+27-07-2023 10:31:29: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\3203-052 Data .xlsx
+27-07-2023 10:31:50: INFO: Data cleaning completed
+27-07-2023 10:31:50: INFO: Irrelevant columns removed
+27-07-2023 10:31:50: ERROR: Error occurred while processing: US, 3203-052
+27-07-2023 10:31:50: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:31:50: INFO: Processing task 24 of 53
+27-07-2023 10:31:50: INFO: Searching Excel file for : US, 531-P-2142A
+27-07-2023 10:31:50: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\531-P-2142 A Data .xlsx
+27-07-2023 10:31:52: INFO: Data cleaning completed
+27-07-2023 10:31:52: INFO: Irrelevant columns removed
+27-07-2023 10:31:52: ERROR: Error occurred while processing: US, 531-P-2142A
+27-07-2023 10:31:52: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:31:52: INFO: Processing task 25 of 53
+27-07-2023 10:31:52: INFO: Searching Excel file for : US, 531-P-2142B
+27-07-2023 10:31:52: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\531-P-2142 B Data.xlsx
+27-07-2023 10:31:53: INFO: Data cleaning completed
+27-07-2023 10:31:53: INFO: Irrelevant columns removed
+27-07-2023 10:31:53: ERROR: Error occurred while processing: US, 531-P-2142B
+27-07-2023 10:31:53: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:31:53: INFO: Processing task 26 of 53
+27-07-2023 10:31:53: INFO: Searching Excel file for : US, 531-P-2142C
+27-07-2023 10:31:53: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\US\531-P-2142 C Data .xlsx
+27-07-2023 10:31:54: INFO: Data cleaning completed
+27-07-2023 10:31:54: INFO: Irrelevant columns removed
+27-07-2023 10:31:54: ERROR: Error occurred while processing: US, 531-P-2142C
+27-07-2023 10:31:54: ERROR: Error occurred while removing non operating rows: ['suction_pressure', 'discharge_pressure', 'discharge_flowrate']
+27-07-2023 10:31:54: INFO: Processing task 27 of 53
+27-07-2023 10:31:54: INFO: Searching Excel file for : ZIRKU, 401-P-101A
+27-07-2023 10:31:54: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-101 A Data .xlsx
+27-07-2023 10:32:12: INFO: Data cleaning completed
+27-07-2023 10:32:12: INFO: Irrelevant columns removed
+27-07-2023 10:32:12: ERROR: Error occurred while processing: ZIRKU, 401-P-101A
+27-07-2023 10:32:12: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:32:12: INFO: Processing task 28 of 53
+27-07-2023 10:32:12: INFO: Searching Excel file for : ZIRKU, 401-P-101B
+27-07-2023 10:32:12: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-101 B Data .xlsx
+27-07-2023 10:32:29: INFO: Data cleaning completed
+27-07-2023 10:32:29: INFO: Irrelevant columns removed
+27-07-2023 10:32:29: ERROR: Error occurred while processing: ZIRKU, 401-P-101B
+27-07-2023 10:32:29: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:32:29: INFO: Processing task 29 of 53
+27-07-2023 10:32:29: INFO: Searching Excel file for : ZIRKU, 401-P-201A
+27-07-2023 10:32:29: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-201 A Data .xlsx
+27-07-2023 10:32:49: INFO: Data cleaning completed
+27-07-2023 10:32:49: INFO: Irrelevant columns removed
+27-07-2023 10:32:49: ERROR: Error occurred while processing: ZIRKU, 401-P-201A
+27-07-2023 10:32:49: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:32:49: INFO: Processing task 30 of 53
+27-07-2023 10:32:49: INFO: Searching Excel file for : ZIRKU, 401-P-201B
+27-07-2023 10:32:49: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-201 B Data .xlsx
+27-07-2023 10:33:06: INFO: Data cleaning completed
+27-07-2023 10:33:06: INFO: Irrelevant columns removed
+27-07-2023 10:33:06: ERROR: Error occurred while processing: ZIRKU, 401-P-201B
+27-07-2023 10:33:06: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:33:06: INFO: Processing task 31 of 53
+27-07-2023 10:33:06: INFO: Searching Excel file for : ZIRKU, 401-P-301A
+27-07-2023 10:33:06: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-301 A Data .xlsx
+27-07-2023 10:33:24: INFO: Data cleaning completed
+27-07-2023 10:33:24: INFO: Irrelevant columns removed
+27-07-2023 10:33:24: ERROR: Error occurred while processing: ZIRKU, 401-P-301A
+27-07-2023 10:33:24: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:33:24: INFO: Processing task 32 of 53
+27-07-2023 10:33:24: INFO: Searching Excel file for : ZIRKU, 401-P-301B
+27-07-2023 10:33:24: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-301 B Data .xlsx
+27-07-2023 10:33:42: INFO: Data cleaning completed
+27-07-2023 10:33:42: INFO: Irrelevant columns removed
+27-07-2023 10:33:42: ERROR: Error occurred while processing: ZIRKU, 401-P-301B
+27-07-2023 10:33:42: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:33:42: INFO: Processing task 33 of 53
+27-07-2023 10:33:42: INFO: Searching Excel file for : ZIRKU, 401-P-401A
+27-07-2023 10:33:42: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-401 A Data .xlsx
+27-07-2023 10:34:00: INFO: Data cleaning completed
+27-07-2023 10:34:00: INFO: Irrelevant columns removed
+27-07-2023 10:34:00: ERROR: Error occurred while processing: ZIRKU, 401-P-401A
+27-07-2023 10:34:00: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:34:00: INFO: Processing task 34 of 53
+27-07-2023 10:34:00: INFO: Searching Excel file for : ZIRKU, 401-P-401B
+27-07-2023 10:34:00: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\401-P-401 B Data .xlsx
+27-07-2023 10:34:18: INFO: Data cleaning completed
+27-07-2023 10:34:18: INFO: Irrelevant columns removed
+27-07-2023 10:34:18: ERROR: Error occurred while processing: ZIRKU, 401-P-401B
+27-07-2023 10:34:18: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:34:18: INFO: Processing task 35 of 53
+27-07-2023 10:34:18: INFO: Searching Excel file for : ZIRKU, 422-P-001A
+27-07-2023 10:34:18: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\422-P-001 A Data  .xlsx
+27-07-2023 10:34:35: INFO: Data cleaning completed
+27-07-2023 10:34:35: INFO: Irrelevant columns removed
+27-07-2023 10:34:36: ERROR: Error occurred while processing: ZIRKU, 422-P-001A
+27-07-2023 10:34:36: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:34:36: INFO: Processing task 36 of 53
+27-07-2023 10:34:36: INFO: Searching Excel file for : ZIRKU, 422-P-001B
+27-07-2023 10:34:36: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\422-P-001 B Data .xlsx
+27-07-2023 10:34:54: INFO: Data cleaning completed
+27-07-2023 10:34:54: INFO: Irrelevant columns removed
+27-07-2023 10:34:54: ERROR: Error occurred while processing: ZIRKU, 422-P-001B
+27-07-2023 10:34:54: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:34:54: INFO: Processing task 37 of 53
+27-07-2023 10:34:54: INFO: Searching Excel file for : ZIRKU, 422-P-001C
+27-07-2023 10:34:54: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\422-P-001C Data .xlsx
+27-07-2023 10:35:13: INFO: Data cleaning completed
+27-07-2023 10:35:14: INFO: Irrelevant columns removed
+27-07-2023 10:35:14: ERROR: Error occurred while processing: ZIRKU, 422-P-001C
+27-07-2023 10:35:14: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:35:14: INFO: Processing task 38 of 53
+27-07-2023 10:35:14: INFO: Searching Excel file for : ZIRKU, 442-P-007 A
+27-07-2023 10:35:14: INFO: Found excel path for processing:None
+27-07-2023 10:35:14: ERROR: Error occurred while processing: ZIRKU, 442-P-007 A
+27-07-2023 10:35:14: ERROR: data_path is not defined.
+27-07-2023 10:35:14: INFO: Processing task 39 of 53
+27-07-2023 10:35:14: INFO: Searching Excel file for : ZIRKU, 442-P-007 B
+27-07-2023 10:35:14: INFO: Found excel path for processing:None
+27-07-2023 10:35:14: ERROR: Error occurred while processing: ZIRKU, 442-P-007 B
+27-07-2023 10:35:14: ERROR: data_path is not defined.
+27-07-2023 10:35:14: INFO: Processing task 40 of 53
+27-07-2023 10:35:14: INFO: Searching Excel file for : ZIRKU, 427-P-101
+27-07-2023 10:35:14: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\427-P-101 Data .xlsx
+27-07-2023 10:35:31: INFO: Data cleaning completed
+27-07-2023 10:35:31: INFO: Irrelevant columns removed
+27-07-2023 10:35:32: ERROR: Error occurred while processing: ZIRKU, 427-P-101
+27-07-2023 10:35:32: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:35:32: INFO: Processing task 41 of 53
+27-07-2023 10:35:32: INFO: Searching Excel file for : ZIRKU, 427-P-201
+27-07-2023 10:35:32: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\427-P-201 Data .xlsx
+27-07-2023 10:35:49: INFO: Data cleaning completed
+27-07-2023 10:35:49: INFO: Irrelevant columns removed
+27-07-2023 10:35:50: ERROR: Error occurred while processing: ZIRKU, 427-P-201
+27-07-2023 10:35:50: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:35:50: INFO: Processing task 42 of 53
+27-07-2023 10:35:50: INFO: Searching Excel file for : ZIRKU, 427-P-301
+27-07-2023 10:35:50: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\ZIRKU\427-P-301 Data .xlsx
+27-07-2023 10:36:08: INFO: Data cleaning completed
+27-07-2023 10:36:08: INFO: Irrelevant columns removed
+27-07-2023 10:36:08: ERROR: Error occurred while processing: ZIRKU, 427-P-301
+27-07-2023 10:36:08: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:36:09: INFO: Processing task 43 of 53
+27-07-2023 10:36:09: INFO: Searching Excel file for : SARB, 614-P-0103 A
+27-07-2023 10:36:09: INFO: Found excel path for processing:None
+27-07-2023 10:36:09: ERROR: Error occurred while processing: SARB, 614-P-0103 A
+27-07-2023 10:36:09: ERROR: data_path is not defined.
+27-07-2023 10:36:09: INFO: Processing task 44 of 53
+27-07-2023 10:36:09: INFO: Searching Excel file for : SARB, 614-P-0103 B
+27-07-2023 10:36:09: INFO: Found excel path for processing:None
+27-07-2023 10:36:09: ERROR: Error occurred while processing: SARB, 614-P-0103 B
+27-07-2023 10:36:09: ERROR: data_path is not defined.
+27-07-2023 10:36:09: INFO: Processing task 45 of 53
+27-07-2023 10:36:09: INFO: Searching Excel file for : SARB, 614-P-0103 C
+27-07-2023 10:36:09: INFO: Found excel path for processing:None
+27-07-2023 10:36:09: ERROR: Error occurred while processing: SARB, 614-P-0103 C
+27-07-2023 10:36:09: ERROR: data_path is not defined.
+27-07-2023 10:36:09: INFO: Processing task 46 of 53
+27-07-2023 10:36:09: INFO: Searching Excel file for : SARB, 615-P-3101B
+27-07-2023 10:36:09: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\SARB\615-P-3101 B  .xlsx
+27-07-2023 10:36:10: INFO: Data cleaning completed
+27-07-2023 10:36:10: INFO: Irrelevant columns removed
+27-07-2023 10:36:10: ERROR: Error occurred while processing: SARB, 615-P-3101B
+27-07-2023 10:36:10: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:36:10: INFO: Processing task 47 of 53
+27-07-2023 10:36:10: INFO: Searching Excel file for : SARB, 615-P-3101C
+27-07-2023 10:36:10: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\SARB\615-P-3101 C .xlsx
+27-07-2023 10:36:11: INFO: Data cleaning completed
+27-07-2023 10:36:11: INFO: Irrelevant columns removed
+27-07-2023 10:36:11: ERROR: Error occurred while processing: SARB, 615-P-3101C
+27-07-2023 10:36:11: ERROR: Error occurred while removing non operating rows: 'downstream_pressure'
+27-07-2023 10:36:11: INFO: Processing task 48 of 53
+27-07-2023 10:36:11: INFO: Searching Excel file for : SARB, 613-P-0101A
+27-07-2023 10:36:11: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\SARB\613-P-0101 A .xlsx
+27-07-2023 10:36:12: INFO: Data cleaning completed
+27-07-2023 10:36:12: INFO: Irrelevant columns removed
+27-07-2023 10:36:12: ERROR: Error occurred while processing: SARB, 613-P-0101A
+27-07-2023 10:36:12: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:36:12: INFO: Processing task 49 of 53
+27-07-2023 10:36:12: INFO: Searching Excel file for : SARB, 613-P-0101B
+27-07-2023 10:36:12: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\SARB\613-P-0101 B .xlsx
+27-07-2023 10:36:13: INFO: Data cleaning completed
+27-07-2023 10:36:13: INFO: Irrelevant columns removed
+27-07-2023 10:36:13: ERROR: Error occurred while processing: SARB, 613-P-0101B
+27-07-2023 10:36:13: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:36:14: INFO: Processing task 50 of 53
+27-07-2023 10:36:14: INFO: Searching Excel file for : SARB, 613-P-0101C
+27-07-2023 10:36:14: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\SARB\613-P-0101 C .xlsx
+27-07-2023 10:36:15: INFO: Data cleaning completed
+27-07-2023 10:36:15: INFO: Irrelevant columns removed
+27-07-2023 10:36:15: ERROR: Error occurred while processing: SARB, 613-P-0101C
+27-07-2023 10:36:15: ERROR: Error occurred while removing non operating rows: ['suction_pressure']
+27-07-2023 10:36:15: INFO: Processing task 51 of 53
+27-07-2023 10:36:15: INFO: Searching Excel file for : SARB, 625-P-0101 A
+27-07-2023 10:36:15: INFO: Found excel path for processing:None
+27-07-2023 10:36:15: ERROR: Error occurred while processing: SARB, 625-P-0101 A
+27-07-2023 10:36:15: ERROR: data_path is not defined.
+27-07-2023 10:36:15: INFO: Processing task 52 of 53
+27-07-2023 10:36:15: INFO: Searching Excel file for : SARB, 625-P-0101 B
+27-07-2023 10:36:15: INFO: Found excel path for processing:None
+27-07-2023 10:36:15: ERROR: Error occurred while processing: SARB, 625-P-0101 B
+27-07-2023 10:36:15: ERROR: data_path is not defined.
+27-07-2023 10:36:15: INFO: Processing task 53 of 53
+27-07-2023 10:36:15: INFO: Searching Excel file for : SARB, 625-P-0101 C
+27-07-2023 10:36:15: INFO: Found excel path for processing:None
+27-07-2023 10:36:15: ERROR: Error occurred while processing: SARB, 625-P-0101 C
+27-07-2023 10:36:15: ERROR: data_path is not defined.
+27-07-2023 10:36:15: INFO: Please check the output folder for the result.
+27-07-2023 10:36:15: INFO: Total tasks processed: 0 out of 53
+27-07-2023 10:36:17: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+27-07-2023 10:38:57: INFO: 
+******************************Welcome to Rotalysis******************************
+
+27-07-2023 10:38:57: INFO: Total tasks to be processed: 2 
+
+27-07-2023 10:38:57: INFO: Processing task 1 of 2
+27-07-2023 10:38:57: INFO: Searching Excel file for : DAS, 90-P-2011
+27-07-2023 10:38:57: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\90-P-2011 Data.xlsx
+27-07-2023 10:38:59: INFO: Data cleaning completed
+27-07-2023 10:38:59: INFO: Irrelevant columns removed
+27-07-2023 10:38:59: INFO: unit conversion completed
+27-07-2023 10:38:59: INFO: Computed columns added
+27-07-2023 10:38:59: INFO: Energy calculation completed
+27-07-2023 10:38:59: INFO: Excel file created at \\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Output\DAS\90-P-2011.xlsx
+27-07-2023 10:39:00: INFO: Processing task 2 of 2
+27-07-2023 10:39:00: INFO: Searching Excel file for : DAS, 90-P-2012
+27-07-2023 10:39:00: INFO: Found excel path for processing:\\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Input\DAS\90-P-2012 Data.xlsx
+27-07-2023 10:39:01: INFO: Data cleaning completed
+27-07-2023 10:39:01: INFO: Irrelevant columns removed
+27-07-2023 10:39:01: INFO: unit conversion completed
+27-07-2023 10:39:01: INFO: Computed columns added
+27-07-2023 10:39:01: INFO: Energy calculation completed
+27-07-2023 10:39:01: INFO: Excel file created at \\10.161.144.78\t$\Project\aeT00989.00 Decarbonization Feasibility Study\09. Documents, Drawings\9.31 Process\09.31.01 Current documents\Opp 6 Report\Pump calculation\Output\DAS\90-P-2012.xlsx
+27-07-2023 10:39:02: INFO: Please check the output folder for the result.
+27-07-2023 10:39:02: INFO: Total tasks processed: 2 out of 2
+27-07-2023 10:39:03: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+27-07-2023 10:43:18: INFO: 
+******************************Welcome to Rotalysis******************************
+
+27-07-2023 10:43:18: INFO: Total tasks to be processed: 9 
+
+27-07-2023 10:43:18: INFO: Processing task 1 of 9
+27-07-2023 10:43:18: INFO: Searching Excel file for : DAS, 90-P-2013
+27-07-2023 10:43:18: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\90-P-2013 Data.xlsx
+27-07-2023 10:43:20: INFO: Data cleaning completed
+27-07-2023 10:43:20: INFO: Irrelevant columns removed
+27-07-2023 10:43:20: INFO: unit conversion completed
+27-07-2023 10:43:20: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:43:20: INFO: Computed columns added
+27-07-2023 10:43:20: INFO: Energy calculation completed
+27-07-2023 10:43:20: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\DAS\90-P-2013.xlsx
+27-07-2023 10:43:21: INFO: Processing task 2 of 9
+27-07-2023 10:43:21: INFO: Searching Excel file for : NASR, 713-P-1101A
+27-07-2023 10:43:21: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 A Data.xlsx
+27-07-2023 10:43:23: INFO: Data cleaning completed
+27-07-2023 10:43:23: INFO: Irrelevant columns removed
+27-07-2023 10:43:23: INFO: unit conversion completed
+27-07-2023 10:43:23: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:43:23: INFO: Computed columns added
+27-07-2023 10:43:23: INFO: Energy calculation completed
+27-07-2023 10:43:23: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101A.xlsx
+27-07-2023 10:43:24: INFO: Processing task 3 of 9
+27-07-2023 10:43:24: INFO: Searching Excel file for : NASR, 713-P-1101B
+27-07-2023 10:43:24: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 B Data .xlsx
+27-07-2023 10:43:26: INFO: Data cleaning completed
+27-07-2023 10:43:26: INFO: Irrelevant columns removed
+27-07-2023 10:43:26: INFO: unit conversion completed
+27-07-2023 10:43:26: INFO: Computed columns added
+27-07-2023 10:43:26: INFO: Energy calculation completed
+27-07-2023 10:43:26: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101B.xlsx
+27-07-2023 10:43:27: INFO: Processing task 4 of 9
+27-07-2023 10:43:27: INFO: Searching Excel file for : NASR, 713-P-1200A
+27-07-2023 10:43:27: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 A Data.xlsx
+27-07-2023 10:43:29: INFO: Data cleaning completed
+27-07-2023 10:43:29: INFO: Irrelevant columns removed
+27-07-2023 10:43:29: INFO: unit conversion completed
+27-07-2023 10:43:29: INFO: Computed columns added
+27-07-2023 10:43:29: INFO: Energy calculation completed
+27-07-2023 10:43:29: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200A.xlsx
+27-07-2023 10:43:30: INFO: Processing task 5 of 9
+27-07-2023 10:43:30: INFO: Searching Excel file for : NASR, 713-P-1200B
+27-07-2023 10:43:30: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 B Data .xlsx
+27-07-2023 10:43:32: INFO: Data cleaning completed
+27-07-2023 10:43:32: INFO: Irrelevant columns removed
+27-07-2023 10:43:32: INFO: unit conversion completed
+27-07-2023 10:43:32: INFO: Computed columns added
+27-07-2023 10:43:32: INFO: Energy calculation completed
+27-07-2023 10:43:32: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200B.xlsx
+27-07-2023 10:43:33: INFO: Processing task 6 of 9
+27-07-2023 10:43:33: INFO: Searching Excel file for : NASR, 713-P-1200C
+27-07-2023 10:43:33: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 C Data .xlsx
+27-07-2023 10:43:35: INFO: Data cleaning completed
+27-07-2023 10:43:35: INFO: Irrelevant columns removed
+27-07-2023 10:43:35: INFO: unit conversion completed
+27-07-2023 10:43:35: INFO: Computed columns added
+27-07-2023 10:43:35: INFO: Energy calculation completed
+27-07-2023 10:43:36: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200C.xlsx
+27-07-2023 10:43:36: INFO: Processing task 7 of 9
+27-07-2023 10:43:36: INFO: Searching Excel file for : UAD, CPP-P-005A
+27-07-2023 10:43:36: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 A Data .xlsx
+27-07-2023 10:43:38: INFO: Data cleaning completed
+27-07-2023 10:43:38: INFO: Irrelevant columns removed
+27-07-2023 10:43:38: INFO: unit conversion completed
+27-07-2023 10:43:38: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:43:38: INFO: Computed columns added
+27-07-2023 10:43:38: INFO: Energy calculation completed
+27-07-2023 10:43:39: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005A.xlsx
+27-07-2023 10:43:39: INFO: Processing task 8 of 9
+27-07-2023 10:43:39: INFO: Searching Excel file for : UAD, CPP-P-005B
+27-07-2023 10:43:39: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 B Data .xlsx
+27-07-2023 10:43:41: INFO: Data cleaning completed
+27-07-2023 10:43:41: INFO: Irrelevant columns removed
+27-07-2023 10:43:41: INFO: unit conversion completed
+27-07-2023 10:43:41: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:43:41: INFO: Computed columns added
+27-07-2023 10:43:41: INFO: Energy calculation completed
+27-07-2023 10:43:42: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005B.xlsx
+27-07-2023 10:43:42: INFO: Processing task 9 of 9
+27-07-2023 10:43:42: INFO: Searching Excel file for : UAD, CPP-P-005C
+27-07-2023 10:43:42: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 C Data.xlsx
+27-07-2023 10:43:44: INFO: Data cleaning completed
+27-07-2023 10:43:44: INFO: Irrelevant columns removed
+27-07-2023 10:43:44: INFO: unit conversion completed
+27-07-2023 10:43:44: WARNING: BEP_flowrate should be empty or numeric. Please don't string values next time. 
+Rated flowrate is used as BEP_flowrate.
+27-07-2023 10:43:44: INFO: Computed columns added
+27-07-2023 10:43:44: INFO: Energy calculation completed
+27-07-2023 10:43:45: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005C.xlsx
+27-07-2023 10:43:45: INFO: Please check the output folder for the result.
+27-07-2023 10:43:45: INFO: Total tasks processed: 9 out of 9
+27-07-2023 10:43:46: INFO: 
+******************************Thanks for using Rotalysis******************************
+
