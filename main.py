@@ -1,11 +1,10 @@
 import sys
 import time
 
-from PyQt6 import QtCore, QtWidgets, QtGui
+from PyQt6 import QtCore, QtGui, QtWidgets
 
 from gui import MainWindow, SplashScreen
 from rotalysis import Core
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
@@ -35,8 +34,9 @@ if __name__ == "__main__":
     def set_path(field):
         paths[field] = get_path(field)
 
-
     def run():
+        window.pbRun.setEnabled(False)
+        window.pbRun.setText("Running...")
         for key in widget.keys():
             set_path(key)
 
@@ -44,11 +44,11 @@ if __name__ == "__main__":
         core.process_task()
 
         window.ProgressBar.setValue(100)
+        window.pbRun.setText("Run")
+        window.pbRun.setEnabled(True)
 
     window.show()
 
     window.pbRun.clicked.connect(run)
-
-    
 
     sys.exit(app.exec())

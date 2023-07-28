@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import xlwings as xw
 
@@ -44,10 +45,7 @@ class UtilityFunction:
             excel_files = [
                 file
                 for file in files
-                if (
-                    (file.endswith(".xlsx") or file.endswith(".xls"))
-                    and tag in file.replace(" ", "")
-                )
+                if ((file.endswith(".xlsx") or file.endswith(".xls")) and tag in file.replace(" ", ""))
             ]
 
             if len(excel_files) > 0:
@@ -64,9 +62,7 @@ class UtilityFunction:
     @staticmethod
     def load_equipment_data(excel_path):
         try:
-            process_data = pd.read_excel(excel_path, sheet_name="process data", index_col=0).fillna(
-                ""
-            )
+            process_data = pd.read_excel(excel_path, sheet_name="process data", index_col=0).fillna("")
             process_data = process_data.to_dict()
             process_data = process_data["value"]
             header_row = process_data["header_row"]
@@ -76,15 +72,11 @@ class UtilityFunction:
             raise Exception("Error in reading process data.")
 
         try:
-            dfoperation = pd.read_excel(
-                excel_path, sheet_name="operational data", header=ignore_rows
-            )
+            dfoperation = pd.read_excel(excel_path, sheet_name="operational data", header=ignore_rows)
             dfoperation = UtilityFunction.Clean_dataframe(dfoperation)
 
         except Exception as e:
-            raise Exception(
-                e, "Error in reading operational data. Check whether header row is correct. "
-            )
+            raise Exception(e, "Error in reading operational data. Check whether header row is correct. ")
 
         try:
             if equipment_type == "Pump":
@@ -117,3 +109,7 @@ class UtilityFunction:
                     wb.save(path)
         except Exception as e:
             raise Exception(e, "Error in writing to excel.")
+
+    @staticmethod
+    def is_empty_value(value):
+        return value == "" or value is None or (isinstance(value, (float, int)) and np.isnan(value))

@@ -1,9 +1,10 @@
 import pandas as pd
 
+
 class ValveFunction:
     df_rated_cv = pd.DataFrame(
         {
-            "valve_size": [0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12],
+            "valve_size": [0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24],
             "equal": [
                 7.35,
                 11.67,
@@ -17,6 +18,11 @@ class ValveFunction:
                 735.2,
                 1000,
                 1521,
+                2000,
+                2560,
+                4350,
+                6000,
+                8500,
             ],
             "linear": [
                 8.05,
@@ -31,6 +37,11 @@ class ValveFunction:
                 805.2,
                 1102,
                 1680,
+                2000,
+                2560,
+                4350,
+                6000,
+                8500,
             ],
         }
     )
