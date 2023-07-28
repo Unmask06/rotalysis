@@ -1,13 +1,11 @@
 # core.py in rotalysis folder
 import logging
 import time
+import traceback
 
-
-from rotalysis import Pump, CustomException
+from rotalysis import CustomException, Pump
 from rotalysis import UtilityFunction as UF
 from utils import logger
-
-
 
 
 class Core:
@@ -22,16 +20,17 @@ class Core:
         self.success_count = 0
 
     def process_task(self):
-        total_tasks = len(self.dftask_list)
+        task_list = self.dftask_list.loc[self.dftask_list["Perform"] == "Y"]
+        total_tasks = len(task_list)
 
-        self.logger.info("\n" + 30 * "*"+ "Welcome to Rotalysis"+ 30 * "*" + "\n")
+        self.logger.info("\n" + 30 * "*" + "Welcome to Rotalysis" + 30 * "*" + "\n")
         self.logger.info(f"Total tasks to be processed: {total_tasks} \n")
 
-        for i in range(total_tasks):
+        for i, (idx, row) in enumerate(task_list.iterrows()):
             self.success = False
             self.logger.info(f"Processing task {i+1} of {total_tasks}")
             try:
-                site, tag = self.dftask_list["Site"][i], self.dftask_list["Tag"][i]
+                site, tag = row["Site"], row["Tag"]
                 self.logger.info(f"Searching Excel file for : {site}, {tag}")
 
                 excel_path = UF.get_excel_path(self.input_path, site, tag)
@@ -50,18 +49,24 @@ class Core:
                 self.success = True
                 self.success_count += 1
 
-            except (CustomException,Exception) as e:
-                self.logger.error(f"Error occurred while processing: {site}, {tag}")
+            except (CustomException, Exception) as e:
                 self.logger.error(e)
+                # print(traceback.format_exc())
 
             time.sleep(0.1)
 
             progress = int((i + 1) / total_tasks * 100)
             if self.window:
                 self.window.ProgressBar.setValue(progress)
-                self.logger.info("TASK COMPLETED!") if self.success else self.logger.critical("TASK FAILED!")
-                self.logger.info("\n" + 50 * "-"+"\n")
+                self.logger.info("TASK COMPLETED!") if self.success else self.logger.critical(
+                    "TASK FAILED!"
+                )
+                self.dftask_list.loc[idx, ["Perform", "Result"]] = (
+                    ("N", "Success") if self.success else ("Y", "Failed")
+                )
+                self.logger.info("\n" + 50 * "-" + "\n")
 
         self.logger.info("Please check the output folder for the result.")
         self.logger.info(f"Total tasks processed: {self.success_count} out of {total_tasks}")
-        self.logger.info("\n" + 30 * "*"+ "Thanks for using Rotalysis"+ 30 * "*" + "\n")
+        UF.write_to_excel(self.task_path, self.dftask_list)
+        self.logger.info("\n" + 30 * "*" + "Thanks for using Rotalysis" + 30 * "*" + "\n")
