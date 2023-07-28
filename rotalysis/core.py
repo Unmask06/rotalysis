@@ -1,6 +1,7 @@
 # core.py in rotalysis folder
 import logging
 import time
+import traceback
 
 from rotalysis import CustomException, Pump
 from rotalysis import UtilityFunction as UF
@@ -49,8 +50,8 @@ class Core:
                 self.success_count += 1
 
             except (CustomException, Exception) as e:
-                self.logger.error(f"Error occurred while processing: {site}, {tag}")
                 self.logger.error(e)
+                # print(traceback.format_exc())
 
             time.sleep(0.1)
 
