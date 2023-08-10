@@ -3558,3 +3558,949 @@ Please check the flowrate unit.
 28-07-2023 11:16:00: INFO: Irrelevant columns removed
 28-07-2023 11:19:11: INFO: Data cleaning completed
 28-07-2023 11:19:11: INFO: Irrelevant columns removed
+09-08-2023 15:13:54: INFO: Data cleaning completed
+09-08-2023 15:13:54: INFO: Irrelevant columns removed
+09-08-2023 15:13:54: INFO: unit conversion completed
+09-08-2023 15:13:54: INFO: Computed columns added
+09-08-2023 15:13:54: INFO: Energy calculation completed
+09-08-2023 15:28:50: INFO: Data cleaning completed
+09-08-2023 15:28:50: INFO: Irrelevant columns removed
+09-08-2023 15:28:50: INFO: unit conversion completed
+09-08-2023 15:28:50: INFO: Computed columns added
+09-08-2023 15:28:50: INFO: Energy calculation completed
+09-08-2023 17:17:28: INFO: Data cleaning completed
+09-08-2023 17:17:28: INFO: Irrelevant columns removed
+09-08-2023 17:17:28: INFO: unit conversion completed
+09-08-2023 17:17:28: INFO: Computed columns added
+09-08-2023 17:17:28: INFO: Energy calculation completed
+09-08-2023 17:18:37: INFO: Data cleaning completed
+09-08-2023 17:18:37: INFO: Irrelevant columns removed
+09-08-2023 17:18:37: INFO: unit conversion completed
+09-08-2023 17:18:37: INFO: Computed columns added
+09-08-2023 17:18:37: INFO: Energy calculation completed
+09-08-2023 17:21:15: INFO: Data cleaning completed
+09-08-2023 17:21:15: INFO: Irrelevant columns removed
+09-08-2023 17:21:15: INFO: unit conversion completed
+09-08-2023 17:21:15: INFO: Computed columns added
+09-08-2023 17:21:15: INFO: Energy calculation completed
+09-08-2023 17:24:13: INFO: Data cleaning completed
+09-08-2023 17:24:13: INFO: Irrelevant columns removed
+09-08-2023 17:24:13: INFO: unit conversion completed
+09-08-2023 17:24:13: INFO: Computed columns added
+09-08-2023 17:24:13: INFO: Energy calculation completed
+09-08-2023 17:26:02: INFO: Data cleaning completed
+09-08-2023 17:26:02: INFO: Irrelevant columns removed
+09-08-2023 17:26:02: INFO: unit conversion completed
+09-08-2023 17:26:02: INFO: Computed columns added
+09-08-2023 17:26:02: INFO: Energy calculation completed
+09-08-2023 17:28:21: INFO: Data cleaning completed
+09-08-2023 17:28:21: INFO: Irrelevant columns removed
+09-08-2023 17:28:21: INFO: unit conversion completed
+09-08-2023 17:28:21: INFO: Computed columns added
+09-08-2023 17:28:21: INFO: Energy calculation completed
+09-08-2023 17:41:03: INFO: Data cleaning completed
+09-08-2023 17:41:03: INFO: Irrelevant columns removed
+09-08-2023 17:41:03: INFO: unit conversion completed
+09-08-2023 17:41:03: INFO: Computed columns added
+09-08-2023 17:41:03: INFO: Energy calculation completed
+09-08-2023 17:41:21: INFO: Data cleaning completed
+09-08-2023 17:41:21: INFO: Irrelevant columns removed
+09-08-2023 17:41:21: INFO: unit conversion completed
+09-08-2023 17:41:21: INFO: Computed columns added
+09-08-2023 17:41:21: INFO: Energy calculation completed
+09-08-2023 17:57:58: INFO: Data cleaning completed
+09-08-2023 17:57:58: INFO: Irrelevant columns removed
+09-08-2023 17:57:58: INFO: unit conversion completed
+09-08-2023 17:57:58: INFO: Computed columns added
+09-08-2023 17:57:58: INFO: Energy calculation completed
+09-08-2023 18:01:49: INFO: Data cleaning completed
+09-08-2023 18:01:49: INFO: Irrelevant columns removed
+09-08-2023 18:01:49: INFO: unit conversion completed
+09-08-2023 18:01:49: INFO: Computed columns added
+09-08-2023 18:01:49: INFO: Energy calculation completed
+09-08-2023 18:03:02: INFO: Data cleaning completed
+09-08-2023 18:03:02: INFO: Irrelevant columns removed
+09-08-2023 18:03:02: INFO: unit conversion completed
+09-08-2023 18:03:02: INFO: Computed columns added
+09-08-2023 18:03:02: INFO: Energy calculation completed
+09-08-2023 18:04:05: INFO: Data cleaning completed
+09-08-2023 18:04:05: INFO: Irrelevant columns removed
+09-08-2023 18:04:05: INFO: unit conversion completed
+09-08-2023 18:04:05: INFO: Computed columns added
+09-08-2023 18:04:05: INFO: Energy calculation completed
+09-08-2023 18:07:09: INFO: 
+******************************Welcome to Rotalysis******************************
+
+09-08-2023 18:07:09: INFO: Total tasks to be processed: 1 
+
+09-08-2023 18:07:09: INFO: Processing task 1 of 1
+09-08-2023 18:07:09: INFO: Searching Excel file for : NASR, 713-P-1101
+09-08-2023 18:07:09: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 A Data.xlsx
+09-08-2023 18:07:11: INFO: Data cleaning completed
+09-08-2023 18:07:11: INFO: Irrelevant columns removed
+09-08-2023 18:07:11: INFO: unit conversion completed
+09-08-2023 18:07:11: INFO: Computed columns added
+09-08-2023 18:07:11: INFO: Energy calculation completed
+09-08-2023 18:07:12: ERROR: (AttributeError("'Pump' object has no attribute 'dfEconomics'"), 'Error in writing to excel.')
+09-08-2023 18:07:12: CRITICAL: TASK FAILED!
+09-08-2023 18:07:12: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:07:12: INFO: Please check the output folder for the result.
+09-08-2023 18:07:12: INFO: Total tasks processed: 0 out of 1
+09-08-2023 18:07:13: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+09-08-2023 18:10:13: INFO: 
+******************************Welcome to Rotalysis******************************
+
+09-08-2023 18:10:13: INFO: Total tasks to be processed: 2 
+
+09-08-2023 18:10:13: INFO: Processing task 1 of 2
+09-08-2023 18:10:13: INFO: Searching Excel file for : UL, 570-P-2900
+09-08-2023 18:10:13: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2900.xlsx
+09-08-2023 18:10:15: INFO: Data cleaning completed
+09-08-2023 18:10:15: INFO: Irrelevant columns removed
+09-08-2023 18:10:15: INFO: unit conversion completed
+09-08-2023 18:10:15: INFO: Computed columns added
+09-08-2023 18:10:15: INFO: Energy calculation completed
+09-08-2023 18:10:16: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+09-08-2023 18:10:16: INFO: TASK COMPLETED!
+09-08-2023 18:10:16: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:10:16: INFO: Processing task 2 of 2
+09-08-2023 18:10:16: INFO: Searching Excel file for : NASR, 713-P-1101
+09-08-2023 18:10:16: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 A Data.xlsx
+09-08-2023 18:10:18: INFO: Data cleaning completed
+09-08-2023 18:10:18: INFO: Irrelevant columns removed
+09-08-2023 18:10:18: INFO: unit conversion completed
+09-08-2023 18:10:18: INFO: Computed columns added
+09-08-2023 18:10:18: INFO: Energy calculation completed
+09-08-2023 18:10:19: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101.xlsx
+09-08-2023 18:10:19: INFO: TASK COMPLETED!
+09-08-2023 18:10:19: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:10:19: INFO: Please check the output folder for the result.
+09-08-2023 18:10:19: INFO: Total tasks processed: 2 out of 2
+09-08-2023 18:10:20: INFO: 
+******************************Thanks for using Rotalysis******************************
+
+09-08-2023 18:17:29: INFO: 
+******************************Welcome to Rotalysis******************************
+
+09-08-2023 18:17:29: INFO: Total tasks to be processed: 62 
+
+09-08-2023 18:17:29: INFO: Processing task 1 of 62
+09-08-2023 18:17:29: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302A
+09-08-2023 18:17:29: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\08.7-HSR3-J-302A Data.xlsx
+09-08-2023 18:17:30: INFO: Data cleaning completed
+09-08-2023 18:17:30: INFO: Irrelevant columns removed
+09-08-2023 18:17:30: INFO: unit conversion completed
+09-08-2023 18:17:30: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:17:30: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:17:30: CRITICAL: TASK FAILED!
+09-08-2023 18:17:30: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:30: INFO: Processing task 2 of 62
+09-08-2023 18:17:30: INFO: Searching Excel file for : DAS, 08.7-HSR3-J-302B
+09-08-2023 18:17:30: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\08.7-HSR3-J-302B Data .xlsx
+09-08-2023 18:17:32: INFO: Data cleaning completed
+09-08-2023 18:17:32: INFO: Irrelevant columns removed
+09-08-2023 18:17:32: INFO: unit conversion completed
+09-08-2023 18:17:32: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:17:32: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:17:32: CRITICAL: TASK FAILED!
+09-08-2023 18:17:32: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:32: INFO: Processing task 3 of 62
+09-08-2023 18:17:32: INFO: Searching Excel file for : DAS, 15.0-P-J11
+09-08-2023 18:17:32: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J11 Data .xlsx
+09-08-2023 18:17:33: INFO: Data cleaning completed
+09-08-2023 18:17:33: INFO: Irrelevant columns removed
+09-08-2023 18:17:33: INFO: unit conversion completed
+09-08-2023 18:17:33: INFO: Computed columns added
+09-08-2023 18:17:33: INFO: Energy calculation completed
+09-08-2023 18:17:35: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\DAS\15.0-P-J11.xlsx
+09-08-2023 18:17:35: INFO: TASK COMPLETED!
+09-08-2023 18:17:35: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:35: INFO: Processing task 4 of 62
+09-08-2023 18:17:35: INFO: Searching Excel file for : DAS, 15.0-P-J12
+09-08-2023 18:17:35: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\DAS\15.0-P- J12 Data .xlsx
+09-08-2023 18:17:36: INFO: Data cleaning completed
+09-08-2023 18:17:36: INFO: Irrelevant columns removed
+09-08-2023 18:17:36: INFO: unit conversion completed
+09-08-2023 18:17:36: INFO: Computed columns added
+09-08-2023 18:17:36: INFO: Energy calculation completed
+09-08-2023 18:17:37: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\DAS\15.0-P-J12.xlsx
+09-08-2023 18:17:37: INFO: TASK COMPLETED!
+09-08-2023 18:17:37: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:37: INFO: Processing task 5 of 62
+09-08-2023 18:17:37: INFO: Searching Excel file for : NASR, 713-P-1101A
+09-08-2023 18:17:37: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 A Data.xlsx
+09-08-2023 18:17:39: INFO: Data cleaning completed
+09-08-2023 18:17:39: INFO: Irrelevant columns removed
+09-08-2023 18:17:39: INFO: unit conversion completed
+09-08-2023 18:17:39: INFO: Computed columns added
+09-08-2023 18:17:39: INFO: Energy calculation completed
+09-08-2023 18:17:40: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101A.xlsx
+09-08-2023 18:17:40: INFO: TASK COMPLETED!
+09-08-2023 18:17:40: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:40: INFO: Processing task 6 of 62
+09-08-2023 18:17:40: INFO: Searching Excel file for : NASR, 713-P-1101B
+09-08-2023 18:17:40: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 B Data .xlsx
+09-08-2023 18:17:42: INFO: Data cleaning completed
+09-08-2023 18:17:42: INFO: Irrelevant columns removed
+09-08-2023 18:17:42: INFO: unit conversion completed
+09-08-2023 18:17:42: INFO: Computed columns added
+09-08-2023 18:17:42: INFO: Energy calculation completed
+09-08-2023 18:17:43: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101B.xlsx
+09-08-2023 18:17:44: INFO: TASK COMPLETED!
+09-08-2023 18:17:44: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:44: INFO: Processing task 7 of 62
+09-08-2023 18:17:44: INFO: Searching Excel file for : NASR, 713-P-1101C
+09-08-2023 18:17:44: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1101 C Data.xlsx
+09-08-2023 18:17:45: INFO: Data cleaning completed
+09-08-2023 18:17:45: INFO: Irrelevant columns removed
+09-08-2023 18:17:45: INFO: unit conversion completed
+09-08-2023 18:17:45: INFO: Computed columns added
+09-08-2023 18:17:45: INFO: Energy calculation completed
+09-08-2023 18:17:46: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1101C.xlsx
+09-08-2023 18:17:46: INFO: TASK COMPLETED!
+09-08-2023 18:17:46: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:46: INFO: Processing task 8 of 62
+09-08-2023 18:17:46: INFO: Searching Excel file for : NASR, 713-P-1200A
+09-08-2023 18:17:46: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 A Data.xlsx
+09-08-2023 18:17:48: INFO: Data cleaning completed
+09-08-2023 18:17:48: INFO: Irrelevant columns removed
+09-08-2023 18:17:48: INFO: unit conversion completed
+09-08-2023 18:17:48: INFO: Computed columns added
+09-08-2023 18:17:48: INFO: Energy calculation completed
+09-08-2023 18:17:49: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200A.xlsx
+09-08-2023 18:17:49: INFO: TASK COMPLETED!
+09-08-2023 18:17:49: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:49: INFO: Processing task 9 of 62
+09-08-2023 18:17:49: INFO: Searching Excel file for : NASR, 713-P-1200B
+09-08-2023 18:17:49: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 B Data .xlsx
+09-08-2023 18:17:51: INFO: Data cleaning completed
+09-08-2023 18:17:51: INFO: Irrelevant columns removed
+09-08-2023 18:17:51: INFO: unit conversion completed
+09-08-2023 18:17:51: INFO: Computed columns added
+09-08-2023 18:17:51: INFO: Energy calculation completed
+09-08-2023 18:17:52: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200B.xlsx
+09-08-2023 18:17:52: INFO: TASK COMPLETED!
+09-08-2023 18:17:52: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:52: INFO: Processing task 10 of 62
+09-08-2023 18:17:52: INFO: Searching Excel file for : NASR, 713-P-1200C
+09-08-2023 18:17:52: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\NASR\713-P-1200 C Data .xlsx
+09-08-2023 18:17:54: INFO: Data cleaning completed
+09-08-2023 18:17:54: INFO: Irrelevant columns removed
+09-08-2023 18:17:54: INFO: unit conversion completed
+09-08-2023 18:17:54: INFO: Computed columns added
+09-08-2023 18:17:54: INFO: Energy calculation completed
+09-08-2023 18:17:55: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\NASR\713-P-1200C.xlsx
+09-08-2023 18:17:56: INFO: TASK COMPLETED!
+09-08-2023 18:17:56: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:56: INFO: Processing task 11 of 62
+09-08-2023 18:17:56: INFO: Searching Excel file for : UAD, CPP-P-004A
+09-08-2023 18:17:56: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 A Data .xlsx
+09-08-2023 18:17:57: INFO: Data cleaning completed
+09-08-2023 18:17:57: INFO: Irrelevant columns removed
+09-08-2023 18:17:57: INFO: unit conversion completed
+09-08-2023 18:17:57: INFO: Computed columns added
+09-08-2023 18:17:57: INFO: Energy calculation completed
+09-08-2023 18:17:58: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-004A.xlsx
+09-08-2023 18:17:59: INFO: TASK COMPLETED!
+09-08-2023 18:17:59: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:17:59: INFO: Processing task 12 of 62
+09-08-2023 18:17:59: INFO: Searching Excel file for : UAD, CPP-P-004B
+09-08-2023 18:17:59: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 B Data .xlsx
+09-08-2023 18:18:23: INFO: Data cleaning completed
+09-08-2023 18:18:23: INFO: Irrelevant columns removed
+09-08-2023 18:18:23: INFO: unit conversion completed
+09-08-2023 18:18:23: INFO: Computed columns added
+09-08-2023 18:18:23: INFO: Energy calculation completed
+09-08-2023 18:18:24: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-004B.xlsx
+09-08-2023 18:18:24: INFO: TASK COMPLETED!
+09-08-2023 18:18:24: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:18:24: INFO: Processing task 13 of 62
+09-08-2023 18:18:24: INFO: Searching Excel file for : UAD, CPP-P-004C
+09-08-2023 18:18:24: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-004 C Data .xlsx
+09-08-2023 18:18:48: INFO: Data cleaning completed
+09-08-2023 18:18:48: INFO: Irrelevant columns removed
+09-08-2023 18:18:48: INFO: unit conversion completed
+09-08-2023 18:18:48: INFO: Computed columns added
+09-08-2023 18:18:49: INFO: Energy calculation completed
+09-08-2023 18:18:49: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-004C.xlsx
+09-08-2023 18:18:50: INFO: TASK COMPLETED!
+09-08-2023 18:18:50: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:18:50: INFO: Processing task 14 of 62
+09-08-2023 18:18:50: INFO: Searching Excel file for : UAD, CPP-P-005A
+09-08-2023 18:18:50: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 A Data .xlsx
+09-08-2023 18:18:52: INFO: Data cleaning completed
+09-08-2023 18:18:52: INFO: Irrelevant columns removed
+09-08-2023 18:18:52: INFO: unit conversion completed
+09-08-2023 18:18:52: INFO: Computed columns added
+09-08-2023 18:18:52: INFO: Energy calculation completed
+09-08-2023 18:18:53: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005A.xlsx
+09-08-2023 18:18:53: INFO: TASK COMPLETED!
+09-08-2023 18:18:53: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:18:53: INFO: Processing task 15 of 62
+09-08-2023 18:18:53: INFO: Searching Excel file for : UAD, CPP-P-005B
+09-08-2023 18:18:53: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 B Data .xlsx
+09-08-2023 18:18:55: INFO: Data cleaning completed
+09-08-2023 18:18:55: INFO: Irrelevant columns removed
+09-08-2023 18:18:55: INFO: unit conversion completed
+09-08-2023 18:18:55: INFO: Computed columns added
+09-08-2023 18:18:55: INFO: Energy calculation completed
+09-08-2023 18:18:56: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005B.xlsx
+09-08-2023 18:18:56: INFO: TASK COMPLETED!
+09-08-2023 18:18:56: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:18:56: INFO: Processing task 16 of 62
+09-08-2023 18:18:56: INFO: Searching Excel file for : UAD, CPP-P-005C
+09-08-2023 18:18:56: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-005 C Data.xlsx
+09-08-2023 18:18:58: INFO: Data cleaning completed
+09-08-2023 18:18:58: INFO: Irrelevant columns removed
+09-08-2023 18:18:58: INFO: unit conversion completed
+09-08-2023 18:18:58: INFO: Computed columns added
+09-08-2023 18:18:58: INFO: Energy calculation completed
+09-08-2023 18:18:59: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-005C.xlsx
+09-08-2023 18:19:00: INFO: TASK COMPLETED!
+09-08-2023 18:19:00: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:00: INFO: Processing task 17 of 62
+09-08-2023 18:19:00: INFO: Searching Excel file for : UAD, CPP-P-026A
+09-08-2023 18:19:00: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-026 A Data.xlsx
+09-08-2023 18:19:02: INFO: Data cleaning completed
+09-08-2023 18:19:02: INFO: Irrelevant columns removed
+09-08-2023 18:19:02: INFO: unit conversion completed
+09-08-2023 18:19:02: INFO: Computed columns added
+09-08-2023 18:19:02: INFO: Energy calculation completed
+09-08-2023 18:19:02: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-026A.xlsx
+09-08-2023 18:19:03: INFO: TASK COMPLETED!
+09-08-2023 18:19:03: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:03: INFO: Processing task 18 of 62
+09-08-2023 18:19:03: INFO: Searching Excel file for : UAD, CPP-P-026B
+09-08-2023 18:19:03: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UAD\CPP-P-026 B Data .xlsx
+09-08-2023 18:19:05: INFO: Data cleaning completed
+09-08-2023 18:19:05: INFO: Irrelevant columns removed
+09-08-2023 18:19:05: INFO: unit conversion completed
+09-08-2023 18:19:05: INFO: Computed columns added
+09-08-2023 18:19:05: INFO: Energy calculation completed
+09-08-2023 18:19:06: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-026B.xlsx
+09-08-2023 18:19:06: INFO: TASK COMPLETED!
+09-08-2023 18:19:06: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:06: INFO: Processing task 19 of 62
+09-08-2023 18:19:06: INFO: Searching Excel file for : UL, 570-P-2900
+09-08-2023 18:19:06: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2900.xlsx
+09-08-2023 18:19:08: INFO: Data cleaning completed
+09-08-2023 18:19:08: INFO: Irrelevant columns removed
+09-08-2023 18:19:08: INFO: unit conversion completed
+09-08-2023 18:19:08: INFO: Computed columns added
+09-08-2023 18:19:08: INFO: Energy calculation completed
+09-08-2023 18:19:09: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+09-08-2023 18:19:10: INFO: TASK COMPLETED!
+09-08-2023 18:19:10: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:10: INFO: Processing task 20 of 62
+09-08-2023 18:19:10: INFO: Searching Excel file for : UL, 570-P-2901
+09-08-2023 18:19:10: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2901.xlsx
+09-08-2023 18:19:12: INFO: Data cleaning completed
+09-08-2023 18:19:12: INFO: Irrelevant columns removed
+09-08-2023 18:19:12: INFO: unit conversion completed
+09-08-2023 18:19:12: INFO: Computed columns added
+09-08-2023 18:19:12: INFO: Energy calculation completed
+09-08-2023 18:19:13: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2901.xlsx
+09-08-2023 18:19:13: INFO: TASK COMPLETED!
+09-08-2023 18:19:13: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:13: INFO: Processing task 21 of 62
+09-08-2023 18:19:13: INFO: Searching Excel file for : UL, 570-P-2902
+09-08-2023 18:19:13: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\UL\570-P-2902 .xlsx
+09-08-2023 18:19:16: INFO: Data cleaning completed
+09-08-2023 18:19:16: INFO: Irrelevant columns removed
+09-08-2023 18:19:16: INFO: unit conversion completed
+09-08-2023 18:19:16: INFO: Computed columns added
+09-08-2023 18:19:16: INFO: Energy calculation completed
+09-08-2023 18:19:16: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2902.xlsx
+09-08-2023 18:19:17: INFO: TASK COMPLETED!
+09-08-2023 18:19:17: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:17: INFO: Processing task 22 of 62
+09-08-2023 18:19:17: INFO: Searching Excel file for : UL, 570-P-2928A
+09-08-2023 18:19:17: INFO: Found excel path for processing:None
+09-08-2023 18:19:17: ERROR: data_path is not defined.
+09-08-2023 18:19:17: CRITICAL: TASK FAILED!
+09-08-2023 18:19:17: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:17: INFO: Processing task 23 of 62
+09-08-2023 18:19:17: INFO: Searching Excel file for : UL, 570-P-2928B
+09-08-2023 18:19:17: INFO: Found excel path for processing:None
+09-08-2023 18:19:17: ERROR: data_path is not defined.
+09-08-2023 18:19:17: CRITICAL: TASK FAILED!
+09-08-2023 18:19:17: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:17: INFO: Processing task 24 of 62
+09-08-2023 18:19:17: INFO: Searching Excel file for : UL, 570-P-2935A
+09-08-2023 18:19:17: INFO: Found excel path for processing:None
+09-08-2023 18:19:17: ERROR: data_path is not defined.
+09-08-2023 18:19:17: CRITICAL: TASK FAILED!
+09-08-2023 18:19:17: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:17: INFO: Processing task 25 of 62
+09-08-2023 18:19:17: INFO: Searching Excel file for : UL, 570-P-2935B
+09-08-2023 18:19:17: INFO: Found excel path for processing:None
+09-08-2023 18:19:17: ERROR: data_path is not defined.
+09-08-2023 18:19:17: CRITICAL: TASK FAILED!
+09-08-2023 18:19:17: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:17: INFO: Processing task 26 of 62
+09-08-2023 18:19:17: INFO: Searching Excel file for : ZIRKU, 401-P-101A
+09-08-2023 18:19:17: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-101 A Data .xlsx
+09-08-2023 18:19:34: INFO: Data cleaning completed
+09-08-2023 18:19:34: INFO: Irrelevant columns removed
+09-08-2023 18:19:34: INFO: unit conversion completed
+09-08-2023 18:19:34: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:19:34: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:19:34: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:19:34: CRITICAL: TASK FAILED!
+09-08-2023 18:19:34: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:34: INFO: Processing task 27 of 62
+09-08-2023 18:19:34: INFO: Searching Excel file for : ZIRKU, 401-P-101B
+09-08-2023 18:19:34: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-101 B Data .xlsx
+09-08-2023 18:19:51: INFO: Data cleaning completed
+09-08-2023 18:19:51: INFO: Irrelevant columns removed
+09-08-2023 18:19:51: INFO: unit conversion completed
+09-08-2023 18:19:51: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:19:51: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:19:51: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:19:51: CRITICAL: TASK FAILED!
+09-08-2023 18:19:51: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:19:51: INFO: Processing task 28 of 62
+09-08-2023 18:19:51: INFO: Searching Excel file for : ZIRKU, 401-P-102A
+09-08-2023 18:19:51: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-102 A Data.xlsx
+09-08-2023 18:20:08: INFO: Data cleaning completed
+09-08-2023 18:20:08: INFO: Irrelevant columns removed
+09-08-2023 18:20:08: INFO: unit conversion completed
+09-08-2023 18:20:08: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:20:08: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:20:09: CRITICAL: TASK FAILED!
+09-08-2023 18:20:09: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:20:09: INFO: Processing task 29 of 62
+09-08-2023 18:20:09: INFO: Searching Excel file for : ZIRKU, 401-P-102B
+09-08-2023 18:20:09: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-102 B Data.xlsx
+09-08-2023 18:20:10: INFO: Data cleaning completed
+09-08-2023 18:20:10: INFO: Irrelevant columns removed
+09-08-2023 18:20:10: INFO: unit conversion completed
+09-08-2023 18:20:10: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:20:10: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:20:10: CRITICAL: TASK FAILED!
+09-08-2023 18:20:10: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:20:10: INFO: Processing task 30 of 62
+09-08-2023 18:20:10: INFO: Searching Excel file for : ZIRKU, 401-P-201A
+09-08-2023 18:20:10: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-201 A Data .xlsx
+09-08-2023 18:20:27: INFO: Data cleaning completed
+09-08-2023 18:20:27: INFO: Irrelevant columns removed
+09-08-2023 18:20:27: INFO: unit conversion completed
+09-08-2023 18:20:27: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:20:27: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:20:27: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:20:27: CRITICAL: TASK FAILED!
+09-08-2023 18:20:27: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:20:27: INFO: Processing task 31 of 62
+09-08-2023 18:20:27: INFO: Searching Excel file for : ZIRKU, 401-P-201B
+09-08-2023 18:20:27: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-201 B Data .xlsx
+09-08-2023 18:20:44: INFO: Data cleaning completed
+09-08-2023 18:20:44: INFO: Irrelevant columns removed
+09-08-2023 18:20:44: INFO: unit conversion completed
+09-08-2023 18:20:44: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:20:44: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:20:44: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:20:44: CRITICAL: TASK FAILED!
+09-08-2023 18:20:44: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:20:44: INFO: Processing task 32 of 62
+09-08-2023 18:20:44: INFO: Searching Excel file for : ZIRKU, 401-P-202A
+09-08-2023 18:20:44: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-202 A Data.xlsx
+09-08-2023 18:21:02: INFO: Data cleaning completed
+09-08-2023 18:21:02: INFO: Irrelevant columns removed
+09-08-2023 18:21:02: INFO: unit conversion completed
+09-08-2023 18:21:02: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:21:02: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:21:02: CRITICAL: TASK FAILED!
+09-08-2023 18:21:02: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:21:02: INFO: Processing task 33 of 62
+09-08-2023 18:21:02: INFO: Searching Excel file for : ZIRKU, 401-P-202B
+09-08-2023 18:21:02: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-202 B Data.xlsx
+09-08-2023 18:21:19: INFO: Data cleaning completed
+09-08-2023 18:21:19: INFO: Irrelevant columns removed
+09-08-2023 18:21:19: INFO: unit conversion completed
+09-08-2023 18:21:19: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:21:19: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:21:19: CRITICAL: TASK FAILED!
+09-08-2023 18:21:19: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:21:19: INFO: Processing task 34 of 62
+09-08-2023 18:21:19: INFO: Searching Excel file for : ZIRKU, 401-P-301A
+09-08-2023 18:21:19: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-301 A Data .xlsx
+09-08-2023 18:21:37: INFO: Data cleaning completed
+09-08-2023 18:21:37: INFO: Irrelevant columns removed
+09-08-2023 18:21:37: INFO: unit conversion completed
+09-08-2023 18:21:37: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:21:37: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:21:37: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:21:37: CRITICAL: TASK FAILED!
+09-08-2023 18:21:37: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:21:37: INFO: Processing task 35 of 62
+09-08-2023 18:21:37: INFO: Searching Excel file for : ZIRKU, 401-P-301B
+09-08-2023 18:21:37: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-301 B Data .xlsx
+09-08-2023 18:21:55: INFO: Data cleaning completed
+09-08-2023 18:21:55: INFO: Irrelevant columns removed
+09-08-2023 18:21:55: INFO: unit conversion completed
+09-08-2023 18:21:55: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:21:55: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:21:55: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:21:55: CRITICAL: TASK FAILED!
+09-08-2023 18:21:55: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:21:55: INFO: Processing task 36 of 62
+09-08-2023 18:21:55: INFO: Searching Excel file for : ZIRKU, 401-P-302A
+09-08-2023 18:21:55: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-302 A Data.xlsx
+09-08-2023 18:22:14: INFO: Data cleaning completed
+09-08-2023 18:22:14: INFO: Irrelevant columns removed
+09-08-2023 18:22:14: INFO: unit conversion completed
+09-08-2023 18:22:14: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:22:14: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:22:14: CRITICAL: TASK FAILED!
+09-08-2023 18:22:14: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:22:14: INFO: Processing task 37 of 62
+09-08-2023 18:22:14: INFO: Searching Excel file for : ZIRKU, 401-P-302B
+09-08-2023 18:22:14: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-302 B Data.xlsx
+09-08-2023 18:22:32: INFO: Data cleaning completed
+09-08-2023 18:22:32: INFO: Irrelevant columns removed
+09-08-2023 18:22:32: INFO: unit conversion completed
+09-08-2023 18:22:32: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:22:32: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:22:32: CRITICAL: TASK FAILED!
+09-08-2023 18:22:32: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:22:32: INFO: Processing task 38 of 62
+09-08-2023 18:22:32: INFO: Searching Excel file for : ZIRKU, 401-P-401A
+09-08-2023 18:22:32: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-401 A Data .xlsx
+09-08-2023 18:22:50: INFO: Data cleaning completed
+09-08-2023 18:22:50: INFO: Irrelevant columns removed
+09-08-2023 18:22:50: INFO: unit conversion completed
+09-08-2023 18:22:50: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:22:50: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:22:50: CRITICAL: TASK FAILED!
+09-08-2023 18:22:50: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:22:50: INFO: Processing task 39 of 62
+09-08-2023 18:22:50: INFO: Searching Excel file for : ZIRKU, 401-P-401B
+09-08-2023 18:22:50: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-401 B Data .xlsx
+09-08-2023 18:23:08: INFO: Data cleaning completed
+09-08-2023 18:23:08: INFO: Irrelevant columns removed
+09-08-2023 18:23:08: INFO: unit conversion completed
+09-08-2023 18:23:08: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:23:08: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:23:08: CRITICAL: TASK FAILED!
+09-08-2023 18:23:08: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:23:08: INFO: Processing task 40 of 62
+09-08-2023 18:23:08: INFO: Searching Excel file for : ZIRKU, 401-P-402A
+09-08-2023 18:23:08: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-402 A Data .xlsx
+09-08-2023 18:23:26: INFO: Data cleaning completed
+09-08-2023 18:23:26: INFO: Irrelevant columns removed
+09-08-2023 18:23:26: INFO: unit conversion completed
+09-08-2023 18:23:26: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:23:26: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:23:26: CRITICAL: TASK FAILED!
+09-08-2023 18:23:26: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:23:26: INFO: Processing task 41 of 62
+09-08-2023 18:23:26: INFO: Searching Excel file for : ZIRKU, 401-P-402B
+09-08-2023 18:23:26: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\401-P-402 B Data .xlsx
+09-08-2023 18:23:44: INFO: Data cleaning completed
+09-08-2023 18:23:44: INFO: Irrelevant columns removed
+09-08-2023 18:23:44: INFO: unit conversion completed
+09-08-2023 18:23:44: WARNING: The maximum flowrate is less than 30% of the rated flowrate. 
+Please check the flowrate unit.
+09-08-2023 18:23:44: ERROR: Analysis stopped since VFD and Impeller trimming will not be effective.
+09-08-2023 18:23:44: CRITICAL: TASK FAILED!
+09-08-2023 18:23:44: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:23:44: INFO: Processing task 42 of 62
+09-08-2023 18:23:44: INFO: Searching Excel file for : ZIRKU, 429-P-011A
+09-08-2023 18:23:44: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\429-P-011 A Data  .xlsx
+09-08-2023 18:24:03: INFO: Data cleaning completed
+09-08-2023 18:24:03: INFO: Irrelevant columns removed
+09-08-2023 18:24:03: INFO: unit conversion completed
+09-08-2023 18:24:03: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:24:03: INFO: Computed columns added
+09-08-2023 18:24:03: ERROR: Base case energy consumption is zero. Please check the input data.
+09-08-2023 18:24:03: CRITICAL: TASK FAILED!
+09-08-2023 18:24:03: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:24:03: INFO: Processing task 43 of 62
+09-08-2023 18:24:03: INFO: Searching Excel file for : ZIRKU, 429-P-011B
+09-08-2023 18:24:03: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\429-P-011 B Data  .xlsx
+09-08-2023 18:24:21: INFO: Data cleaning completed
+09-08-2023 18:24:21: INFO: Irrelevant columns removed
+09-08-2023 18:24:21: INFO: unit conversion completed
+09-08-2023 18:24:21: WARNING: Recirculation flow is greater than discharge flow
+09-08-2023 18:24:21: INFO: Computed columns added
+09-08-2023 18:24:21: ERROR: Base case energy consumption is zero. Please check the input data.
+09-08-2023 18:24:22: CRITICAL: TASK FAILED!
+09-08-2023 18:24:22: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:24:22: INFO: Processing task 44 of 62
+09-08-2023 18:24:22: INFO: Searching Excel file for : ZIRKU, 422-P-001A
+09-08-2023 18:24:22: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\422-P-001 A Data  .xlsx
+09-08-2023 18:24:23: INFO: Data cleaning completed
+09-08-2023 18:24:23: INFO: Irrelevant columns removed
+09-08-2023 18:24:23: INFO: unit conversion completed
+09-08-2023 18:24:23: INFO: Computed columns added
+09-08-2023 18:24:23: INFO: Energy calculation completed
+09-08-2023 18:24:24: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\ZIRKU\422-P-001A.xlsx
+09-08-2023 18:24:24: INFO: TASK COMPLETED!
+09-08-2023 18:24:24: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:24:24: INFO: Processing task 45 of 62
+09-08-2023 18:24:24: INFO: Searching Excel file for : ZIRKU, 422-P-001B
+09-08-2023 18:24:24: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\422-P-001 B Data .xlsx
+09-08-2023 18:24:41: INFO: Data cleaning completed
+09-08-2023 18:24:41: INFO: Irrelevant columns removed
+09-08-2023 18:24:41: INFO: unit conversion completed
+09-08-2023 18:24:41: ERROR: valve_size is not defined in config file.
+09-08-2023 18:24:41: ERROR: valve_size is not defined in config file.
+09-08-2023 18:24:41: CRITICAL: TASK FAILED!
+09-08-2023 18:24:41: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:24:41: INFO: Processing task 46 of 62
+09-08-2023 18:24:41: INFO: Searching Excel file for : ZIRKU, 422-P-001C
+09-08-2023 18:24:41: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\422-P-001 C Data .xlsx
+09-08-2023 18:24:59: INFO: Data cleaning completed
+09-08-2023 18:24:59: INFO: Irrelevant columns removed
+09-08-2023 18:24:59: INFO: unit conversion completed
+09-08-2023 18:24:59: INFO: Computed columns added
+09-08-2023 18:24:59: INFO: Energy calculation completed
+09-08-2023 18:25:00: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\ZIRKU\422-P-001C.xlsx
+09-08-2023 18:25:00: INFO: TASK COMPLETED!
+09-08-2023 18:25:00: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:25:00: INFO: Processing task 47 of 62
+09-08-2023 18:25:00: INFO: Searching Excel file for : ZIRKU, 442-P-007A
+09-08-2023 18:25:00: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\442-P-007 A Data  .xlsx
+09-08-2023 18:25:18: INFO: Data cleaning completed
+09-08-2023 18:25:18: INFO: Irrelevant columns removed
+09-08-2023 18:25:18: INFO: unit conversion completed
+09-08-2023 18:25:18: INFO: Computed columns added
+09-08-2023 18:25:18: INFO: Energy calculation completed
+09-08-2023 18:25:18: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\ZIRKU\442-P-007A.xlsx
+09-08-2023 18:25:19: INFO: TASK COMPLETED!
+09-08-2023 18:25:19: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:25:19: INFO: Processing task 48 of 62
+09-08-2023 18:25:19: INFO: Searching Excel file for : ZIRKU, 442-P-007B
+09-08-2023 18:25:19: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\442-P-007 B Data .xlsx
+09-08-2023 18:25:36: INFO: Data cleaning completed
+09-08-2023 18:25:36: INFO: Irrelevant columns removed
+09-08-2023 18:25:36: INFO: unit conversion completed
+09-08-2023 18:25:36: INFO: Computed columns added
+09-08-2023 18:25:36: INFO: Energy calculation completed
+09-08-2023 18:25:37: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\ZIRKU\442-P-007B.xlsx
+09-08-2023 18:25:38: INFO: TASK COMPLETED!
+09-08-2023 18:25:38: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:25:38: INFO: Processing task 49 of 62
+09-08-2023 18:25:38: INFO: Searching Excel file for : ZIRKU, 427-P-101
+09-08-2023 18:25:38: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\427-P-101 Data .xlsx
+09-08-2023 18:25:55: INFO: Data cleaning completed
+09-08-2023 18:25:55: INFO: Irrelevant columns removed
+09-08-2023 18:25:55: INFO: unit conversion completed
+09-08-2023 18:25:55: INFO: Computed columns added
+09-08-2023 18:25:55: INFO: Energy calculation completed
+09-08-2023 18:25:56: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\ZIRKU\427-P-101.xlsx
+09-08-2023 18:25:57: INFO: TASK COMPLETED!
+09-08-2023 18:25:57: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:25:57: INFO: Processing task 50 of 62
+09-08-2023 18:25:57: INFO: Searching Excel file for : ZIRKU, 427-P-201
+09-08-2023 18:25:57: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\427-P-201 Data .xlsx
+09-08-2023 18:26:14: INFO: Data cleaning completed
+09-08-2023 18:26:14: INFO: Irrelevant columns removed
+09-08-2023 18:26:14: INFO: unit conversion completed
+09-08-2023 18:26:14: INFO: Computed columns added
+09-08-2023 18:26:14: INFO: Energy calculation completed
+09-08-2023 18:26:15: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\ZIRKU\427-P-201.xlsx
+09-08-2023 18:26:15: INFO: TASK COMPLETED!
+09-08-2023 18:26:15: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:15: INFO: Processing task 51 of 62
+09-08-2023 18:26:15: INFO: Searching Excel file for : ZIRKU, 427-P-301
+09-08-2023 18:26:15: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\ZIRKU\427-P-301 Data .xlsx
+09-08-2023 18:26:33: INFO: Data cleaning completed
+09-08-2023 18:26:33: INFO: Irrelevant columns removed
+09-08-2023 18:26:33: INFO: unit conversion completed
+09-08-2023 18:26:33: INFO: Computed columns added
+09-08-2023 18:26:33: INFO: Energy calculation completed
+09-08-2023 18:26:34: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\ZIRKU\427-P-301.xlsx
+09-08-2023 18:26:35: INFO: TASK COMPLETED!
+09-08-2023 18:26:35: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:35: INFO: Processing task 52 of 62
+09-08-2023 18:26:35: INFO: Searching Excel file for : SARB, 614-P-0103A
+09-08-2023 18:26:35: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\614-P-0103 A .xlsx
+09-08-2023 18:26:36: INFO: Data cleaning completed
+09-08-2023 18:26:36: INFO: Irrelevant columns removed
+09-08-2023 18:26:36: INFO: unit conversion completed
+09-08-2023 18:26:36: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:36: INFO: Computed columns added
+09-08-2023 18:26:36: INFO: Energy calculation completed
+09-08-2023 18:26:37: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\614-P-0103A.xlsx
+09-08-2023 18:26:37: INFO: TASK COMPLETED!
+09-08-2023 18:26:37: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:37: INFO: Processing task 53 of 62
+09-08-2023 18:26:37: INFO: Searching Excel file for : SARB, 614-P-0103B
+09-08-2023 18:26:37: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\614-P-0103 B .xlsx
+09-08-2023 18:26:39: INFO: Data cleaning completed
+09-08-2023 18:26:39: INFO: Irrelevant columns removed
+09-08-2023 18:26:39: INFO: unit conversion completed
+09-08-2023 18:26:39: INFO: Computed columns added
+09-08-2023 18:26:39: ERROR: Base case energy consumption is zero. Please check the input data.
+09-08-2023 18:26:39: CRITICAL: TASK FAILED!
+09-08-2023 18:26:39: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:39: INFO: Processing task 54 of 62
+09-08-2023 18:26:39: INFO: Searching Excel file for : SARB, 614-P-0103C
+09-08-2023 18:26:39: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\614-P-0103 C.xlsx
+09-08-2023 18:26:40: INFO: Data cleaning completed
+09-08-2023 18:26:40: INFO: Irrelevant columns removed
+09-08-2023 18:26:40: INFO: unit conversion completed
+09-08-2023 18:26:40: INFO: Computed columns added
+09-08-2023 18:26:40: ERROR: Base case energy consumption is zero. Please check the input data.
+09-08-2023 18:26:40: CRITICAL: TASK FAILED!
+09-08-2023 18:26:40: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:40: INFO: Processing task 55 of 62
+09-08-2023 18:26:40: INFO: Searching Excel file for : SARB, 615-P-3101B
+09-08-2023 18:26:40: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\615-P-3101 B  .xlsx
+09-08-2023 18:26:41: INFO: Data cleaning completed
+09-08-2023 18:26:41: INFO: Irrelevant columns removed
+09-08-2023 18:26:41: INFO: unit conversion completed
+09-08-2023 18:26:41: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:41: INFO: Computed columns added
+09-08-2023 18:26:41: INFO: Energy calculation completed
+09-08-2023 18:26:42: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\615-P-3101B.xlsx
+09-08-2023 18:26:42: INFO: TASK COMPLETED!
+09-08-2023 18:26:42: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:42: INFO: Processing task 56 of 62
+09-08-2023 18:26:42: INFO: Searching Excel file for : SARB, 615-P-3101C
+09-08-2023 18:26:42: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\615-P-3101 C .xlsx
+09-08-2023 18:26:43: INFO: Data cleaning completed
+09-08-2023 18:26:43: INFO: Irrelevant columns removed
+09-08-2023 18:26:43: INFO: unit conversion completed
+09-08-2023 18:26:43: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:43: INFO: Computed columns added
+09-08-2023 18:26:43: INFO: Energy calculation completed
+09-08-2023 18:26:44: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\615-P-3101C.xlsx
+09-08-2023 18:26:45: INFO: TASK COMPLETED!
+09-08-2023 18:26:45: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:45: INFO: Processing task 57 of 62
+09-08-2023 18:26:45: INFO: Searching Excel file for : SARB, 613-P-0101A
+09-08-2023 18:26:45: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\613-P-0101 A .xlsx
+09-08-2023 18:26:46: INFO: Data cleaning completed
+09-08-2023 18:26:46: INFO: Irrelevant columns removed
+09-08-2023 18:26:46: INFO: unit conversion completed
+09-08-2023 18:26:46: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:46: INFO: Computed columns added
+09-08-2023 18:26:46: INFO: Energy calculation completed
+09-08-2023 18:26:47: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\613-P-0101A.xlsx
+09-08-2023 18:26:47: INFO: TASK COMPLETED!
+09-08-2023 18:26:47: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:47: INFO: Processing task 58 of 62
+09-08-2023 18:26:47: INFO: Searching Excel file for : SARB, 613-P-0101B
+09-08-2023 18:26:47: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\613-P-0101 B .xlsx
+09-08-2023 18:26:49: INFO: Data cleaning completed
+09-08-2023 18:26:49: INFO: Irrelevant columns removed
+09-08-2023 18:26:49: INFO: unit conversion completed
+09-08-2023 18:26:49: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:49: INFO: Computed columns added
+09-08-2023 18:26:49: INFO: Energy calculation completed
+09-08-2023 18:26:50: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\613-P-0101B.xlsx
+09-08-2023 18:26:50: INFO: TASK COMPLETED!
+09-08-2023 18:26:50: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:50: INFO: Processing task 59 of 62
+09-08-2023 18:26:50: INFO: Searching Excel file for : SARB, 613-P-0101C
+09-08-2023 18:26:50: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\613-P-0101 C .xlsx
+09-08-2023 18:26:51: INFO: Data cleaning completed
+09-08-2023 18:26:51: INFO: Irrelevant columns removed
+09-08-2023 18:26:51: INFO: unit conversion completed
+09-08-2023 18:26:51: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:51: INFO: Computed columns added
+09-08-2023 18:26:51: INFO: Energy calculation completed
+09-08-2023 18:26:52: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\613-P-0101C.xlsx
+09-08-2023 18:26:53: INFO: TASK COMPLETED!
+09-08-2023 18:26:53: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:53: INFO: Processing task 60 of 62
+09-08-2023 18:26:53: INFO: Searching Excel file for : SARB, 625-P-0101A
+09-08-2023 18:26:53: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\625-P-0101 A.xlsx
+09-08-2023 18:26:54: INFO: Data cleaning completed
+09-08-2023 18:26:54: INFO: Irrelevant columns removed
+09-08-2023 18:26:54: INFO: unit conversion completed
+09-08-2023 18:26:54: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:54: INFO: Computed columns added
+09-08-2023 18:26:54: INFO: Energy calculation completed
+09-08-2023 18:26:55: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\625-P-0101A.xlsx
+09-08-2023 18:26:55: INFO: TASK COMPLETED!
+09-08-2023 18:26:55: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:55: INFO: Processing task 61 of 62
+09-08-2023 18:26:55: INFO: Searching Excel file for : SARB, 625-P-0101B
+09-08-2023 18:26:55: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\625-P-0101 B .xlsx
+09-08-2023 18:26:57: INFO: Data cleaning completed
+09-08-2023 18:26:57: INFO: Irrelevant columns removed
+09-08-2023 18:26:57: INFO: unit conversion completed
+09-08-2023 18:26:57: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:57: INFO: Computed columns added
+09-08-2023 18:26:57: INFO: Energy calculation completed
+09-08-2023 18:26:57: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\625-P-0101B.xlsx
+09-08-2023 18:26:58: INFO: TASK COMPLETED!
+09-08-2023 18:26:58: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:26:58: INFO: Processing task 62 of 62
+09-08-2023 18:26:58: INFO: Searching Excel file for : SARB, 625-P-0101C
+09-08-2023 18:26:58: INFO: Found excel path for processing:C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Input\SARB\625-P-0101 C .xlsx
+09-08-2023 18:26:59: INFO: Data cleaning completed
+09-08-2023 18:26:59: INFO: Irrelevant columns removed
+09-08-2023 18:26:59: INFO: unit conversion completed
+09-08-2023 18:26:59: WARNING: motor_efficiency is empty. 
+ motor efficiency is considered 90% by default
+09-08-2023 18:26:59: INFO: Computed columns added
+09-08-2023 18:26:59: INFO: Energy calculation completed
+09-08-2023 18:27:00: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\SARB\625-P-0101C.xlsx
+09-08-2023 18:27:01: INFO: TASK COMPLETED!
+09-08-2023 18:27:01: INFO: 
+--------------------------------------------------
+
+09-08-2023 18:27:01: INFO: Please check the output folder for the result.
+09-08-2023 18:27:01: INFO: Total tasks processed: 35 out of 62
+09-08-2023 18:27:02: INFO: 
+******************************Thanks for using Rotalysis******************************
+

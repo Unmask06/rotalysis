@@ -45,6 +45,7 @@ class Core:
                 p1.get_computed_columns()
                 p1.group_by_flowrate_percent()
                 p1.create_energy_calculation()
+                p1.get_economics_summary()
                 p1.write_to_excel(self.output_path, site, tag)
                 self.success = True
                 self.success_count += 1
@@ -64,6 +65,8 @@ class Core:
                 self.dftask_list.loc[idx, ["Perform", "Result"]] = (
                     ("N", "Success") if self.success else ("Y", "Failed")
                 )
+
+                
                 self.logger.info("\n" + 50 * "-" + "\n")
 
         self.logger.info("Please check the output folder for the result.")

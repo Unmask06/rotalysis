@@ -1,14 +1,17 @@
 # pump.py in rotalysis folder
 import os
 import sys
+import traceback
 from pathlib import Path
 
 sys.path.append("..")
 
 import numpy as np
+import numpy_financial as npf
 import pandas as pd
 import xlwings as xw
 
+from rotalysis import Economics as ec
 from rotalysis import PumpFunction as PF
 from rotalysis import UtilityFunction as uf
 from utils import logger
@@ -612,6 +615,74 @@ class Pump:
         self.VSDCalculation.columns = self.VSDCalculation.columns.droplevel(1)
         self.ImpellerCalculation.columns = self.ImpellerCalculation.columns.droplevel(1)
 
+    def get_economic_calculation(self, capex, opex, annual_energy_savings, annual_emission_reduction):
+        discount_rate = self.config["discount_rate"]["value"]
+        project_life = self.config["project_life"]["value"]
+        inflation_rate = self.config["inflation_rate"]["value"]
+        electricity_price = self.config["electricity_price"]["value"]
+
+        dfcashflow = ec.create_cashflow_df(capex=capex, project_life=project_life)
+
+        dfcashflow["fuel_cost"] = annual_energy_savings * electricity_price
+        dfcashflow["opex"] = ec.inflation_adjusted_opex(opex, inflation_rate, years=dfcashflow.index)
+        dfcashflow.loc[1:, "cashflow"] = dfcashflow["fuel_cost"] - dfcashflow["opex"]
+
+        NPV = npf.npv(rate=discount_rate, values=dfcashflow["cashflow"])
+        IRR = npf.irr(dfcashflow["cashflow"])
+        annualized_spending = ec.annualized_spending(NPV, discount_rate, project_life)
+        pay_back = ec.calculate_payback_period(dfcashflow["cashflow"])
+        ghg_reduction_cost = ec.GHG_reduction_cost(annualized_spending, annual_emission_reduction)
+
+        economic_calculation = {
+            "Capex": round(capex, 0),
+            "NPV": round(NPV, 0),
+            "IRR": "{:.0%}".format(IRR),
+            "Payback Period": pay_back,
+            "Annualized Spendings": round(annualized_spending, 0),
+            "Annual GHG Reduction": round(annual_emission_reduction, 0),
+            "GHG Reduction Cost": round(ghg_reduction_cost, 0),
+        }
+        return economic_calculation
+
+    def __get_economics(self):
+        self.VSDEconomics = self.get_economic_calculation(
+            capex=self.config["vsd_capex"]["value"],
+            opex=self.config["vsd_opex"]["value"] * self.config["vsd_capex"]["value"],
+            annual_energy_savings=self.dfsummary["Vsd"]["Annual Energy Saving"],
+            annual_emission_reduction=self.dfsummary["Vsd"]["Ghg Reduction"],
+        )
+
+        self.VFDEconomics = self.get_economic_calculation(
+            capex=self.config["vfd_capex"]["value"],
+            opex=self.config["vfd_opex"]["value"] * self.config["vfd_capex"]["value"],
+            annual_energy_savings=self.dfsummary["Vsd"]["Annual Energy Saving"],
+            annual_emission_reduction=self.dfsummary["Vsd"]["Ghg Reduction"],
+        )
+
+        self.ImpellerEconomics = self.get_economic_calculation(
+            capex=self.config["impeller_capex"]["value"],
+            opex=self.config["impeller_opex"]["value"] * self.config["impeller_capex"]["value"],
+            annual_energy_savings=self.dfsummary["Impeller"]["Annual Energy Saving"],
+            annual_emission_reduction=self.dfsummary["Impeller"]["Ghg Reduction"],
+        )
+
+    def get_economics_summary(self):
+        try:
+            self.__get_economics()
+
+            dfs = []
+            for option, col in zip(
+                [self.VSDEconomics, self.VFDEconomics, self.ImpellerEconomics], ["VSD", "VFD", "Impeller"]
+            ):
+                df = pd.DataFrame(option.values(), index=option.keys(), columns=[col])
+                dfs.append(df)
+
+            self.dfEconomics = pd.concat(dfs, axis=1)
+
+        except Exception as e:
+            self.logger.error("Error while creating economics summary.")
+            print(traceback.format_exc())
+
     def _get_output_path(self, output_folder, site, tag):
         """
         PRIVATE METHOD used in  write_to_excel()
@@ -647,9 +718,9 @@ class Pump:
                 ws.clear_contents()
 
                 for cell, df, bool in zip(
-                    ["A1", "A13", "A31"],
-                    [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation],
-                    [True, False, False],
+                    ["A1", "A13", "A31", "G1"],
+                    [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation, self.dfEconomics],
+                    [True, False, False, True],
                 ):
                     ws.range(cell).options(index=bool).value = df
                 wb.save(path)
