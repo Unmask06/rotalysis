@@ -19,6 +19,22 @@ class Core:
         self.logger = logger
         self.success_count = 0
 
+    def update_tasklist(self, pump, idx):
+        if self.success:
+            self.dftask_list.loc[idx, ["Perform", "Result"]] = ("N", "Success")
+            self.dftask_list.loc[idx, "IT_energy"] = pump.dfsummary["Impeller"]["Annual Energy Saving"]
+            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"]["GHG Reduction Cost"]
+            self.dftask_list.loc[idx, "IT_ghg_reduction"] = pump.dfsummary["Impeller"]["Ghg Reduction"]
+            self.dftask_list.loc[idx, "IT_ghg_reduction_percent"] = pump.dfsummary["Impeller"]["Ghg Reduction Percent"]
+            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"]["GHG Reduction Cost"]
+            self.dftask_list.loc[idx, "VSD_energy"] = pump.dfsummary["Vsd"]["Annual Energy Saving"]
+            self.dftask_list.loc[idx, "VSD_ghg_reduction"] = pump.dfsummary["Vsd"]["Ghg Reduction"]
+            self.dftask_list.loc[idx, "VSD_ghg_reduction_percent"] = pump.dfsummary["Vsd"]["Ghg Reduction Percent"]
+            self.dftask_list.loc[idx, "VSD_ghg_cost"] = pump.dfEconomics["VSD"]["GHG Reduction Cost"]
+
+        else:
+            self.dftask_list.loc[idx, ["Perform", "Result"]] = ("Y", "Failed")
+
     def process_task(self):
         task_list = self.dftask_list.loc[self.dftask_list["Perform"] == "Y"]
         total_tasks = len(task_list)
@@ -44,7 +60,7 @@ class Core:
                 p1.convert_default_unit()
                 p1.get_computed_columns()
                 p1.group_by_flowrate_percent()
-                p1.create_energy_calculation()
+                p1.create_energy_calculation(site)
                 p1.get_economics_summary()
                 p1.write_to_excel(self.output_path, site, tag)
                 self.success = True
@@ -52,21 +68,16 @@ class Core:
 
             except (CustomException, Exception) as e:
                 self.logger.error(e)
-                # print(traceback.format_exc())
+                print(traceback.format_exc())
 
             time.sleep(0.1)
 
             progress = int((i + 1) / total_tasks * 100)
             if self.window:
                 self.window.ProgressBar.setValue(progress)
-                self.logger.info("TASK COMPLETED!") if self.success else self.logger.critical(
-                    "TASK FAILED!"
-                )
-                self.dftask_list.loc[idx, ["Perform", "Result"]] = (
-                    ("N", "Success") if self.success else ("Y", "Failed")
-                )
+                self.logger.info("TASK COMPLETED!") if self.success else self.logger.critical("TASK FAILED!")
+                self.update_tasklist(p1, idx)
 
-                
                 self.logger.info("\n" + 50 * "-" + "\n")
 
         self.logger.info("Please check the output folder for the result.")

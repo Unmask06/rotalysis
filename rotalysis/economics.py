@@ -24,11 +24,11 @@ class Economics:
 
     @staticmethod
     def GHG_reduction_cost(annualized_spending, GHG_reduction):
-        try:
-            GHG_reduction_cost = annualized_spending / GHG_reduction
-            return round(GHG_reduction_cost,2)
-        except ZeroDivisionError:
+        if GHG_reduction == 0:
             return 0
+        else:
+            GHG_reduction_cost = annualized_spending / GHG_reduction
+            return round(GHG_reduction_cost, 2)
 
     @staticmethod
     def calculate_payback_period(cash_flows):

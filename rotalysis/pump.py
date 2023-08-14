@@ -98,6 +98,7 @@ class Pump:
         self.__set_data()
         self.logger = logger
         self.__set_config()
+        self.get_emission_factor()
         self.__check_mandatory_columns()
 
     def __set_config(self):
@@ -109,6 +110,18 @@ class Pump:
         dfconfig = dfconfig.iloc[:, :3].dropna(subset=["parameter"])
         dfconfig.set_index("parameter", inplace=True)
         self.config = dfconfig.to_dict("index")
+
+    def get_emission_factor(self):
+        """
+        Returns the emission factor from the config file.
+
+        Returns:
+            float: emission factor
+        """
+        dfemission_factor = pd.read_excel(self.config_path, sheet_name="EmissionFactor", header=0)
+        dfemission_factor = dfemission_factor.iloc[:, :2].dropna(subset=["emission_factor"])
+        dfemission_factor.set_index("site", inplace=True)
+        self.dfemission_factor = dfemission_factor.to_dict("index")
 
     def __set_data(self):
         """
@@ -496,11 +509,11 @@ class Pump:
             self.dfcalculation["base_case_energy_consumption"] - self.dfcalculation["proposed_case_energy_consumption"]
         )
 
-    def __get_emissions_columns(self):
+    def __get_emissions_columns(self, site):
         """
         Private method used in create_energy_calculation() method to create emissions related columns in dfcalculation dataframe.
         """
-        emission_factor = self.config["emission_factor"]["value"]
+        emission_factor = self.dfemission_factor[site]["emission_factor"]
 
         self.dfcalculation["base_case_emission"] = self.dfcalculation["base_case_energy_consumption"] * emission_factor
 
@@ -516,7 +529,7 @@ class Pump:
             self.dfcalculation["ghg_reduction"] / self.dfcalculation["base_case_emission"]
         )
 
-    def create_energy_calculation(self):
+    def create_energy_calculation(self, site):
         """
         - Create energy calculation dataframe for VSD and Impeller options.
         - Create summary dataframe for VSD and Impeller options.
@@ -526,15 +539,15 @@ class Pump:
             self.dfcalculation["selected_measure"] = option
             self.__select_speed_reduction()
             self.__get_energy_columns()
-            self.__get_emissions_columns()
+            self.__get_emissions_columns(site)
 
             if option == "Vsd":
                 self.VSDCalculation = self.dfcalculation.copy()
-                self.VSDSummary = self.__summarize(self.VSDCalculation)
+                self.VSDSummary = self.__summarize(self.VSDCalculation,site)
                 self.VSDSummary.columns = [option]
             elif option == "Impeller":
                 self.ImpellerCalculation = self.dfcalculation.copy()
-                self.ImpellerSummary = self.__summarize(self.ImpellerCalculation)
+                self.ImpellerSummary = self.__summarize(self.ImpellerCalculation,site)
                 self.ImpellerSummary.columns = [option]
 
         self.dfsummary = pd.concat([self.VSDSummary, self.ImpellerSummary], axis=1)
@@ -546,7 +559,7 @@ class Pump:
         self.__rename_columns()
         self.logger.info("Energy calculation completed")
 
-    def __summarize(self, dfenergy):
+    def __summarize(self, dfenergy,site):
         """
         PRIVATE METHOD USED IN create_energy_calculation()
 
@@ -578,6 +591,7 @@ class Pump:
         dfsummary["annual_energy_saving"] = dfenergy["annual_energy_saving"].sum()
         dfsummary["base_case_emission"] = dfenergy["base_case_emission"].sum()
         dfsummary["proposed_case_emission"] = dfenergy["proposed_case_emission"].sum()
+        dfsummary["emission_factor"] = self.dfemission_factor[site]["emission_factor"]
         dfsummary["ghg_reduction"] = dfenergy["ghg_reduction"].sum()
         dfsummary["ghg_reduction_percent"] = dfsummary["ghg_reduction"] / dfsummary["base_case_emission"]
         dfsummary = dfsummary.transpose()
@@ -646,21 +660,21 @@ class Pump:
 
     def __get_economics(self):
         self.VSDEconomics = self.get_economic_calculation(
-            capex=self.config["vsd_capex"]["value"],
+            capex=self.config["vsd_capex"]["value"] / self.process_data["spare"]["value"],
             opex=self.config["vsd_opex"]["value"] * self.config["vsd_capex"]["value"],
             annual_energy_savings=self.dfsummary["Vsd"]["Annual Energy Saving"],
             annual_emission_reduction=self.dfsummary["Vsd"]["Ghg Reduction"],
         )
 
         self.VFDEconomics = self.get_economic_calculation(
-            capex=self.config["vfd_capex"]["value"],
+            capex=self.config["vfd_capex"]["value"] / self.process_data["spare"]["value"],
             opex=self.config["vfd_opex"]["value"] * self.config["vfd_capex"]["value"],
             annual_energy_savings=self.dfsummary["Vsd"]["Annual Energy Saving"],
             annual_emission_reduction=self.dfsummary["Vsd"]["Ghg Reduction"],
         )
 
         self.ImpellerEconomics = self.get_economic_calculation(
-            capex=self.config["impeller_capex"]["value"],
+            capex=self.config["impeller_capex"]["value"] / self.process_data["spare"]["value"],
             opex=self.config["impeller_opex"]["value"] * self.config["impeller_capex"]["value"],
             annual_energy_savings=self.dfsummary["Impeller"]["Annual Energy Saving"],
             annual_emission_reduction=self.dfsummary["Impeller"]["Ghg Reduction"],
@@ -695,6 +709,10 @@ class Pump:
         output_path = os.path.join(output_folder_path, tag + ".xlsx")
         return output_path
 
+    def format_dataframes(self):
+        # TODO : Add formatting for all dataframes
+        pass
+
     def write_to_excel(self, output_folder, site, tag):
         """
         Creates excel file based on the output folder, site and tag.
@@ -718,7 +736,7 @@ class Pump:
                 ws.clear_contents()
 
                 for cell, df, bool in zip(
-                    ["A1", "A13", "A31", "G1"],
+                    ["A1", "A14", "A32", "G1"],
                     [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation, self.dfEconomics],
                     [True, False, False, True],
                 ):
