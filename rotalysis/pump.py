@@ -460,6 +460,8 @@ class Pump:
         df2["working_percent"] = df2["working_hours"] / df2["working_hours"].sum()
         df2["working_hours"] = df2["working_percent"] * 8760
         df2 = df2.loc[df2["working_percent"] > 0].reset_index(drop=True)
+        df2["working_percent"] = df2["working_hours"] / df2["working_hours"].sum()
+        df2["working_hours"] = df2["working_percent"] * 8760
 
         self.dfcalculation = df2
 
@@ -543,23 +545,24 @@ class Pump:
 
             if option == "Vsd":
                 self.VSDCalculation = self.dfcalculation.copy()
-                self.VSDSummary = self.__summarize(self.VSDCalculation,site)
+                self.VSDSummary = self.__summarize(self.VSDCalculation, site)
                 self.VSDSummary.columns = [option]
             elif option == "Impeller":
                 self.ImpellerCalculation = self.dfcalculation.copy()
-                self.ImpellerSummary = self.__summarize(self.ImpellerCalculation,site)
+                self.ImpellerSummary = self.__summarize(self.ImpellerCalculation, site)
                 self.ImpellerSummary.columns = [option]
 
-        self.dfsummary = pd.concat([self.VSDSummary, self.ImpellerSummary], axis=1)
+        self.dfSummary = pd.concat([self.VSDSummary, self.ImpellerSummary], axis=1)
 
-        if self.dfsummary["Vsd"]["base_case_energy_consumption"] == 0:
+        if self.dfSummary["Vsd"]["base_case_energy_consumption"] == 0:
             error_msg = "Base case energy consumption is zero. Please check the input data."
             raise CustomException(error_msg)
 
+        self.format_dataframes()
         self.__rename_columns()
         self.logger.info("Energy calculation completed")
 
-    def __summarize(self, dfenergy,site):
+    def __summarize(self, dfenergy, site):
         """
         PRIVATE METHOD USED IN create_energy_calculation()
 
@@ -577,26 +580,26 @@ class Pump:
             "ghg_reduction",
             "ghg_reduction_percent",
         ]
-        dfsummary = pd.DataFrame(columns=columns, data=np.nan, index=[0])
-        dfsummary["pump_tag"] = self.process_data["tag"]["value"]
-        dfsummary["rated_flowrate"] = self.process_data["rated_flow"]["value"]
+        dfSummary = pd.DataFrame(columns=columns, data=np.nan, index=[0])
+        dfSummary["pump_tag"] = self.process_data["tag"]["value"]
+        dfSummary["rated_flowrate"] = self.process_data["rated_flow"]["value"]
 
-        dfsummary["selected_speed_variation"] = (
+        dfSummary["selected_speed_variation"] = (
             "{:.0%}".format(dfenergy["selected_speed_variation"].max())
             + " - "
             + "{:.0%}".format(dfenergy["selected_speed_variation"].min())
         )
-        dfsummary["base_case_energy_consumption"] = dfenergy["base_case_energy_consumption"].sum()
-        dfsummary["proposed_case_energy_consumption"] = dfenergy["proposed_case_energy_consumption"].sum()
-        dfsummary["annual_energy_saving"] = dfenergy["annual_energy_saving"].sum()
-        dfsummary["base_case_emission"] = dfenergy["base_case_emission"].sum()
-        dfsummary["proposed_case_emission"] = dfenergy["proposed_case_emission"].sum()
-        dfsummary["emission_factor"] = self.dfemission_factor[site]["emission_factor"]
-        dfsummary["ghg_reduction"] = dfenergy["ghg_reduction"].sum()
-        dfsummary["ghg_reduction_percent"] = dfsummary["ghg_reduction"] / dfsummary["base_case_emission"]
-        dfsummary = dfsummary.transpose()
+        dfSummary["base_case_energy_consumption"] = dfenergy["base_case_energy_consumption"].sum()
+        dfSummary["proposed_case_energy_consumption"] = dfenergy["proposed_case_energy_consumption"].sum()
+        dfSummary["annual_energy_saving"] = dfenergy["annual_energy_saving"].sum()
+        dfSummary["base_case_emission"] = dfenergy["base_case_emission"].sum()
+        dfSummary["proposed_case_emission"] = dfenergy["proposed_case_emission"].sum()
+        dfSummary["emission_factor"] = self.dfemission_factor[site]["emission_factor"]
+        dfSummary["ghg_reduction"] = dfenergy["ghg_reduction"].sum()
+        dfSummary["ghg_reduction_percent"] = dfSummary["ghg_reduction"] / dfSummary["base_case_emission"]
+        dfSummary = dfSummary.transpose()
 
-        return dfsummary
+        return dfSummary
 
     def __rename_columns(self):
         """
@@ -607,7 +610,7 @@ class Pump:
         dfs = [j for j in vars(self).values() if isinstance(j, pd.DataFrame)]
         for df in dfs:
             df.rename(columns=lambda x: x.replace("_", " ").title(), inplace=True)
-        self.dfsummary.index = self.dfsummary.index.str.replace("_", " ").str.title()
+        self.dfSummary.index = self.dfSummary.index.str.replace("_", " ").str.title()
 
     def _add_multiheader(self):
         l1 = self.dfcalculation.columns.to_list()
@@ -623,7 +626,7 @@ class Pump:
         self.VSDCalculation.columns = pd.MultiIndex.from_tuples(multi_header)
         self.ImpellerCalculation.columns = pd.MultiIndex.from_tuples(multi_header)
 
-        self.dfsummary["Unit"] = [d1.get(i.replace(" ", "_").lower(), "") for i in self.dfsummary.index]
+        self.dfSummary["Unit"] = [d1.get(i.replace(" ", "_").lower(), "") for i in self.dfSummary.index]
 
     def _remove_multiheader(self):
         self.VSDCalculation.columns = self.VSDCalculation.columns.droplevel(1)
@@ -662,22 +665,22 @@ class Pump:
         self.VSDEconomics = self.get_economic_calculation(
             capex=self.config["vsd_capex"]["value"] / self.process_data["spare"]["value"],
             opex=self.config["vsd_opex"]["value"] * self.config["vsd_capex"]["value"],
-            annual_energy_savings=self.dfsummary["Vsd"]["Annual Energy Saving"],
-            annual_emission_reduction=self.dfsummary["Vsd"]["Ghg Reduction"],
+            annual_energy_savings=self.dfSummary["Vsd"]["Annual Energy Saving"],
+            annual_emission_reduction=self.dfSummary["Vsd"]["Ghg Reduction"],
         )
 
         self.VFDEconomics = self.get_economic_calculation(
             capex=self.config["vfd_capex"]["value"] / self.process_data["spare"]["value"],
             opex=self.config["vfd_opex"]["value"] * self.config["vfd_capex"]["value"],
-            annual_energy_savings=self.dfsummary["Vsd"]["Annual Energy Saving"],
-            annual_emission_reduction=self.dfsummary["Vsd"]["Ghg Reduction"],
+            annual_energy_savings=self.dfSummary["Vsd"]["Annual Energy Saving"],
+            annual_emission_reduction=self.dfSummary["Vsd"]["Ghg Reduction"],
         )
 
         self.ImpellerEconomics = self.get_economic_calculation(
             capex=self.config["impeller_capex"]["value"] / self.process_data["spare"]["value"],
             opex=self.config["impeller_opex"]["value"] * self.config["impeller_capex"]["value"],
-            annual_energy_savings=self.dfsummary["Impeller"]["Annual Energy Saving"],
-            annual_emission_reduction=self.dfsummary["Impeller"]["Ghg Reduction"],
+            annual_energy_savings=self.dfSummary["Impeller"]["Annual Energy Saving"],
+            annual_emission_reduction=self.dfSummary["Impeller"]["Ghg Reduction"],
         )
 
     def get_economics_summary(self):
@@ -710,8 +713,38 @@ class Pump:
         return output_path
 
     def format_dataframes(self):
-        # TODO : Add formatting for all dataframes
-        pass
+        """
+        Formats the dataframes for excel file.
+        """
+        percent_columns = [
+            "flowrate_percent",
+            "old_pump_efficiency",
+            "old_motor_efficiency",
+            "new_motor_efficiency",
+            "new_pump_efficiency",
+            "ghg_reduction_percent",
+            "required_speed_variation",
+            "selected_speed_variation",
+            "working_percent"
+        ]
+        for df in [self.VSDCalculation, self.ImpellerCalculation]:
+            for col in percent_columns:
+                df[col] = df[col].apply(lambda x: uf.format_number(x, type="percent"))
+
+            for col in df.columns:
+                if df[col].dtype == "float64":
+                    df[col] = df[col].apply(lambda x: uf.format_number(x, type="whole"))
+
+    def format_summary(self):
+        excluded_columns = ["Ghg Reduction Percent", "Emission Factor"]
+        self.dfSummary = self.dfSummary.apply(
+            lambda row: row.apply(lambda val: uf.format_number(val, type="percent"))
+            if row.name == "Ghg Reduction Percent"
+            else row
+            if row.name == "Emission Factor"
+            else row.apply(uf.format_number),
+            axis=1,
+        )
 
     def write_to_excel(self, output_folder, site, tag):
         """
@@ -725,6 +758,7 @@ class Pump:
         try:
             path = self._get_output_path(output_folder, site, tag)
 
+            self.format_summary()
             self._add_multiheader()
 
             with xw.App(visible=False) as app:
@@ -737,10 +771,26 @@ class Pump:
 
                 for cell, df, bool in zip(
                     ["A1", "A14", "A32", "G1"],
-                    [self.dfsummary, self.VSDCalculation, self.ImpellerCalculation, self.dfEconomics],
+                    [self.dfSummary, self.VSDCalculation, self.ImpellerCalculation, self.dfEconomics],
                     [True, False, False, True],
                 ):
                     ws.range(cell).options(index=bool).value = df
+                    current_area = ws.range(cell).expand().address
+                    #make boder
+                    ws.range(current_area).api.Borders.LineStyle = 1
+
+                ws.api.PageSetup.Orientation = xw.constants.PageOrientation.xlLandscape
+                ws.api.PageSetup.PaperSize = xw.constants.PaperSize.xlPaperA3
+                ws.api.PageSetup.PrintArea = "$A$1:$AG$50"
+                ws.api.PageSetup.Zoom = 55
+                ws.range("14:14").api.Font.Bold = True
+                ws.range("14:14").api.Orientation = 90
+                ws.range("32:32").api.Font.Bold = True
+                ws.range("32:32").api.Orientation = 90
+                ws.range("A:A").api.EntireColumn.AutoFit()
+
+                pdf_path = path.replace(".xlsx", ".pdf")
+                wb.api.ExportAsFixedFormat(0, pdf_path)
                 wb.save(path)
 
                 self._remove_multiheader()

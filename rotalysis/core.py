@@ -22,14 +22,14 @@ class Core:
     def update_tasklist(self, pump, idx):
         if self.success:
             self.dftask_list.loc[idx, ["Perform", "Result"]] = ("N", "Success")
-            self.dftask_list.loc[idx, "IT_energy"] = pump.dfsummary["Impeller"]["Annual Energy Saving"]
+            self.dftask_list.loc[idx, "IT_energy"] = pump.dfSummary["Impeller"]["Annual Energy Saving"]
             self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"]["GHG Reduction Cost"]
-            self.dftask_list.loc[idx, "IT_ghg_reduction"] = pump.dfsummary["Impeller"]["Ghg Reduction"]
-            self.dftask_list.loc[idx, "IT_ghg_reduction_percent"] = pump.dfsummary["Impeller"]["Ghg Reduction Percent"]
+            self.dftask_list.loc[idx, "IT_ghg_reduction"] = pump.dfSummary["Impeller"]["Ghg Reduction"]
+            self.dftask_list.loc[idx, "IT_ghg_reduction_percent"] = pump.dfSummary["Impeller"]["Ghg Reduction Percent"]
             self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"]["GHG Reduction Cost"]
-            self.dftask_list.loc[idx, "VSD_energy"] = pump.dfsummary["Vsd"]["Annual Energy Saving"]
-            self.dftask_list.loc[idx, "VSD_ghg_reduction"] = pump.dfsummary["Vsd"]["Ghg Reduction"]
-            self.dftask_list.loc[idx, "VSD_ghg_reduction_percent"] = pump.dfsummary["Vsd"]["Ghg Reduction Percent"]
+            self.dftask_list.loc[idx, "VSD_energy"] = pump.dfSummary["Vsd"]["Annual Energy Saving"]
+            self.dftask_list.loc[idx, "VSD_ghg_reduction"] = pump.dfSummary["Vsd"]["Ghg Reduction"]
+            self.dftask_list.loc[idx, "VSD_ghg_reduction_percent"] = pump.dfSummary["Vsd"]["Ghg Reduction Percent"]
             self.dftask_list.loc[idx, "VSD_ghg_cost"] = pump.dfEconomics["VSD"]["GHG Reduction Cost"]
 
         else:

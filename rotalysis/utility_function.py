@@ -113,3 +113,17 @@ class UtilityFunction:
     @staticmethod
     def is_empty_value(value):
         return value == "" or value is None or (isinstance(value, (float, int)) and np.isnan(value))
+
+    @staticmethod
+    def format_number(number, type="whole"):
+        try:
+            if type == "percent":
+                formatted_number = "{:.0%}".format(number)
+            elif type == "whole":
+                formatted_number = "{:,}".format(int(number))
+            else:
+                formatted_number = str(number)
+        except (ValueError, TypeError):
+            formatted_number = str(number)
+        
+        return formatted_number
