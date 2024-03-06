@@ -10,11 +10,12 @@ import numpy as np
 import numpy_financial as npf
 import pandas as pd
 import xlwings as xw
+import xlwings.constants as xwc
 
 from rotalysis import Economics as ec
 from rotalysis import PumpFunction as PF
 from rotalysis import UtilityFunction as uf
-from utils import logger
+from utils import streamlit_logger
 
 
 class CustomException(Exception):
@@ -46,7 +47,11 @@ class Pump:
     """
 
     # ** Columns with units in Class Level
-    mandatory_columns = {"suction_pressure": "barg", "discharge_pressure": "barg", "discharge_flowrate": "m3/h"}
+    mandatory_columns = {
+        "suction_pressure": "barg",
+        "discharge_pressure": "barg",
+        "discharge_flowrate": "m3/h",
+    }
     optional_columns = {
         "cv_opening": "%",
         "downstream_pressure": "barg",
@@ -96,7 +101,7 @@ class Pump:
         self.data_path = data_path
         self.config_path = config_path
         self.__set_data()
-        self.logger = logger
+        self.logger = streamlit_logger
         self.__set_config()
         self.get_emission_factor()
         self.__check_mandatory_columns()
@@ -118,8 +123,12 @@ class Pump:
         Returns:
             float: emission factor
         """
-        dfemission_factor = pd.read_excel(self.config_path, sheet_name="EmissionFactor", header=0)
-        dfemission_factor = dfemission_factor.iloc[:, :2].dropna(subset=["emission_factor"])
+        dfemission_factor = pd.read_excel(
+            self.config_path, sheet_name="EmissionFactor", header=0
+        )
+        dfemission_factor = dfemission_factor.iloc[:, :2].dropna(
+            subset=["emission_factor"]
+        )
         dfemission_factor.set_index("site", inplace=True)
         self.dfemission_factor = dfemission_factor.to_dict("index")
 
@@ -139,7 +148,9 @@ class Pump:
 
         # Set Pump operational data
         self.dfoperation = pd.read_excel(
-            self.data_path, sheet_name="operational data", header=self.process_data["header_row"]["value"] - 1
+            self.data_path,
+            sheet_name="operational data",
+            header=self.process_data["header_row"]["value"] - 1,
         )
 
         # Set Pump unit
@@ -154,11 +165,13 @@ class Pump:
         Raises:
             ValueError: If the operational data excel sheet is missing the mandatory columns.
         """
-        missing_columns = [col for col in list(Pump.mandatory_columns.keys()) if col not in self.dfoperation.columns]
+        missing_columns = [
+            col
+            for col in list(Pump.mandatory_columns.keys())
+            if col not in self.dfoperation.columns
+        ]
         if len(missing_columns) > 0:
-            missing_columns_error = (
-                f"The operational data excel sheet is missing the following required columns: {', '.join(missing_columns)}."
-            )
+            missing_columns_error = f"The operational data excel sheet is missing the following required columns: {', '.join(missing_columns)}."
             raise CustomException(missing_columns_error)
 
     def clean_non_numeric_data(self):
@@ -171,28 +184,35 @@ class Pump:
         self.logger.info("Data cleaning completed")
 
     def remove_irrelevant_columns(self):
-        irrelevant_columns = [col for col in self.dfoperation.columns if col not in Pump.relevant_columns]
+        irrelevant_columns = [
+            col for col in self.dfoperation.columns if col not in Pump.relevant_columns
+        ]
         self.dfoperation = self.dfoperation.drop(columns=irrelevant_columns)
         self.logger.info("Irrelevant columns removed")
 
     def convert_default_unit(self):
-        flowrate_conversion = {"m3/hr": 1, "default": 1, "bpd": 0.0066245, "gpm": 0.22712, "bph": 0.15899, "mbph": 158.99}
+        flowrate_conversion = {
+            "m3/hr": 1,
+            "default": 1,
+            "bpd": 0.0066245,
+            "gpm": 0.22712,
+            "bph": 0.15899,
+            "mbph": 158.99,
+        }
 
         flowrate_unit = self.unit["flowrate"].lower()
         if flowrate_unit not in flowrate_conversion.keys():
-            error_msg = (
-                f"Flowrate unit {flowrate_unit} is not supported.Supported units are {', '.join(flowrate_conversion.keys())}"
-            )
+            error_msg = f"Flowrate unit {flowrate_unit} is not supported.Supported units are {', '.join(flowrate_conversion.keys())}"
             self.logger.error(error_msg)
             raise CustomException(error_msg)
 
-        self.dfoperation["discharge_flowrate"] = self.dfoperation["discharge_flowrate"] * flowrate_conversion.get(
-            flowrate_unit, 1
-        )
+        self.dfoperation["discharge_flowrate"] = self.dfoperation[
+            "discharge_flowrate"
+        ] * flowrate_conversion.get(flowrate_unit, 1)
 
-        self.process_data["rated_flow"]["value"] = self.process_data["rated_flow"]["value"] * flowrate_conversion.get(
-            flowrate_unit, 1
-        )
+        self.process_data["rated_flow"]["value"] = self.process_data["rated_flow"][
+            "value"
+        ] * flowrate_conversion.get(flowrate_unit, 1)
 
         pressure_unit = self.unit["pressure"]
         pressure_conversion = {"bar": 1, "psi": 0.0689476}
@@ -202,9 +222,9 @@ class Pump:
         ] * pressure_conversion.get(pressure_unit, 1)
 
         if "downstream_pressure" in self.dfoperation.columns:
-            self.dfoperation["downstream_pressure"] = self.dfoperation["downstream_pressure"] * pressure_conversion.get(
-                pressure_unit, 1
-            )
+            self.dfoperation["downstream_pressure"] = self.dfoperation[
+                "downstream_pressure"
+            ] * pressure_conversion.get(pressure_unit, 1)
 
         self.logger.info("unit conversion completed")
 
@@ -217,26 +237,47 @@ class Pump:
 
         """
         try:
-            self.dfoperation.dropna(subset=list(Pump.mandatory_columns.keys()), inplace=True)
+            self.dfoperation.dropna(
+                subset=list(Pump.mandatory_columns.keys()), inplace=True
+            )
 
             calculation_method = self.process_data["calculation_method"]["value"]
 
-            mask = pd.Series(True, index=self.dfoperation.index)  # Initialize mask as True for all rows
+            mask = pd.Series(
+                True, index=self.dfoperation.index
+            )  # Initialize mask as True for all rows
             mask &= self.dfoperation["discharge_flowrate"] > 0
-            mask &= self.dfoperation["suction_pressure"] < self.dfoperation["discharge_pressure"]
+            mask &= (
+                self.dfoperation["suction_pressure"]
+                < self.dfoperation["discharge_pressure"]
+            )
 
             if uf.is_empty_value(calculation_method):
-                raise CustomException("calculation_method is not defined in config file.")
-
-            if (calculation_method == "downstream_pressure") and ("downstream_pressure" in self.dfoperation.columns):
-                downstream_pressure = pd.to_numeric(self.dfoperation["downstream_pressure"], errors="coerce").notna()
-                mask &= (self.dfoperation["downstream_pressure"] < self.dfoperation["discharge_pressure"]) & (
-                    downstream_pressure
+                raise CustomException(
+                    "calculation_method is not defined in config file."
                 )
 
-            elif calculation_method == "cv_opening" and "cv_opening" in self.dfoperation.columns:
-                cv_opening = pd.to_numeric(self.dfoperation["cv_opening"], errors="coerce")
-                mask &= (cv_opening.notna()) & (cv_opening > self.config["min_cv_opening"]["value"])
+            if (calculation_method == "downstream_pressure") and (
+                "downstream_pressure" in self.dfoperation.columns
+            ):
+                downstream_pressure = pd.to_numeric(
+                    self.dfoperation["downstream_pressure"], errors="coerce"
+                ).notna()
+                mask &= (
+                    self.dfoperation["downstream_pressure"]
+                    < self.dfoperation["discharge_pressure"]
+                ) & (downstream_pressure)
+
+            elif (
+                calculation_method == "cv_opening"
+                and "cv_opening" in self.dfoperation.columns
+            ):
+                cv_opening = pd.to_numeric(
+                    self.dfoperation["cv_opening"], errors="coerce"
+                )
+                mask &= (cv_opening.notna()) & (
+                    cv_opening > self.config["min_cv_opening"]["value"]
+                )
 
             elif "downstream_pressure|cv_opening" not in self.dfoperation.columns:
                 error_msg = f"Can't find '{calculation_method}' column in the operational data sheet.\n \
@@ -258,11 +299,12 @@ class Pump:
         """
         percent = self.config["bin_percent"]["value"]
         self.dfoperation["flowrate_percent"] = (
-            self.dfoperation["discharge_flowrate"] / self.process_data["rated_flow"]["value"]
+            self.dfoperation["discharge_flowrate"]
+            / self.process_data["rated_flow"]["value"]
         )
 
-        bins = np.arange(0.275, 1 + (5 * percent), percent)
-        labels = np.arange(0.30, 1 + (5 * percent), percent)
+        bins = np.arange(0.275, 1 + (5 * percent), percent).tolist()
+        labels = np.arange(0.30, 1 + (5 * percent), percent).tolist()
         self.dfoperation["flowrate_percent"] = pd.cut(
             self.dfoperation["flowrate_percent"], bins=bins, labels=labels, right=True
         )
@@ -273,7 +315,10 @@ class Pump:
         - Check if recirculation flow is greater than the discharge flow
         """
         if "recirculation_flow" in self.dfoperation.columns:
-            if (self.dfoperation["recirculation_flow"] > self.dfoperation["discharge_flowrate"]).all():
+            if (
+                self.dfoperation["recirculation_flow"]
+                > self.dfoperation["discharge_flowrate"]
+            ).all():
                 self.logger.warning("Recirculation flow is greater than discharge flow")
 
     def get_computed_columns(self):
@@ -304,7 +349,8 @@ class Pump:
         """
 
         self.dfoperation = self.dfoperation.reindex(
-            columns=self.dfoperation.columns.tolist() + list(Pump.computed_columns.keys())
+            columns=self.dfoperation.columns.tolist()
+            + list(Pump.computed_columns.keys())
         )
 
         self.dfoperation["differential_pressure"] = PF.get_differential_pressure(
@@ -326,12 +372,18 @@ class Pump:
 
         if calculation_method == "cv_opening":
             if not uf.is_empty_value(valve_size):
-                self.dfoperation["actual_cv"] = PF.get_actual_cv(valve_size, self.dfoperation["cv_opening"], valve_character)
+                self.dfoperation["actual_cv"] = PF.get_actual_cv(
+                    valve_size, self.dfoperation["cv_opening"], valve_character
+                )
 
                 self.dfoperation["calculated_cv_drop"] = PF.get_calculated_cv_drop(
-                    self.dfoperation["discharge_flowrate"], self.dfoperation["actual_cv"], density
+                    self.dfoperation["discharge_flowrate"],
+                    self.dfoperation["actual_cv"],
+                    density,
                 )
-                self.dfoperation["cv_pressure_drop"] = self.dfoperation["calculated_cv_drop"]
+                self.dfoperation["cv_pressure_drop"] = self.dfoperation[
+                    "calculated_cv_drop"
+                ]
                 self.dfoperation["inherent_piping_loss"] = 0
             else:
                 error_msg = "valve_size is not defined in config file."
@@ -340,7 +392,8 @@ class Pump:
 
         elif calculation_method == "downstream_pressure":
             self.dfoperation["measured_cv_drop"] = PF.get_measured_cv_drop(
-                self.dfoperation["discharge_pressure"], self.dfoperation["downstream_pressure"]
+                self.dfoperation["discharge_pressure"],
+                self.dfoperation["downstream_pressure"],
             )
 
             self.dfoperation["cv_pressure_drop"] = self.dfoperation["measured_cv_drop"]
@@ -357,28 +410,28 @@ class Pump:
 
     def __get_required_speed_varation(self):
         self.dfoperation["required_speed_variation"] = PF.get_speed_variation(
-            self.dfoperation["differential_pressure"], self.dfoperation["required_differential_pressure"]
+            self.dfoperation["differential_pressure"],
+            self.dfoperation["required_differential_pressure"],
         )
 
     def __get_base_hydraulic_power(self):
         self.dfoperation["base_hydraulic_power"] = PF.get_base_hydraulic_power(
-            self.dfoperation["discharge_flowrate"], self.dfoperation["differential_pressure"]
+            self.dfoperation["discharge_flowrate"],
+            self.dfoperation["differential_pressure"],
         )
 
     def __get_BEP_flowrate(self):
         """
         PRIVATE METHOD USED IN __get_efficiency()
         """
-
-        if uf.is_empty_value(self.process_data["BEP_flowrate"]["value"]):
+        BEP_flowrate = self.process_data["BEP_flowrate"]["value"]
+        if uf.is_empty_value(BEP_flowrate):
             BEP_flowrate = self.process_data["rated_flow"]["value"]
-        elif isinstance(self.process_data["BEP_flowrate"]["value"], str):
+        elif isinstance(BEP_flowrate, str):
             BEP_flowrate = self.process_data["rated_flow"]["value"]
             self.logger.warning(
                 f"BEP_flowrate should be empty or numeric. Please don't string values next time. \nRated flowrate is used as BEP_flowrate."
             )
-        else:
-            BEP_flowrate = self.process_data["BEP_flowrate"]["value"]
 
         return BEP_flowrate
 
@@ -387,12 +440,13 @@ class Pump:
         PRIVATE METHOD USED IN __get_efficiency()
         """
 
-        if self.process_data["BEP_efficiency"]["value"] == "" or (np.nan or None):
+        BEP_efficiency = self.process_data["BEP_efficiency"]["value"]
+        if uf.is_empty_value(BEP_efficiency):
             BEP_efficiency = self.config["pump_efficiency"]["value"]
-        elif isinstance(self.process_data["BEP_efficiency"]["value"], str):
+        elif isinstance(BEP_efficiency, str):
             BEP_efficiency = self.config["pump_efficiency"]["value"]
             self.logger.warning(
-                f"BEP_efficiency should be empty or numeric. Please don't string values next time. \nDefault pump efficiency is used as BEP_efficiency."
+                "BEP_efficiency should be empty or numeric. Please don't use string values. Default pump efficiency is used as BEP_efficiency."
             )
 
         return BEP_efficiency
@@ -414,9 +468,13 @@ class Pump:
         # calculate old_motor_efficiency
         if uf.is_empty_value(self.process_data["motor_efficiency"]["value"]):
             self.process_data["motor_efficiency"]["value"] = 0.9
-            self.logger.warning(f"motor_efficiency is empty. \n motor efficiency is considered 90% by default")
+            self.logger.warning(
+                f"motor_efficiency is empty. \n motor efficiency is considered 90% by default"
+            )
 
-        self.dfoperation["old_motor_efficiency"] = self.process_data["motor_efficiency"]["value"]
+        self.dfoperation["old_motor_efficiency"] = self.process_data[
+            "motor_efficiency"
+        ]["value"]
 
     def __get_base_motor_power(self):
         """
@@ -436,26 +494,34 @@ class Pump:
             CustomException if the discharge flowrate is less than 30% of the rated flowrate
         """
 
-        if self.dfoperation["discharge_flowrate"].max() < 0.3 * self.process_data["rated_flow"]["value"]:
+        if (
+            self.dfoperation["discharge_flowrate"].max()
+            < 0.3 * self.process_data["rated_flow"]["value"]
+        ):
             error_msg = "The maximum flowrate is less than 30% of the rated flowrate. \nPlease check the flowrate unit."
             self.logger.warning(error_msg)
 
-            raise CustomException("Analysis stopped since VFD and Impeller trimming will not be effective.")
+            raise CustomException(
+                "Analysis stopped since VFD and Impeller trimming will not be effective."
+            )
 
     def group_by_flowrate_percent(self):
         """
         - Group the dfoperation dataframe based on the flowrate percentage
         - Create a new datframe "dfcalculation"
         """
-        df2 = self.dfoperation.groupby(by=["flowrate_percent"], as_index=False, dropna=False).mean(numeric_only=True)
-        working_hours = self.dfoperation.groupby(by=["flowrate_percent"], as_index=False, dropna=False)[
-            "discharge_flowrate"
-        ].size()
+        df2 = self.dfoperation.groupby(
+            by=["flowrate_percent"], as_index=False, dropna=False
+        ).mean(numeric_only=True)
+        working_hours = self.dfoperation.groupby(
+            by=["flowrate_percent"], as_index=False, dropna=False
+        )["discharge_flowrate"].size()
         df2["working_hours"] = working_hours["size"]
         df2["working_percent"] = df2["working_hours"] / df2["working_hours"].sum()
 
         df2.loc[
-            df2["working_percent"] < self.config["min_working_percent"]["value"], ["working_hours", "working_percent"]
+            df2["working_percent"] < self.config["min_working_percent"]["value"],
+            ["working_hours", "working_percent"],
         ] = 0
         df2["working_percent"] = df2["working_hours"] / df2["working_hours"].sum()
         df2["working_hours"] = df2["working_percent"] * 8760
@@ -475,11 +541,20 @@ class Pump:
         ] = self.dfcalculation["required_speed_variation"]
 
         self.dfcalculation.loc[
-            (self.dfcalculation["selected_measure"] == "Impeller") & (self.dfcalculation["working_percent"] > 0),
+            (self.dfcalculation["selected_measure"] == "Impeller")
+            & (self.dfcalculation["working_percent"] > 0),
             "selected_speed_variation",
-        ] = (self.dfcalculation.loc[self.dfcalculation["working_percent"] > 0, "required_speed_variation"].dropna().max())
+        ] = (
+            self.dfcalculation.loc[
+                self.dfcalculation["working_percent"] > 0, "required_speed_variation"
+            ]
+            .dropna()
+            .max()
+        )
 
-        self.dfcalculation.loc[(self.dfcalculation["working_percent"] <= 0), "selected_speed_variation"] = 0
+        self.dfcalculation.loc[
+            (self.dfcalculation["working_percent"] <= 0), "selected_speed_variation"
+        ] = 0
 
     def __get_energy_columns(self):
         """
@@ -492,12 +567,20 @@ class Pump:
         )
 
         # calculate proposed case efficiency
-        self.dfcalculation["new_pump_efficiency"] = self.dfcalculation["old_pump_efficiency"]
-        self.dfcalculation["new_motor_efficiency"] = self.dfcalculation["old_motor_efficiency"]
+        self.dfcalculation["new_pump_efficiency"] = self.dfcalculation[
+            "old_pump_efficiency"
+        ]
+        self.dfcalculation["new_motor_efficiency"] = self.dfcalculation[
+            "old_motor_efficiency"
+        ]
 
         # calculate proposed case annual energy consumption
-        eff_factor = (self.dfcalculation["new_pump_efficiency"] * self.dfcalculation["new_motor_efficiency"]) / (
-            self.dfcalculation["old_pump_efficiency"] * self.dfcalculation["old_motor_efficiency"]
+        eff_factor = (
+            self.dfcalculation["new_pump_efficiency"]
+            * self.dfcalculation["new_motor_efficiency"]
+        ) / (
+            self.dfcalculation["old_pump_efficiency"]
+            * self.dfcalculation["old_motor_efficiency"]
         )
 
         self.dfcalculation["proposed_case_energy_consumption"] = (
@@ -508,7 +591,8 @@ class Pump:
 
         # calculate annual energy savings
         self.dfcalculation["annual_energy_saving"] = (
-            self.dfcalculation["base_case_energy_consumption"] - self.dfcalculation["proposed_case_energy_consumption"]
+            self.dfcalculation["base_case_energy_consumption"]
+            - self.dfcalculation["proposed_case_energy_consumption"]
         )
 
     def __get_emissions_columns(self, site):
@@ -517,18 +601,22 @@ class Pump:
         """
         emission_factor = self.dfemission_factor[site]["emission_factor"]
 
-        self.dfcalculation["base_case_emission"] = self.dfcalculation["base_case_energy_consumption"] * emission_factor
+        self.dfcalculation["base_case_emission"] = (
+            self.dfcalculation["base_case_energy_consumption"] * emission_factor
+        )
 
         self.dfcalculation["proposed_case_emission"] = (
             self.dfcalculation["proposed_case_energy_consumption"] * emission_factor
         )
 
         self.dfcalculation["ghg_reduction"] = (
-            self.dfcalculation["base_case_emission"] - self.dfcalculation["proposed_case_emission"]
+            self.dfcalculation["base_case_emission"]
+            - self.dfcalculation["proposed_case_emission"]
         )
 
         self.dfcalculation["ghg_reduction_percent"] = (
-            self.dfcalculation["ghg_reduction"] / self.dfcalculation["base_case_emission"]
+            self.dfcalculation["ghg_reduction"]
+            / self.dfcalculation["base_case_emission"]
         )
 
     def create_energy_calculation(self, site):
@@ -555,7 +643,9 @@ class Pump:
         self.dfSummary = pd.concat([self.VSDSummary, self.ImpellerSummary], axis=1)
 
         if self.dfSummary["Vsd"]["base_case_energy_consumption"] == 0:
-            error_msg = "Base case energy consumption is zero. Please check the input data."
+            error_msg = (
+                "Base case energy consumption is zero. Please check the input data."
+            )
             raise CustomException(error_msg)
 
         self.format_dataframes()
@@ -589,14 +679,20 @@ class Pump:
             + " - "
             + "{:.0%}".format(dfenergy["selected_speed_variation"].min())
         )
-        dfSummary["base_case_energy_consumption"] = dfenergy["base_case_energy_consumption"].sum()
-        dfSummary["proposed_case_energy_consumption"] = dfenergy["proposed_case_energy_consumption"].sum()
+        dfSummary["base_case_energy_consumption"] = dfenergy[
+            "base_case_energy_consumption"
+        ].sum()
+        dfSummary["proposed_case_energy_consumption"] = dfenergy[
+            "proposed_case_energy_consumption"
+        ].sum()
         dfSummary["annual_energy_saving"] = dfenergy["annual_energy_saving"].sum()
         dfSummary["base_case_emission"] = dfenergy["base_case_emission"].sum()
         dfSummary["proposed_case_emission"] = dfenergy["proposed_case_emission"].sum()
         dfSummary["emission_factor"] = self.dfemission_factor[site]["emission_factor"]
         dfSummary["ghg_reduction"] = dfenergy["ghg_reduction"].sum()
-        dfSummary["ghg_reduction_percent"] = dfSummary["ghg_reduction"] / dfSummary["base_case_emission"]
+        dfSummary["ghg_reduction_percent"] = (
+            dfSummary["ghg_reduction"] / dfSummary["base_case_emission"]
+        )
         dfSummary = dfSummary.transpose()
 
         return dfSummary
@@ -626,13 +722,17 @@ class Pump:
         self.VSDCalculation.columns = pd.MultiIndex.from_tuples(multi_header)
         self.ImpellerCalculation.columns = pd.MultiIndex.from_tuples(multi_header)
 
-        self.dfSummary["Unit"] = [d1.get(i.replace(" ", "_").lower(), "") for i in self.dfSummary.index]
+        self.dfSummary["Unit"] = [
+            d1.get(i.replace(" ", "_").lower(), "") for i in self.dfSummary.index
+        ]
 
     def _remove_multiheader(self):
         self.VSDCalculation.columns = self.VSDCalculation.columns.droplevel(1)
         self.ImpellerCalculation.columns = self.ImpellerCalculation.columns.droplevel(1)
 
-    def get_economic_calculation(self, capex, opex, annual_energy_savings, annual_emission_reduction):
+    def get_economic_calculation(
+        self, capex, opex, annual_energy_savings, annual_emission_reduction
+    ):
         discount_rate = self.config["discount_rate"]["value"]
         project_life = self.config["project_life"]["value"]
         inflation_rate = self.config["inflation_rate"]["value"]
@@ -641,14 +741,18 @@ class Pump:
         dfcashflow = ec.create_cashflow_df(capex=capex, project_life=project_life)
 
         dfcashflow["fuel_cost"] = annual_energy_savings * electricity_price
-        dfcashflow["opex"] = ec.inflation_adjusted_opex(opex, inflation_rate, years=dfcashflow.index)
+        dfcashflow["opex"] = ec.inflation_adjusted_opex(
+            opex, inflation_rate, years=dfcashflow.index
+        )
         dfcashflow.loc[1:, "cashflow"] = dfcashflow["fuel_cost"] - dfcashflow["opex"]
 
         NPV = npf.npv(rate=discount_rate, values=dfcashflow["cashflow"])
         IRR = npf.irr(dfcashflow["cashflow"])
         annualized_spending = ec.annualized_spending(NPV, discount_rate, project_life)
         pay_back = ec.calculate_payback_period(dfcashflow["cashflow"])
-        ghg_reduction_cost = ec.GHG_reduction_cost(annualized_spending, annual_emission_reduction)
+        ghg_reduction_cost = ec.GHG_reduction_cost(
+            annualized_spending, annual_emission_reduction
+        )
 
         economic_calculation = {
             "Capex": round(capex, 0),
@@ -663,22 +767,26 @@ class Pump:
 
     def __get_economics(self):
         self.VSDEconomics = self.get_economic_calculation(
-            capex=self.config["vsd_capex"]["value"] / self.process_data["spare"]["value"],
+            capex=self.config["vsd_capex"]["value"]
+            / self.process_data["spare"]["value"],
             opex=self.config["vsd_opex"]["value"] * self.config["vsd_capex"]["value"],
             annual_energy_savings=self.dfSummary["Vsd"]["Annual Energy Saving"],
             annual_emission_reduction=self.dfSummary["Vsd"]["Ghg Reduction"],
         )
 
         self.VFDEconomics = self.get_economic_calculation(
-            capex=self.config["vfd_capex"]["value"] / self.process_data["spare"]["value"],
+            capex=self.config["vfd_capex"]["value"]
+            / self.process_data["spare"]["value"],
             opex=self.config["vfd_opex"]["value"] * self.config["vfd_capex"]["value"],
             annual_energy_savings=self.dfSummary["Vsd"]["Annual Energy Saving"],
             annual_emission_reduction=self.dfSummary["Vsd"]["Ghg Reduction"],
         )
 
         self.ImpellerEconomics = self.get_economic_calculation(
-            capex=self.config["impeller_capex"]["value"] / self.process_data["spare"]["value"],
-            opex=self.config["impeller_opex"]["value"] * self.config["impeller_capex"]["value"],
+            capex=self.config["impeller_capex"]["value"]
+            / self.process_data["spare"]["value"],
+            opex=self.config["impeller_opex"]["value"]
+            * self.config["impeller_capex"]["value"],
             annual_energy_savings=self.dfSummary["Impeller"]["Annual Energy Saving"],
             annual_emission_reduction=self.dfSummary["Impeller"]["Ghg Reduction"],
         )
@@ -689,9 +797,10 @@ class Pump:
 
             dfs = []
             for option, col in zip(
-                [self.VSDEconomics, self.VFDEconomics, self.ImpellerEconomics], ["VSD", "VFD", "Impeller"]
+                [self.VSDEconomics, self.VFDEconomics, self.ImpellerEconomics],
+                ["VSD", "VFD", "Impeller"],
             ):
-                df = pd.DataFrame(option.values(), index=option.keys(), columns=[col])
+                df = pd.DataFrame(list(option.values()), index=list(option.keys()), columns=[col])
                 dfs.append(df)
 
             self.dfEconomics = pd.concat(dfs, axis=1)
@@ -725,7 +834,7 @@ class Pump:
             "ghg_reduction_percent",
             "required_speed_variation",
             "selected_speed_variation",
-            "working_percent"
+            "working_percent",
         ]
         for df in [self.VSDCalculation, self.ImpellerCalculation]:
             for col in percent_columns:
@@ -771,16 +880,21 @@ class Pump:
 
                 for cell, df, bool in zip(
                     ["A1", "A14", "A32", "G1"],
-                    [self.dfSummary, self.VSDCalculation, self.ImpellerCalculation, self.dfEconomics],
+                    [
+                        self.dfSummary,
+                        self.VSDCalculation,
+                        self.ImpellerCalculation,
+                        self.dfEconomics,
+                    ],
                     [True, False, False, True],
                 ):
                     ws.range(cell).options(index=bool).value = df
                     current_area = ws.range(cell).expand().address
-                    #make boder
+                    # make boder
                     ws.range(current_area).api.Borders.LineStyle = 1
 
-                ws.api.PageSetup.Orientation = xw.constants.PageOrientation.xlLandscape
-                ws.api.PageSetup.PaperSize = xw.constants.PaperSize.xlPaperA3
+                ws.api.PageSetup.Orientation = xwc.PageOrientation.xlLandscape
+                ws.api.PageSetup.PaperSize = xwc.PaperSize.xlPaperA3
                 ws.api.PageSetup.PrintArea = "$A$1:$AG$50"
                 ws.api.PageSetup.Zoom = 55
                 ws.range("14:14").api.Font.Bold = True
@@ -798,3 +912,24 @@ class Pump:
                 self.logger.info(f"Excel file created at {path}")
         except Exception as e:
             raise CustomException(e, "Error in writing to excel.")
+
+    def process_pump(self, output_folder, site, tag):
+        """
+        Main method to run the pump analysis.
+        """
+        try:
+            self.clean_non_numeric_data()
+            self.remove_irrelevant_columns()
+            self.convert_default_unit()
+            self.remove_non_operating_rows()
+            self.get_computed_columns()
+            self.group_by_flowrate_percent()
+            self.create_energy_calculation(site)
+            self.get_economics_summary()
+            self.write_to_excel(output_folder, site, tag)
+        except CustomException as e:
+            self.logger.error(e)
+            raise CustomException(e)
+        except Exception as e:
+            self.logger.error(e)
+            raise CustomException(e)

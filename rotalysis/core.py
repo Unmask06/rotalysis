@@ -1,13 +1,10 @@
 # core.py in rotalysis folder
-import logging
 import time
 import traceback
 
-from regex import F
-
 from rotalysis import CustomException, Pump, RotalysisInput
 from rotalysis import UtilityFunction as UF
-from utils import StreamlitObject, streamlit_logger
+from utils import streamlit_logger
 
 
 class Core:
@@ -22,36 +19,27 @@ class Core:
         self.success_count = 0
         self.window = window
 
-    def update_tasklist(self, pump, idx):
+    def update_tasklist(self, pump: Pump, idx):
+        task = self.dftask_list.loc[idx]
         if self.success:
-            self.dftask_list.loc[idx, ["Perform", "Result"]] = ["N", "Success"]
-            self.dftask_list.loc[idx, "IT_energy"] = pump.dfSummary["Impeller"][
-                "Annual Energy Saving"
-            ]
-            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"][
-                "GHG Reduction Cost"
-            ]
-            self.dftask_list.loc[idx, "IT_ghg_reduction"] = pump.dfSummary["Impeller"][
-                "Ghg Reduction"
-            ]
-            self.dftask_list.loc[idx, "IT_ghg_reduction_percent"] = pump.dfSummary[
-                "Impeller"
-            ]["Ghg Reduction Percent"]
-            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"][
-                "GHG Reduction Cost"
-            ]
-            self.dftask_list.loc[idx, "VSD_energy"] = pump.dfSummary["Vsd"][
-                "Annual Energy Saving"
-            ]
-            self.dftask_list.loc[idx, "VSD_ghg_reduction"] = pump.dfSummary["Vsd"][
-                "Ghg Reduction"
-            ]
-            self.dftask_list.loc[idx, "VSD_ghg_reduction_percent"] = pump.dfSummary[
-                "Vsd"
-            ]["Ghg Reduction Percent"]
-            self.dftask_list.loc[idx, "VSD_ghg_cost"] = pump.dfEconomics["VSD"][
-                "GHG Reduction Cost"
-            ]
+            task.update(
+                {
+                    "Perform": "N",
+                    "Result": "Success",
+                    "IT_energy": pump.dfSummary["Impeller"]["Annual Energy Saving"],
+                    "IT_ghg_cost": pump.dfEconomics["Impeller"]["GHG Reduction Cost"],
+                    "IT_ghg_reduction": pump.dfSummary["Impeller"]["Ghg Reduction"],
+                    "IT_ghg_reduction_percent": pump.dfSummary["Impeller"][
+                        "Ghg Reduction Percent"
+                    ],
+                    "VSD_energy": pump.dfSummary["Vsd"]["Annual Energy Saving"],
+                    "VSD_ghg_reduction": pump.dfSummary["Vsd"]["Ghg Reduction"],
+                    "VSD_ghg_reduction_percent": pump.dfSummary["Vsd"][
+                        "Ghg Reduction Percent"
+                    ],
+                    "VSD_ghg_cost": pump.dfEconomics["VSD"]["GHG Reduction Cost"],
+                }
+            )
 
         else:
             self.dftask_list.loc[idx, ["Perform", "Result"]] = ["Y", "Failed"]
@@ -60,7 +48,7 @@ class Core:
         task_list = self.dftask_list.loc[self.dftask_list["Perform"] == "Y"]
         total_tasks = len(task_list)
 
-        self.logger.info("\n" + 30 * "*" + "Welcome to Rotalysis" + 30 * "*" + "\n")
+        self.logger.info(f"\n{'*' * 30}Welcome to Rotalysis{'*' * 30}\n")
         self.logger.info(f"Total tasks to be processed: {total_tasks} \n")
 
         for i, (idx, row) in enumerate(task_list.iterrows()):
@@ -73,17 +61,9 @@ class Core:
                 excel_path = UF.get_excel_path(self.input_path, site, tag)
                 self.logger.info(f"Found excel path for processing:{excel_path}")
 
-                p1 = Pump(config_path=self.config_path, data_path=excel_path)
+                pump = Pump(config_path=self.config_path, data_path=excel_path)
 
-                p1.clean_non_numeric_data()
-                p1.remove_irrelevant_columns()
-                p1.remove_non_operating_rows()
-                p1.convert_default_unit()
-                p1.get_computed_columns()
-                p1.group_by_flowrate_percent()
-                p1.create_energy_calculation(site)
-                p1.get_economics_summary()
-                p1.write_to_excel(self.output_path, site, tag)
+                pump.process_pump(output_folder=self.output_path, tag=tag, site=site)
                 self.success = True
                 self.success_count += 1
 
@@ -95,11 +75,15 @@ class Core:
 
             progress = int((i + 1) / total_tasks)
             if self.window:
-                self.window.progress(progress, text=f"Processing {i+1} of {total_tasks} tasks")
-                self.logger.info(
-                    "TASK COMPLETED!"
-                ) if self.success else self.logger.critical("TASK FAILED!")
-                self.update_tasklist(p1, idx)
+                self.window.progress(
+                    progress, text=f"Processing {i+1} of {total_tasks} tasks"
+                )
+                (
+                    self.logger.info("TASK COMPLETED!")
+                    if self.success
+                    else self.logger.critical("TASK FAILED!")
+                )
+                self.update_tasklist(pump, idx) #type: ignore
 
                 self.logger.info("\n" + 50 * "-" + "\n")
 
@@ -108,6 +92,4 @@ class Core:
             f"Total tasks processed: {self.success_count} out of {total_tasks}"
         )
         UF.write_to_excel(self.task_path, self.dftask_list)
-        self.logger.info(
-            "\n" + 30 * "*" + "Thanks for using Rotalysis" + 30 * "*" + "\n"
-        )
+        self.logger.info(f"\n{'*' * 30}Thanks for using Rotalysis{'*' * 30}\n")

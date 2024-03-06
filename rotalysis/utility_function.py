@@ -5,8 +5,6 @@ import numpy as np
 import pandas as pd
 import xlwings as xw
 
-from utils import logger
-
 
 class UtilityFunction:
     excel_number_fomrat = {
@@ -83,6 +81,8 @@ class UtilityFunction:
                 dfcurve = pd.read_excel(excel_path, sheet_name="pump curve")
             elif equipment_type == "Compressor":
                 dfcurve = pd.read_excel(excel_path, sheet_name="compressor curve")
+            else:
+                raise Exception("Invalid equipment type.")
 
         except Exception as e:
             raise Exception("Error in reading curve data.")

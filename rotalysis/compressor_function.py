@@ -3,7 +3,6 @@ sys.path.append('..')
 
 import pandas as pd
 from rotalysis import UtilityFunction as uf
-import matplotlib.pyplot as plt
 from utils import UnitConvertor as uc
 
 class CompressorFunction:
