@@ -1,54 +1,48 @@
-import sys
+# main.py
 import time
 
-from PyQt6 import QtCore, QtGui, QtWidgets
+import streamlit as st
 
-from gui import MainWindow, SplashScreen
-from rotalysis import Core
+from rotalysis import Core, RotalysisInput
+from utils import StreamlitObject
 
-if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
-    app.setWindowIcon(QtGui.QIcon("icon.ico"))
+title = st.container().title("Rotalysis")
 
-    window = MainWindow()
-    splash_screen = SplashScreen()
-    splash_screen.show()
-    time.sleep(2)
-    splash_screen.finish(window)
+col1, col2 = st.container().columns(2)
 
-    widget = {
-        "Config": window.tbox_config,
-        "InputFolder": window.tbox_InputFolder,
-        "OutputFolder": window.tbox_OutputFolder,
-        "TaskList": window.tbox_tasklist,
-    }
+with col1:
+    input_folder = st.text_area(
+        label="Input Folder Path", value="Input", key="input_folder"
+    )
+    output_folder = st.text_area(
+        label="Output Folder Path", value="Output", key="output_folder"
+    )
 
-    paths = {"Config": "", "TaskList": "", "InputFolder": "", "OutputFolder": ""}
 
-    def get_path(field, text_box_dict=widget):
-        for key, widget in text_box_dict.items():
-            if field == key:
-                path = widget.toPlainText()
-                return path
+with col2:
+    config_file = st.text_area(
+        label="Configuration File Path", value="Config.xlsx", key="config_file"
+    )
+    tasklist_file = st.text_area(
+        label="Task List", value="TaskList.xlsx", key="tasklist_file"
+    )
 
-    def set_path(field):
-        paths[field] = get_path(field)
+input = RotalysisInput(
+    INPUT_FOLDER=input_folder,
+    OUTPUT_FOLDER=output_folder,
+    CONFIG_FILE=config_file,
+    TASKLIST_FILE=tasklist_file,
+)
 
-    def run():
-        window.pbRun.setEnabled(False)
-        window.pbRun.setText("Running...")
-        for key in widget.keys():
-            set_path(key)
+main_st_obj = StreamlitObject().component.progress(0)
 
-        core = Core(*paths.values(), window=window)
-        core.process_task()
+run_button = st.button("Process Task", key="run_button")
 
-        window.ProgressBar.setValue(100)
-        window.pbRun.setText("Run")
-        window.pbRun.setEnabled(True)
 
-    window.show()
+def run():
+    core = Core(input, main_st_obj)
+    core.process_task()
 
-    window.pbRun.clicked.connect(run)
 
-    sys.exit(app.exec())
+if run_button:
+    run()

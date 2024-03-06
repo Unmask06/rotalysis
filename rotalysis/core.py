@@ -3,37 +3,58 @@ import logging
 import time
 import traceback
 
-from rotalysis import CustomException, Pump
+from regex import F
+
+from rotalysis import CustomException, Pump, RotalysisInput
 from rotalysis import UtilityFunction as UF
-from utils import logger
+from utils import StreamlitObject, streamlit_logger
 
 
 class Core:
-    def __init__(self, config_path, task_path, input_path, output_path, window=None):
-        self.config_path = config_path
-        self.task_path = task_path
-        self.input_path = input_path
-        self.output_path = output_path
+    def __init__(self, input: RotalysisInput, window):
+        self.input = input
+        self.config_path = input.CONFIG_FILE
+        self.task_path = input.TASKLIST_FILE
+        self.input_path = input.INPUT_FOLDER
+        self.output_path = input.OUTPUT_FOLDER
         self.dftask_list = UF.load_task_list(task_path=self.task_path)
-        self.window = window
-        self.logger = logger
+        self.logger = streamlit_logger
         self.success_count = 0
+        self.window = window
 
     def update_tasklist(self, pump, idx):
         if self.success:
-            self.dftask_list.loc[idx, ["Perform", "Result"]] = ("N", "Success")
-            self.dftask_list.loc[idx, "IT_energy"] = pump.dfSummary["Impeller"]["Annual Energy Saving"]
-            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"]["GHG Reduction Cost"]
-            self.dftask_list.loc[idx, "IT_ghg_reduction"] = pump.dfSummary["Impeller"]["Ghg Reduction"]
-            self.dftask_list.loc[idx, "IT_ghg_reduction_percent"] = pump.dfSummary["Impeller"]["Ghg Reduction Percent"]
-            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"]["GHG Reduction Cost"]
-            self.dftask_list.loc[idx, "VSD_energy"] = pump.dfSummary["Vsd"]["Annual Energy Saving"]
-            self.dftask_list.loc[idx, "VSD_ghg_reduction"] = pump.dfSummary["Vsd"]["Ghg Reduction"]
-            self.dftask_list.loc[idx, "VSD_ghg_reduction_percent"] = pump.dfSummary["Vsd"]["Ghg Reduction Percent"]
-            self.dftask_list.loc[idx, "VSD_ghg_cost"] = pump.dfEconomics["VSD"]["GHG Reduction Cost"]
+            self.dftask_list.loc[idx, ["Perform", "Result"]] = ["N", "Success"]
+            self.dftask_list.loc[idx, "IT_energy"] = pump.dfSummary["Impeller"][
+                "Annual Energy Saving"
+            ]
+            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"][
+                "GHG Reduction Cost"
+            ]
+            self.dftask_list.loc[idx, "IT_ghg_reduction"] = pump.dfSummary["Impeller"][
+                "Ghg Reduction"
+            ]
+            self.dftask_list.loc[idx, "IT_ghg_reduction_percent"] = pump.dfSummary[
+                "Impeller"
+            ]["Ghg Reduction Percent"]
+            self.dftask_list.loc[idx, "IT_ghg_cost"] = pump.dfEconomics["Impeller"][
+                "GHG Reduction Cost"
+            ]
+            self.dftask_list.loc[idx, "VSD_energy"] = pump.dfSummary["Vsd"][
+                "Annual Energy Saving"
+            ]
+            self.dftask_list.loc[idx, "VSD_ghg_reduction"] = pump.dfSummary["Vsd"][
+                "Ghg Reduction"
+            ]
+            self.dftask_list.loc[idx, "VSD_ghg_reduction_percent"] = pump.dfSummary[
+                "Vsd"
+            ]["Ghg Reduction Percent"]
+            self.dftask_list.loc[idx, "VSD_ghg_cost"] = pump.dfEconomics["VSD"][
+                "GHG Reduction Cost"
+            ]
 
         else:
-            self.dftask_list.loc[idx, ["Perform", "Result"]] = ("Y", "Failed")
+            self.dftask_list.loc[idx, ["Perform", "Result"]] = ["Y", "Failed"]
 
     def process_task(self):
         task_list = self.dftask_list.loc[self.dftask_list["Perform"] == "Y"]
@@ -72,15 +93,21 @@ class Core:
 
             time.sleep(0.1)
 
-            progress = int((i + 1) / total_tasks * 100)
+            progress = int((i + 1) / total_tasks)
             if self.window:
-                self.window.ProgressBar.setValue(progress)
-                self.logger.info("TASK COMPLETED!") if self.success else self.logger.critical("TASK FAILED!")
+                self.window.progress(progress, text=f"Processing {i+1} of {total_tasks} tasks")
+                self.logger.info(
+                    "TASK COMPLETED!"
+                ) if self.success else self.logger.critical("TASK FAILED!")
                 self.update_tasklist(p1, idx)
 
                 self.logger.info("\n" + 50 * "-" + "\n")
 
         self.logger.info("Please check the output folder for the result.")
-        self.logger.info(f"Total tasks processed: {self.success_count} out of {total_tasks}")
+        self.logger.info(
+            f"Total tasks processed: {self.success_count} out of {total_tasks}"
+        )
         UF.write_to_excel(self.task_path, self.dftask_list)
-        self.logger.info("\n" + 30 * "*" + "Thanks for using Rotalysis" + 30 * "*" + "\n")
+        self.logger.info(
+            "\n" + 30 * "*" + "Thanks for using Rotalysis" + 30 * "*" + "\n"
+        )

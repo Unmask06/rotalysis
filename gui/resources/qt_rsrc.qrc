@@ -1,7 +1,0 @@
-<RCC>
-  <qresource prefix="Logo">
-    <file>ADNOC.png</file>
-    <file>Bilfinger.jpg</file>
-    <file>Rotalysis.png</file>
-  </qresource>
-</RCC>

@@ -4182,3 +4182,50 @@
 27-08-2023 18:38:13: INFO: 
 ******************************Thanks for using Rotalysis******************************
 
+06-03-2024 10:56:49: INFO: Data cleaning completed
+06-03-2024 10:56:49: INFO: Irrelevant columns removed
+06-03-2024 10:56:49: INFO: unit conversion completed
+06-03-2024 10:56:49: INFO: Computed columns added
+06-03-2024 10:56:49: INFO: Energy calculation completed
+06-03-2024 11:05:27: INFO: Data cleaning completed
+06-03-2024 11:05:27: INFO: Irrelevant columns removed
+06-03-2024 11:05:27: INFO: unit conversion completed
+06-03-2024 11:05:27: INFO: Computed columns added
+06-03-2024 11:05:27: INFO: Energy calculation completed
+06-03-2024 11:05:29: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+06-03-2024 11:15:51: INFO: Data cleaning completed
+06-03-2024 11:15:51: INFO: Irrelevant columns removed
+06-03-2024 11:15:51: INFO: unit conversion completed
+06-03-2024 11:15:51: INFO: Computed columns added
+06-03-2024 11:15:52: INFO: Energy calculation completed
+06-03-2024 11:15:53: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+06-03-2024 11:51:27: INFO: Data cleaning completed
+06-03-2024 11:51:27: INFO: Irrelevant columns removed
+06-03-2024 11:51:27: INFO: unit conversion completed
+06-03-2024 11:51:27: INFO: Computed columns added
+06-03-2024 11:51:27: INFO: Energy calculation completed
+06-03-2024 11:51:29: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+06-03-2024 12:26:58: INFO: Data cleaning completed
+06-03-2024 12:26:58: INFO: Irrelevant columns removed
+06-03-2024 12:26:58: INFO: unit conversion completed
+06-03-2024 12:26:58: INFO: Computed columns added
+06-03-2024 12:26:59: INFO: Energy calculation completed
+06-03-2024 12:27:00: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+06-03-2024 12:29:28: INFO: Data cleaning completed
+06-03-2024 12:29:28: INFO: Irrelevant columns removed
+06-03-2024 12:29:28: INFO: unit conversion completed
+06-03-2024 12:29:28: INFO: Computed columns added
+06-03-2024 12:29:28: INFO: Energy calculation completed
+06-03-2024 12:29:30: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UAD\CPP-P-026A.xlsx
+06-03-2024 12:29:32: INFO: Data cleaning completed
+06-03-2024 12:29:32: INFO: Irrelevant columns removed
+06-03-2024 12:29:32: INFO: unit conversion completed
+06-03-2024 12:29:32: INFO: Computed columns added
+06-03-2024 12:29:32: INFO: Energy calculation completed
+06-03-2024 12:29:34: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2900.xlsx
+06-03-2024 12:29:37: INFO: Data cleaning completed
+06-03-2024 12:29:37: INFO: Irrelevant columns removed
+06-03-2024 12:29:37: INFO: unit conversion completed
+06-03-2024 12:29:37: INFO: Computed columns added
+06-03-2024 12:29:37: INFO: Energy calculation completed
+06-03-2024 12:29:39: INFO: Excel file created at C:\Users\IDM252577\Desktop\Python Projects\Decarbonization\Rotalysis\Output\UL\570-P-2901.xlsx
