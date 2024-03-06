@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from utils import UnitConvertor as uc
 
 class CompressorFunction:
+    @staticmethod
     def calculate_compressor_power(
         Qm,
         Ps,
