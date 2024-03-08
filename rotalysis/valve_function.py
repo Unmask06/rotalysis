@@ -4,12 +4,8 @@ sys.path.append("..")
 import math
 
 from utils import Databook
+from .definitions import ValveCharacter
 
-
-class ValveCharacter:
-    LINEAR = "Linear"
-    EQUAL_PERCENTAGE = "Equal Percentage"
-    QUICK_OPENING = "Quick Opening"
 
 
 class ValveFunction:

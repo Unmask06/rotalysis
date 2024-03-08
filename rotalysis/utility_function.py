@@ -5,6 +5,12 @@ import numpy as np
 import pandas as pd
 import xlwings as xw
 
+from .definitions import (
+    ConfigurationVariables,
+    InputSheetNames,
+    PumpDesignDataVariables,
+)
+
 
 class UtilityFunction:
     excel_number_fomrat = {
@@ -37,13 +43,18 @@ class UtilityFunction:
 
         try:
             if not os.path.exists(subfolder_path):
-                raise NotADirectoryError("Site subfolder doesn't exist in Input directory.")
+                raise NotADirectoryError(
+                    "Site subfolder doesn't exist in Input directory."
+                )
             files = os.listdir(subfolder_path)
 
             excel_files = [
                 file
                 for file in files
-                if ((file.endswith(".xlsx") or file.endswith(".xls")) and tag in file.replace(" ", ""))
+                if (
+                    (file.endswith(".xlsx") or file.endswith(".xls"))
+                    and tag in file.replace(" ", "")
+                )
             ]
 
             if len(excel_files) > 0:
@@ -60,25 +71,36 @@ class UtilityFunction:
     @staticmethod
     def load_equipment_data(excel_path):
         try:
-            process_data = pd.read_excel(excel_path, sheet_name="process data", index_col=0).fillna("")
+            process_data = pd.read_excel(
+                excel_path, sheet_name=InputSheetNames.DESIGN_DATA, index_col=0
+            ).fillna("")
             process_data = process_data.to_dict()
             process_data = process_data["value"]
-            header_row = process_data["header_row"]
-            equipment_type = process_data["equipment_type"]
+            header_row = process_data[PumpDesignDataVariables.HEADER_ROW]
+            equipment_type = process_data[PumpDesignDataVariables.EQUIPMENT_TYPE]
             ignore_rows = header_row - 1
         except Exception as e:
             raise Exception("Error in reading process data.")
 
         try:
-            dfoperation = pd.read_excel(excel_path, sheet_name="operational data", header=ignore_rows)
+            dfoperation = pd.read_excel(
+                excel_path,
+                sheet_name=InputSheetNames.OPERATIONAL_DATA,
+                header=ignore_rows,
+            )
             dfoperation = UtilityFunction.Clean_dataframe(dfoperation)
 
         except Exception as e:
-            raise Exception(e, "Error in reading operational data. Check whether header row is correct. ")
+            raise Exception(
+                e,
+                "Error in reading operational data. Check whether header row is correct. ",
+            )
 
         try:
             if equipment_type == "Pump":
-                dfcurve = pd.read_excel(excel_path, sheet_name="pump curve")
+                dfcurve = pd.read_excel(
+                    excel_path, sheet_name=InputSheetNames.PUMP_CURVE
+                )
             elif equipment_type == "Compressor":
                 dfcurve = pd.read_excel(excel_path, sheet_name="compressor curve")
             else:
@@ -87,9 +109,11 @@ class UtilityFunction:
         except Exception as e:
             raise Exception("Error in reading curve data.")
         try:
-            dfunit = pd.read_excel(excel_path, sheet_name="unit", usecols="A:B")
+            dfunit = pd.read_excel(
+                excel_path, sheet_name=InputSheetNames.UNIT, usecols="A:B"
+            )
             dfunit.dropna(inplace=True)
-            dfunit = dict(zip(dfunit["parameter"], dfunit["unit"]))
+            dfunit = dict(zip(dfunit["parameter"], dfunit[InputSheetNames.UNIT]))
         except Exception as e:
             raise Exception(e, "Error in reading unit data.")
 
@@ -112,7 +136,11 @@ class UtilityFunction:
 
     @staticmethod
     def is_empty_value(value):
-        return value == "" or value is None or (isinstance(value, (float, int)) and np.isnan(value))
+        return (
+            value == ""
+            or value is None
+            or (isinstance(value, (float, int)) and np.isnan(value))
+        )
 
     @staticmethod
     def format_number(number, type="whole"):
@@ -125,5 +153,4 @@ class UtilityFunction:
                 formatted_number = str(number)
         except (ValueError, TypeError):
             formatted_number = str(number)
-        
         return formatted_number

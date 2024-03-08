@@ -6,6 +6,8 @@ from rotalysis import CustomException, Pump, RotalysisInput
 from rotalysis import UtilityFunction as UF
 from utils import streamlit_logger
 
+from .definitions import EconomicsVariables, EmissionVariables
+
 
 class Core:
     def __init__(self, input: RotalysisInput, window):
@@ -20,26 +22,39 @@ class Core:
         self.window = window
 
     def update_tasklist(self, pump: Pump, idx):
-        task = self.dftask_list.loc[idx]
+        task = self.dftask_list.loc[idx].copy()
         if self.success:
             task.update(
                 {
                     "Perform": "N",
                     "Result": "Success",
-                    "IT_energy": pump.dfSummary["Impeller"]["Annual Energy Saving"],
-                    "IT_ghg_cost": pump.dfEconomics["Impeller"]["GHG Reduction Cost"],
-                    "IT_ghg_reduction": pump.dfSummary["Impeller"]["Ghg Reduction"],
+                    "IT_energy": pump.dfSummary["Impeller"][
+                        EconomicsVariables.ANNUAL_ENERGY_SAVING
+                    ],
+                    "IT_ghg_cost": pump.dfEconomics["Impeller"][
+                        EconomicsVariables.GHG_REDUCTION_COST
+                    ],
+                    "IT_ghg_reduction": pump.dfSummary["Impeller"][
+                        EmissionVariables.GHG_REDUCTION
+                    ],
                     "IT_ghg_reduction_percent": pump.dfSummary["Impeller"][
-                        "Ghg Reduction Percent"
+                        EmissionVariables.GHG_REDUCTION_PERCENT
                     ],
-                    "VSD_energy": pump.dfSummary["Vsd"]["Annual Energy Saving"],
-                    "VSD_ghg_reduction": pump.dfSummary["Vsd"]["Ghg Reduction"],
+                    "VSD_energy": pump.dfSummary["Vsd"][
+                        EconomicsVariables.ANNUAL_ENERGY_SAVING
+                    ],
+                    "VSD_ghg_reduction": pump.dfSummary["Vsd"][
+                        EmissionVariables.GHG_REDUCTION
+                    ],
                     "VSD_ghg_reduction_percent": pump.dfSummary["Vsd"][
-                        "Ghg Reduction Percent"
+                        EmissionVariables.GHG_REDUCTION_PERCENT
                     ],
-                    "VSD_ghg_cost": pump.dfEconomics["VSD"]["GHG Reduction Cost"],
+                    "VSD_ghg_cost": pump.dfEconomics["VSD"][
+                        EconomicsVariables.GHG_REDUCTION_COST
+                    ],
                 }
             )
+            self.dftask_list.loc[idx] = task
 
         else:
             self.dftask_list.loc[idx, ["Perform", "Result"]] = ["Y", "Failed"]
@@ -83,7 +98,7 @@ class Core:
                     if self.success
                     else self.logger.critical("TASK FAILED!")
                 )
-                self.update_tasklist(pump, idx) #type: ignore
+                self.update_tasklist(pump, idx)  # type: ignore
 
                 self.logger.info("\n" + 50 * "-" + "\n")
 
