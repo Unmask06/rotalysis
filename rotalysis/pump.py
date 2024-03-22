@@ -984,11 +984,13 @@ class Pump:
         ]
         for df in [self.VSDCalculation, self.ImpellerCalculation]:
             for col in percent_columns:
-                df[col] = df[col].apply(lambda x: uf.format_number(x, type="percent"))
+                df[col] = df[col].apply(lambda x: uf.format_number(x, number_format="percent"))
 
             for col in df.columns:
                 if df[col].dtype == "float64":
-                    df[col] = df[col].apply(lambda x: uf.format_number(x, type="whole"))
+                    df[col] = df[col].apply(
+                        lambda x: uf.format_number(x, number_format="whole")
+                    )
 
     def format_summary(self):
         excluded_columns = [
@@ -997,7 +999,7 @@ class Pump:
         ]
         self.dfSummary = self.dfSummary.apply(
             lambda row: (
-                row.apply(lambda val: uf.format_number(val, type="percent"))
+                row.apply(lambda val: uf.format_number(val, number_format="percent"))
                 if row.name == EmissionVariables.GHG_REDUCTION_PERCENT
                 else (
                     row

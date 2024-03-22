@@ -18,7 +18,7 @@ class Economics:
             index=range(0, project_life),
         )
         dfcashflow = dfcashflow.rename_axis("year")
-        dfcashflow.loc[0,EconomicsVariables.CASH_FLOW] = -capex
+        dfcashflow.loc[0, EconomicsVariables.CASH_FLOW] = -capex
         return dfcashflow
 
     @staticmethod

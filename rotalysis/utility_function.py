@@ -13,7 +13,7 @@ from .definitions import (
 
 
 class UtilityFunction:
-    excel_number_fomrat = {
+    excel_number_format = {
         "acc_dec": "_-* #,##0.0_-",
         "acc_integer": "_-* #,##0_-",
         "percent_int": "0%",
@@ -23,8 +23,6 @@ class UtilityFunction:
     @staticmethod
     def load_task_list(task_path="TaskList.xlsx", sheet_name=0):
         task_list = pd.read_excel(task_path, sheet_name=sheet_name, header=0).fillna("")
-        # task_list = task_list.loc[task_list["Perform"] == "Y"]
-        # task_list.reset_index(drop=True, inplace=True)
         return task_list
 
     @staticmethod
@@ -143,12 +141,12 @@ class UtilityFunction:
         )
 
     @staticmethod
-    def format_number(number, type="whole"):
+    def format_number(number, number_format="whole"):
         try:
-            if type == "percent":
-                formatted_number = "{:.0%}".format(number)
-            elif type == "whole":
-                formatted_number = "{:,}".format(int(number))
+            if number_format == "percent":
+                formatted_number = f"{number:.0%}"
+            elif number_format == "whole":
+                formatted_number = f"{int(number):,}"
             else:
                 formatted_number = str(number)
         except (ValueError, TypeError):
