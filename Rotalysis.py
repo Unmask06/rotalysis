@@ -9,6 +9,7 @@ st.sidebar.image(logo_path, width=200)
 # logo_path = 'path/to/your/logo.png'
 # st.sidebar.image(logo_path, use_column_width=True)
 
+
 st.title("Rotalysis")
 st.markdown("**Rotating Equipment Analysis**")
 

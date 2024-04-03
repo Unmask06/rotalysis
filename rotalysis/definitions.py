@@ -22,7 +22,7 @@ class PumpDesignDataVariables:
     HEADER_ROW = "Header Row"
 
 
-class PumpOperationalDataVariables:
+class PumpOperationVariables:
     SUCTION_PRESSURE = "Suction Pressure"
     DISCHARGE_PRESSURE = "Discharge Pressure"
     DISCHARGE_FLOWRATE = "Discharge Flowrate"
@@ -38,6 +38,7 @@ class EmissionVariables:
     GHG_REDUCTION_PERCENT = "GHG Reduction Percent"
     EMISSION_FACTOR = "Emission Factor"
     ANNUAL_GHG_REDUCTION = "Annual GHG Reduction"
+
 
 class ComputedVariables:
     FLOWRATE_PERCENT = "Flowrate Percent"
@@ -109,6 +110,7 @@ class ConfigurationVariables:
     STD_EFFICIENCY_MOTOR = "Std Eff Motor"
     HIGH_EFFICIENCY_MOTOR = "High Eff Motor"
     PREMIUM_EFFICIENCY_MOTOR = "Premium Eff Motor"
+
 
 class EconomicsVariables:
     ANNUAL_ENERGY_SAVING = "Annual Energy Saving"

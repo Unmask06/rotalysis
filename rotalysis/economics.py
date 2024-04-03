@@ -1,11 +1,13 @@
-import numpy as np
-import numpy_financial as npf
+""" economics.py - Module for economic calculations. """
+
 import pandas as pd
 
 from .definitions import EconomicsVariables
 
 
 class Economics:
+    """Class to handle economic calculations"""
+
     @staticmethod
     def create_cashflow_df(capex, project_life):
         project_life = int(project_life) + 1
@@ -29,19 +31,18 @@ class Economics:
         return adjusted_opex
 
     @staticmethod
-    def annualized_spending(NPV, discount_rate, project_life):
-        annualized_spending = -NPV * (
+    def annualized_spending(npv, discount_rate, project_life):
+        annualized_spending = -npv * (
             discount_rate / (1 - (1 + discount_rate) ** (-project_life))
         )
         return round(annualized_spending, 2)
 
     @staticmethod
-    def GHG_reduction_cost(annualized_spending, GHG_reduction):
-        if GHG_reduction == 0:
+    def ghg_reduction_cost(annualized_spending, ghg_reduction):
+        if ghg_reduction == 0:
             return 0
-        else:
-            GHG_reduction_cost = annualized_spending / GHG_reduction
-            return round(GHG_reduction_cost, 2)
+        ghg_reduction_cost = annualized_spending / ghg_reduction
+        return round(ghg_reduction_cost, 2)
 
     @staticmethod
     def calculate_payback_period(cash_flows):

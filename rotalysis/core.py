@@ -10,12 +10,12 @@ from .definitions import EconomicsVariables, EmissionVariables
 
 
 class Core:
-    def __init__(self, input: RotalysisInput, window):
-        self.input = input
-        self.config_path = input.CONFIG_FILE
-        self.task_path = input.TASKLIST_FILE
-        self.input_path = input.INPUT_FOLDER
-        self.output_path = input.OUTPUT_FOLDER
+    def __init__(self, rotalysis_input: RotalysisInput, window):
+        self.input = rotalysis_input
+        self.config_path = rotalysis_input.CONFIG_FILE
+        self.task_path = rotalysis_input.TASKLIST_FILE
+        self.input_path = rotalysis_input.INPUT_FOLDER
+        self.output_path = rotalysis_input.OUTPUT_FOLDER
         self.dftask_list = UF.load_task_list(task_path=self.task_path)
         self.logger = streamlit_logger
         self.success_count = 0
@@ -28,28 +28,28 @@ class Core:
                 {
                     "Perform": "N",
                     "Result": "Success",
-                    "IT_energy": pump.dfSummary["Impeller"][
+                    "IT_energy": pump.df_summary["Impeller"][
                         EconomicsVariables.ANNUAL_ENERGY_SAVING
                     ],
-                    "IT_ghg_cost": pump.dfEconomics["Impeller"][
+                    "IT_ghg_cost": pump.df_economics["Impeller"][
                         EconomicsVariables.GHG_REDUCTION_COST
                     ],
-                    "IT_ghg_reduction": pump.dfSummary["Impeller"][
+                    "IT_ghg_reduction": pump.df_summary["Impeller"][
                         EmissionVariables.GHG_REDUCTION
                     ],
-                    "IT_ghg_reduction_percent": pump.dfSummary["Impeller"][
+                    "IT_ghg_reduction_percent": pump.df_summary["Impeller"][
                         EmissionVariables.GHG_REDUCTION_PERCENT
                     ],
-                    "VSD_energy": pump.dfSummary["Vsd"][
+                    "VSD_energy": pump.df_summary["Vsd"][
                         EconomicsVariables.ANNUAL_ENERGY_SAVING
                     ],
-                    "VSD_ghg_reduction": pump.dfSummary["Vsd"][
+                    "VSD_ghg_reduction": pump.df_summary["Vsd"][
                         EmissionVariables.GHG_REDUCTION
                     ],
-                    "VSD_ghg_reduction_percent": pump.dfSummary["Vsd"][
+                    "VSD_ghg_reduction_percent": pump.df_summary["Vsd"][
                         EmissionVariables.GHG_REDUCTION_PERCENT
                     ],
-                    "VSD_ghg_cost": pump.dfEconomics["VSD"][
+                    "VSD_ghg_cost": pump.df_economics["VSD"][
                         EconomicsVariables.GHG_REDUCTION_COST
                     ],
                 }
@@ -100,7 +100,7 @@ class Core:
                 )
                 self.update_tasklist(pump, idx)  # type: ignore
 
-                self.logger.info("\n" + 50 * "-" + "\n")
+                self.logger.info(f"\n{'-' * 50}\n")
 
         self.logger.info("Please check the output folder for the result.")
         self.logger.info(
