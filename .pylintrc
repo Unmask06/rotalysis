@@ -57,7 +57,16 @@ logging-format-style=new
 
 [MESSAGES CONTROL]
 confidence=HIGH,CONTROL_FLOW,INFERENCE,INFERENCE_FAILURE,UNDEFINED
-disable=raw-checker-failed,bad-inline-option,locally-disabled,file-ignored,suppressed-message,useless-suppression,deprecated-pragma,use-symbolic-message-instead,W1203,C0116
+disable=
+    raw-checker-failed,
+    bad-inline-option,
+    locally-disabled,
+    file-ignored,suppressed-message,
+    useless-suppression,
+    deprecated-pragma,
+    use-symbolic-message-instead,
+    W1203,
+    C0116
 enable=c-extension-no-member, consider-using-f-string
 
 [METHOD_ARGS]
