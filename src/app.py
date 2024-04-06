@@ -4,7 +4,7 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import Dash, html
 
-from callbacks import data_transfer
+from callbacks import data_transfer,process_pump
 
 app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -24,7 +24,7 @@ side_bar = dbc.Nav(
 )
 
 
-lay = dbc.Container(
+layout = dbc.Container(
     [
         dbc.Row(
             [
@@ -49,8 +49,9 @@ lay = dbc.Container(
 )
 
 
-app.layout = lay
+app.layout = layout
 data_transfer.register_callbacks(app)
+process_pump.register_callbacks(app)
 
 
 if __name__ == "__main__":

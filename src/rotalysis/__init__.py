@@ -11,6 +11,4 @@ from .pump import CustomException
 
 from .inputs import RotalysisInput
 
-from .core import Core
-
 

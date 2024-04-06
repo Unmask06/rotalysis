@@ -1,6 +1,7 @@
 """Upload file component."""
 
 from dash import dcc, html
+from . import ids
 
 
 def render() -> html.Div:
@@ -8,7 +9,7 @@ def render() -> html.Div:
         [
             html.H1("Upload File"),
             dcc.Upload(
-                id="upload-data",
+                id=ids.UPLOAD_DATA,
                 children=html.Div(["Drag and Drop or ", html.A("Select Files")]),
                 style={
                     "width": "100%",
@@ -22,6 +23,7 @@ def render() -> html.Div:
                 },
                 multiple=False,
             ),
-            html.Div(id="output-data-upload", children="Upload file to see the result"),
+            dcc.Store(id=ids.STORE_DATA, data={}),
+            html.Div(id=ids.UPLOAD_OUTPUT, children="Upload file to see the result"),
         ]
     )

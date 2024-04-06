@@ -11,7 +11,7 @@ class Databook:
     Class for reading data from an Excel databook using xlwings.
     """
 
-    def __init__(self, databook_path: str = "utils/Databook.xlsx"):
+    def __init__(self, databook_path: str = "src/utils/Databook.xlsx"):
         """
         Initializes the Databook class by setting the path to the databook 
         and verifying its existence.

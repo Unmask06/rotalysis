@@ -3,6 +3,7 @@
     variable speed drive or trimming the impeller based on the operating data
 """
 
+import logging
 import os
 import traceback
 from pathlib import Path
@@ -26,7 +27,8 @@ from rotalysis.definitions import (
     PumpDesignDataVariables,
     PumpOperationVariables,
 )
-from utils import streamlit_logger
+
+logger = logging.getLogger(__name__)
 
 
 class CustomException(Exception):
@@ -120,11 +122,23 @@ class Pump:
     vfd_economics: Dict[str, Any]
     df_economics: pd.DataFrame
 
-    def __init__(self, config_path="Config.xlsx", data_path=None):
-        self.data_path = data_path
-        self.config_path = config_path
+    def __init__(
+        self,
+        config: pd.DataFrame,
+        emission_factor: pd.DataFrame,
+        process_data: pd.DataFrame,
+        operation_data: pd.DataFrame,
+        unit: pd.DataFrame,
+    ):
+        self.config = config
+        self.emission_factor = emission_factor
+        self.process_data = process_data
+        self.operation_data = operation_data
+        self.unit = unit
+        self.logger = logger
+
         self.__set_data()
-        self.logger = streamlit_logger
+        self.logger = logger
         self.__set_config()
         self.get_emission_factor()
         self.__check_mandatory_columns()
@@ -134,7 +148,7 @@ class Pump:
         INIT METHOD - Sets the config dictionary from the Config.xlsx file.
         """
 
-        dfconfig = pd.read_excel(self.config_path, sheet_name="PumpConfig1", header=0)
+        dfconfig = self.config
         dfconfig = dfconfig.iloc[:, :3].dropna(subset=["parameter"])
         dfconfig.set_index("parameter", inplace=True)
         self.config = dfconfig.to_dict("index")
@@ -146,9 +160,7 @@ class Pump:
         Returns:
             float: emission factor
         """
-        dfemission_factor = pd.read_excel(
-            self.config_path, sheet_name=EmissionVariables.EMISSION_FACTOR, header=0
-        )
+        dfemission_factor = self.emission_factor
         dfemission_factor = dfemission_factor.iloc[:, :2].dropna(
             subset=[EmissionVariables.EMISSION_FACTOR]
         )
@@ -160,28 +172,18 @@ class Pump:
         INIT METHOD- Sets the process data, operational data and unit dictionary from the Excel file
 
         """
-        if self.data_path is None:
-            raise ValueError("data_path is not defined.")
 
         # Set Pump's process data
-        dfprocess = pd.read_excel(
-            self.data_path, sheet_name=InputSheetNames.DESIGN_DATA, header=0
-        )
+        dfprocess = self.process_data
         dfprocess = dfprocess.iloc[:, :3].dropna(subset=[InputSheetNames.DESIGN_DATA])
         dfprocess.set_index(InputSheetNames.DESIGN_DATA, inplace=True)
         self.process_data = dfprocess.to_dict("index")
 
         # Set Pump operational data
-        self.dfoperation = pd.read_excel(
-            self.data_path,
-            sheet_name=InputSheetNames.OPERATIONAL_DATA,
-            header=self.process_data[PumpDesignDataVariables.HEADER_ROW]["value"] - 1,
-        )
+        self.dfoperation = self.operation_data
 
         # Set Pump unit
-        dfunit = pd.read_excel(
-            self.data_path, sheet_name=InputSheetNames.UNIT, header=0
-        )
+        dfunit = self.unit
         dfunit = dfunit.iloc[:, :2].dropna(subset=[InputSheetNames.UNIT])
         self.unit = dict(zip(dfunit["parameter"], dfunit[InputSheetNames.UNIT]))
 
@@ -749,7 +751,7 @@ class Pump:
             / self.dfcalculation[EmissionVariables.BASE_CASE_EMISSION]
         )
 
-    def create_energy_calculation(self, site):
+    def create_energy_calculation(self, site: str):
         """
         - Create energy calculation dataframe for VSD and Impeller options.
         - Create summary dataframe for VSD and Impeller options.
@@ -1013,65 +1015,81 @@ class Pump:
                     df[col] = df[col].apply(
                         lambda x: uf.format_number(x, number_format="whole")
                     )
+        self._add_multiheader()
 
-    def write_to_excel(self, output_folder, site, tag):
+    # def write_to_excel(self, output_folder, site, tag):
+    #     """
+    #     Creates excel file based on the output folder, site and tag.
+    #     Writes three dataframes to excel file.
+    #     1. df_summary
+    #     2. VSDCalculation
+    #     3. ImpellerCalculation
+
+    #     """
+    #     try:
+    #         path = self._get_output_path(output_folder, site, tag)
+
+    #         with xw.App(visible=False):
+    #             if not os.path.isfile(path):
+    #                 wb = xw.Book()
+    #             else:
+    #                 wb = xw.Book(path)
+    #             ws = wb.sheets[0]
+    #             ws.clear_contents()
+
+    #             for cell, df, cond in zip(
+    #                 ["A1", "A14", "A32", "G1"],
+    #                 [
+    #                     self.df_summary,
+    #                     self.vsd_calculation,
+    #                     self.impeller_calculation,
+    #                     self.df_economics,
+    #                 ],
+    #                 [True, False, False, True],
+    #             ):
+    #                 ws.range(cell).options(index=cond).value = df
+    #                 current_area = ws.range(cell).expand().address
+    #                 # make boder
+    #                 ws.range(current_area).api.Borders.LineStyle = 1
+
+    #             ws.api.PageSetup.Orientation = xwc.PageOrientation.xlLandscape
+    #             ws.api.PageSetup.PaperSize = xwc.PaperSize.xlPaperA3
+    #             ws.api.PageSetup.PrintArea = "$A$1:$AG$50"
+    #             ws.api.PageSetup.Zoom = 55
+    #             ws.range("14:14").api.Font.Bold = True
+    #             ws.range("14:14").api.Orientation = 90
+    #             ws.range("32:32").api.Font.Bold = True
+    #             ws.range("32:32").api.Orientation = 90
+    #             ws.range("A:A").api.EntireColumn.AutoFit()
+
+    #             pdf_path = path.replace(".xlsx", ".pdf")
+    #             wb.api.ExportAsFixedFormat(0, pdf_path)
+    #             wb.save(path)
+
+    #             self._remove_multiheader()
+
+    #             self.logger.info(f"Excel file created at {path}")
+    #     except Exception as e:
+    #         raise CustomException(e, "Error in writing to excel.") from e
+
+    def print_results(self):
         """
-        Creates excel file based on the output folder, site and tag.
-        Writes three dataframes to excel file.
-        1. df_summary
-        2. VSDCalculation
-        3. ImpellerCalculation
-
+        Prints the results to the console.
         """
-        try:
-            path = self._get_output_path(output_folder, site, tag)
-
-            self._add_multiheader()
-
-            with xw.App(visible=False):
-                if not os.path.isfile(path):
-                    wb = xw.Book()
-                else:
-                    wb = xw.Book(path)
-                ws = wb.sheets[0]
-                ws.clear_contents()
-
-                for cell, df, cond in zip(
-                    ["A1", "A14", "A32", "G1"],
-                    [
-                        self.df_summary,
-                        self.vsd_calculation,
-                        self.impeller_calculation,
-                        self.df_economics,
-                    ],
-                    [True, False, False, True],
-                ):
-                    ws.range(cell).options(index=cond).value = df
-                    current_area = ws.range(cell).expand().address
-                    # make boder
-                    ws.range(current_area).api.Borders.LineStyle = 1
-
-                ws.api.PageSetup.Orientation = xwc.PageOrientation.xlLandscape
-                ws.api.PageSetup.PaperSize = xwc.PaperSize.xlPaperA3
-                ws.api.PageSetup.PrintArea = "$A$1:$AG$50"
-                ws.api.PageSetup.Zoom = 55
-                ws.range("14:14").api.Font.Bold = True
-                ws.range("14:14").api.Orientation = 90
-                ws.range("32:32").api.Font.Bold = True
-                ws.range("32:32").api.Orientation = 90
-                ws.range("A:A").api.EntireColumn.AutoFit()
-
-                pdf_path = path.replace(".xlsx", ".pdf")
-                wb.api.ExportAsFixedFormat(0, pdf_path)
-                wb.save(path)
-
-                self._remove_multiheader()
-
-                self.logger.info(f"Excel file created at {path}")
-        except Exception as e:
-            raise CustomException(e, "Error in writing to excel.") from e
-
-    def process_pump(self, output_folder, site, tag):
+        print("\n\n")
+        print("VSD Calculation")
+        print(self.vsd_calculation)
+        print("\n\n")
+        print("Impeller Calculation")
+        print(self.impeller_calculation)
+        print("\n\n")
+        print("Summary")
+        print(self.df_summary)
+        print("\n\n")
+        print("Economics")
+        print(self.df_economics)
+    
+    def process_pump(self):
         """
         Main method to run the pump analysis.
         """
@@ -1082,9 +1100,10 @@ class Pump:
             self.remove_non_operating_rows()
             self.get_computed_columns()
             self.group_by_flowrate_percent()
-            self.create_energy_calculation(site)
+            self.create_energy_calculation(site="UL")
             self.get_economics_summary()
-            self.write_to_excel(output_folder, site, tag)
+            # self.write_to_excel(output_folder, site, tag)
+            self.print_results()
         except CustomException as e:
             self.logger.error(e)
             raise CustomException(e) from e
