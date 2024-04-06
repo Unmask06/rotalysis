@@ -1,9 +1,8 @@
-import sys
-sys.path.append('..')
-
 import pandas as pd
+
 from rotalysis import UtilityFunction as uf
 from utils import UnitConvertor as uc
+
 
 class CompressorFunction:
     @staticmethod

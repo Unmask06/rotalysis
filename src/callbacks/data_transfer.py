@@ -3,23 +3,17 @@ callbacks.data_transfer
 This module contains the callbacks for data transfer (uploading and downloading files).
 """
 
-import base64
-import io
 from typing import Dict, Tuple
 
-import pandas as pd
-from dash import Dash, html
+from dash import Dash, dcc, html
 from dash.dependencies import Input, Output, State
 
 from components import ids
-from rotalysis.definitions import InputSheetNames
-
-
-
 
 
 def register_callbacks(app: Dash):
     register_upload_callbacks(app)
+    register_download_callbacks(app)
 
 
 def register_upload_callbacks(app: Dash):
@@ -37,7 +31,19 @@ def register_upload_callbacks(app: Dash):
             upload_response = html.Div(html.H5(f"File {filename} has been uploaded."))
         else:
             data = {"filename": "", "contents": ""}
-            upload_response = html.Div(html.H5(f"No file has been uploaded."))
+            upload_response = html.Div(html.H5("No file has been uploaded."))
 
         return (upload_response, data)
 
+
+def register_download_callbacks(app: Dash):
+
+    @app.callback(
+        Output(ids.DOWNLOAD_OUTPUT, "data"),
+        Input(ids.DOWNLOAD_BUTTON, "n_clicks"),
+        prevent_initial_call=True,
+    )
+    def download_result(n_clicks: int):
+        if n_clicks is None:
+            return None
+        return dcc.send_file("src/data/output/Output.xlsx")

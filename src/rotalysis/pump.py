@@ -1017,78 +1017,40 @@ class Pump:
                     )
         self._add_multiheader()
 
-    # def write_to_excel(self, output_folder, site, tag):
-    #     """
-    #     Creates excel file based on the output folder, site and tag.
-    #     Writes three dataframes to excel file.
-    #     1. df_summary
-    #     2. VSDCalculation
-    #     3. ImpellerCalculation
-
-    #     """
-    #     try:
-    #         path = self._get_output_path(output_folder, site, tag)
-
-    #         with xw.App(visible=False):
-    #             if not os.path.isfile(path):
-    #                 wb = xw.Book()
-    #             else:
-    #                 wb = xw.Book(path)
-    #             ws = wb.sheets[0]
-    #             ws.clear_contents()
-
-    #             for cell, df, cond in zip(
-    #                 ["A1", "A14", "A32", "G1"],
-    #                 [
-    #                     self.df_summary,
-    #                     self.vsd_calculation,
-    #                     self.impeller_calculation,
-    #                     self.df_economics,
-    #                 ],
-    #                 [True, False, False, True],
-    #             ):
-    #                 ws.range(cell).options(index=cond).value = df
-    #                 current_area = ws.range(cell).expand().address
-    #                 # make boder
-    #                 ws.range(current_area).api.Borders.LineStyle = 1
-
-    #             ws.api.PageSetup.Orientation = xwc.PageOrientation.xlLandscape
-    #             ws.api.PageSetup.PaperSize = xwc.PaperSize.xlPaperA3
-    #             ws.api.PageSetup.PrintArea = "$A$1:$AG$50"
-    #             ws.api.PageSetup.Zoom = 55
-    #             ws.range("14:14").api.Font.Bold = True
-    #             ws.range("14:14").api.Orientation = 90
-    #             ws.range("32:32").api.Font.Bold = True
-    #             ws.range("32:32").api.Orientation = 90
-    #             ws.range("A:A").api.EntireColumn.AutoFit()
-
-    #             pdf_path = path.replace(".xlsx", ".pdf")
-    #             wb.api.ExportAsFixedFormat(0, pdf_path)
-    #             wb.save(path)
-
-    #             self._remove_multiheader()
-
-    #             self.logger.info(f"Excel file created at {path}")
-    #     except Exception as e:
-    #         raise CustomException(e, "Error in writing to excel.") from e
-
-    def print_results(self):
+    def write_to_excel(self):
         """
-        Prints the results to the console.
+        Creates excel file based on the output folder, site and tag.
+        Writes three dataframes to excel file.
+        1. df_summary
+        2. VSDCalculation
+        3. ImpellerCalculation
+
         """
-        print("\n\n")
-        print("VSD Calculation")
-        print(self.vsd_calculation)
-        print("\n\n")
-        print("Impeller Calculation")
-        print(self.impeller_calculation)
-        print("\n\n")
-        print("Summary")
-        print(self.df_summary)
-        print("\n\n")
-        print("Economics")
-        print(self.df_economics)
-    
+        try:
+            output_folder = Path("src/data/output")
+            output_folder.mkdir(parents=True, exist_ok=True)
+            path = output_folder / "Output.xlsx"
+
+            # Create a Pandas Excel writer using XlsxWriter as the engine.
+            writer = pd.ExcelWriter(path, engine='xlsxwriter')
+
+            # Write each DataFrame to a specific sheet
+            self.df_summary.to_excel(writer, sheet_name='Summary')
+            self.vsd_calculation.to_excel(writer, sheet_name='VSD Calculation')
+            self.impeller_calculation.to_excel(writer, sheet_name='Impeller Calculation')
+            self.df_economics.to_excel(writer, sheet_name='Economics')
+
+            # Save the writer (and thus the file)
+            writer.close()
+
+            # Optionally convert to PDF here if necessary
+
+            self.logger.info(f"Excel file created at {path}")
+
+        except Exception as e:
+            self.logger.exception("Error in writing to excel.")
+            # Handle or raise the exception as needed
+
     def process_pump(self):
         """
         Main method to run the pump analysis.
@@ -1102,11 +1064,12 @@ class Pump:
             self.group_by_flowrate_percent()
             self.create_energy_calculation(site="UL")
             self.get_economics_summary()
-            # self.write_to_excel(output_folder, site, tag)
-            self.print_results()
+            self.write_to_excel()
         except CustomException as e:
             self.logger.error(e)
+            print(traceback.format_exc())
             raise CustomException(e) from e
         except Exception as e:
             self.logger.error(e)
+            print(traceback.format_exc())
             raise CustomException(e) from e

@@ -1,6 +1,7 @@
 """Upload file component."""
 
 from dash import dcc, html
+
 from . import ids
 
 

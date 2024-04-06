@@ -13,6 +13,7 @@ from rotalysis.pump import Pump
 config = pd.read_excel("src/data/Config.xlsx", sheet_name="PumpConfig1")
 emission_factor = pd.read_excel("src/data/Config.xlsx", sheet_name="Emission Factor")
 
+
 # helper functions
 def parse_contents(filename: str, contents: str) -> Dict[str, pd.DataFrame] | html.Div:
     content_type, content_string = contents.split(",")
@@ -30,35 +31,42 @@ def parse_contents(filename: str, contents: str) -> Dict[str, pd.DataFrame] | ht
         print(e)
         return html.Div(["There was an error processing this file."])
 
+
 def register_callbacks(app: Dash):
     register_process_pump_callbacks(app)
 
+
 def register_process_pump_callbacks(app: Dash):
+
     @app.callback(
         Output(ids.OUTPUT_PROCESS_PUMP, "children"),
         Input(ids.BUTTON_PROCESS_PUMP, "n_clicks"),
         State(ids.STORE_DATA, "data"),
+        prevent_initial_call=True,
     )
-    
     def process_pump(n_clicks: int, data: Dict[str, str]) -> html.Div:
         if n_clicks is None:
             return html.Div("Click the button to process the pump.")
         if not data["filename"]:
             return html.Div("No file has been uploaded.")
-        
+
         dfs = parse_contents(data["filename"], data["contents"])
         design_data = dfs[InputSheetNames.DESIGN_DATA]
         operating_data = dfs[InputSheetNames.OPERATIONAL_DATA]
         unit = dfs[InputSheetNames.UNIT]
-        pump = Pump(config=config, emission_factor=emission_factor,process_data=design_data,operation_data=operating_data,unit=unit)
-        print(pump.process_data)
-        print(f"{"-"*20}")
-        print(pump.dfoperation)
-        print(f"{"-"*20}")
-        print(pump.unit)
-        print(f"{"-"*20}")
-        print(pump.config, pump.emission_factor)
-        
+        pump = Pump(
+            config=config,
+            emission_factor=emission_factor,
+            process_data=design_data,
+            operation_data=operating_data,
+            unit=unit,
+        )
+
         pump.process_pump()
-        
-        return html.Div("Pump has been processed.")
+
+        return html.Div(
+            [
+                html.H5("Pump has been processed."),
+                html.Button("Download the result", id=ids.DOWNLOAD_BUTTON),
+            ]
+        )

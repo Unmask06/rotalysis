@@ -1,10 +1,20 @@
+"""
+src/rotalysis/definitions.py
+This module contains the definitions for the Rotalysis app.
+"""
+
+
 class ValveCharacter:
+    """Enumeration for valve character."""
+
     LINEAR = "Linear"
     EQUAL_PERCENTAGE = "Equal Percentage"
     QUICK_OPENING = "Quick Opening"
 
 
 class PumpDesignDataVariables:
+    """Enumeration for pump design data variables."""
+
     EQUIPMENT_TAG = "Equipment Tag"
     EQUIPMENT_TYPE = "Equipment Type"
     DESCRIPTION = "Description"

@@ -4,9 +4,14 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import Dash, html
 
-from callbacks import data_transfer,process_pump
+from callbacks import data_transfer, process_pump
 
-app = Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(
+    __name__,
+    use_pages=True,
+    suppress_callback_exceptions=True,
+    external_stylesheets=[dbc.themes.BOOTSTRAP],
+)
 
 app.title = "Rotalysis"
 
@@ -29,7 +34,7 @@ layout = dbc.Container(
         dbc.Row(
             [
                 dbc.Col(
-                    html.H1("Rotalysis", className="display-3"), xs=4, md=4, lg=4, xl=4
+                    html.H1("Rotalysis"), xs=4, md=4, lg=4, xl=4
                 ),
                 dbc.Col(
                     [side_bar], xs=8, md=8, lg=8, xl=8, style={"text-align": "right"}

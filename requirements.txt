@@ -7,3 +7,4 @@ pydantic
 dash
 xlwings
 dash_bootstrap_components
+xlsxwriter
