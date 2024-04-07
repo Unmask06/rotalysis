@@ -17,8 +17,10 @@ def layout():
             html.P("This is the calculation page."),
             upload_file.render(),
             html.Button("Process Pump", id=ids.BUTTON_PROCESS_PUMP),
-            html.Div(
-                id=ids.OUTPUT_PROCESS_PUMP, children="Process pump to see the result"
+            dcc.Loading(
+                id=ids.LOADING_PROCESS_PUMP,
+                type="default",
+                children=[html.Div(id=ids.OUTPUT_PROCESS_PUMP,children="Process pump to see the result")],
             ),
             dcc.Download(id=ids.DOWNLOAD_OUTPUT),
         ]

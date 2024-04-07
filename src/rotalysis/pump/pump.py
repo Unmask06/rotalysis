@@ -16,7 +16,7 @@ import xlwings as xw
 import xlwings.constants as xwc
 
 from rotalysis import Economics as ec
-from rotalysis import PumpFunction as PF
+from .pump_function import PumpFunction as PF
 from rotalysis import UtilityFunction as uf
 from rotalysis.definitions import (
     ComputedVariables,

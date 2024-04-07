@@ -11,14 +11,15 @@ class Databook:
     Class for reading data from an Excel databook using xlwings.
     """
 
-    def __init__(self, databook_path: str = "src/utils/Databook.xlsx"):
+    def __init__(self):
         """
         Initializes the Databook class by setting the path to the databook 
         and verifying its existence.
 
         :param databook_path: Path to the Excel databook.
         """
-        self.databook_path = Path(databook_path).resolve()
+        
+        self.databook_path = Path(__file__).parent / "Databook.xlsx"
         if not self.databook_path.is_file():
             raise FileNotFoundError(f"{self.databook_path} not found")
 
