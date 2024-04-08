@@ -782,7 +782,6 @@ class Pump:
             )
             raise CustomException(error_msg)
 
-        self.format_dataframes()
         self.logger.info("Energy calculation completed")
 
     def __summarize(self, dfenergy, site):
@@ -989,33 +988,6 @@ class Pump:
         output_path = os.path.join(output_folder_path, tag + ".xlsx")
         return output_path
 
-    def format_dataframes(self):
-        """
-        Formats the dataframes for excel file.
-        """
-        percent_columns = [
-            ComputedVariables.FLOWRATE_PERCENT,
-            ComputedVariables.OLD_PUMP_EFFICIENCY,
-            ComputedVariables.OLD_MOTOR_EFFICIENCY,
-            ComputedVariables.NEW_MOTOR_EFFICIENCY,
-            ComputedVariables.NEW_PUMP_EFFICIENCY,
-            EmissionVariables.GHG_REDUCTION_PERCENT,
-            ComputedVariables.REQUIRED_SPEED_VARIATION,
-            ComputedVariables.SELECTED_SPEED_VARIATION,
-            ComputedVariables.WORKING_PERCENT,
-        ]
-        for df in [self.vsd_calculation, self.impeller_calculation]:
-            for col in percent_columns:
-                df[col] = df[col].apply(
-                    lambda x: uf.format_number(x, number_format="percent")
-                )
-
-            for col in df.columns:
-                if df[col].dtype == "float64":
-                    df[col] = df[col].apply(
-                        lambda x: uf.format_number(x, number_format="whole")
-                    )
-        self._add_multiheader()
 
     def write_to_excel(self):
         """

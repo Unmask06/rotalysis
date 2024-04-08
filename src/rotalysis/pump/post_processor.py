@@ -4,57 +4,78 @@ This module responsible for generating the graphs and figures for the pump data.
 Also, formatting the data for the pump data.
 """
 
-import pandas as pd
-from rotalysis import definitions as defs
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+from rotalysis import definitions as defs
 
-xl_path = r"D:\Code\rotalysis\src\data\output\Output.xlsx" # TODO: Change this path to the correct path
-df = pd.read_excel(xl_path, sheet_name=1, index_col=0)
-df2 = pd.read_excel(xl_path, sheet_name=2, index_col=0)
-
-
-df.dropna(subset=[defs.ComputedVariables.FLOWRATE_PERCENT], inplace=True)
-df2.dropna(subset=[defs.ComputedVariables.FLOWRATE_PERCENT], inplace=True)
+from .pump import Pump
 
 
-fig = make_subplots(specs=[[{"secondary_y": True}]])
-fig.add_trace(
-    go.Bar(
-        x=df[defs.ComputedVariables.FLOWRATE_PERCENT],
-        y=df[defs.ComputedVariables.WORKING_PERCENT],
-        name="Flowrate %",
-    ),
-    secondary_y=False,
-)
-fig.add_trace(
-    go.Scatter(
-        x=df2[defs.ComputedVariables.FLOWRATE_PERCENT],
-        y=df2[defs.ComputedVariables.ANNUAL_ENERGY_SAVING],
-        mode="lines+markers",
-        name="Annual Energy Saving (Impeller Trim)",
-    ),
-    secondary_y=True,
-)
-fig.add_trace(
-    go.Scatter(
-        x=df[defs.ComputedVariables.FLOWRATE_PERCENT],
-        y=df[defs.ComputedVariables.ANNUAL_ENERGY_SAVING],
-        mode="lines",
-        name="Annual Energy Saving (VSD)",
-    ),
-    secondary_y=True,
-)
+class PumpReporter:
+    """
+    A class that generates a report for pump analysis.
 
-fig.update_layout(
-    title="Energy Savings upon implementing the VSD and Impeller Trim",
-    xaxis_title="% of Rated Flowrate",
-    yaxis_title="Working %",
-    yaxis2={
-        "title": "Annual Energy Saving (MWh)",
-        "titlefont": {"color": "blue"},
-        "tickfont": {"color": "blue"},
-    },
-)
+    Attributes:
+        pump (Pump): The pump object containing the analysis results.
+        vsd_calc (VSDCalculation): The VSD calculation object.
+        imp_trim_calc (ImpellerCalculation): The impeller calculation object.
+    """
 
+    energy_savings_graph: go.Figure
+
+    def __init__(self, pump: Pump) -> None:
+        if pump.df_summary is None:
+            raise ValueError(
+                "Please run the pump analysis first before generating the report"
+            )
+        self.pump = pump
+        self.vsd_calc = pump.vsd_calculation
+        self.imp_trim_calc = pump.impeller_calculation
+
+    def generate_energy_savings_graph(self) -> None:
+
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+        fig.add_trace(
+            go.Bar(
+                x=self.vsd_calc[defs.ComputedVariables.FLOWRATE_PERCENT],
+                y=self.vsd_calc[defs.ComputedVariables.WORKING_PERCENT],
+                name="Flowrate %",
+            ),
+            secondary_y=False,
+        )
+        fig.add_trace(
+            go.Scatter(
+                x=self.imp_trim_calc[defs.ComputedVariables.FLOWRATE_PERCENT],
+                y=self.imp_trim_calc[defs.ComputedVariables.ANNUAL_ENERGY_SAVING],
+                mode="lines+markers",
+                name="Annual Energy Saving (Impeller Trim)",
+            ),
+            secondary_y=True,
+        )
+        fig.add_trace(
+            go.Scatter(
+                x=self.vsd_calc[defs.ComputedVariables.FLOWRATE_PERCENT],
+                y=self.vsd_calc[defs.ComputedVariables.ANNUAL_ENERGY_SAVING],
+                mode="lines",
+                name="Annual Energy Saving (VSD)",
+            ),
+            secondary_y=True,
+        )
+
+        fig.update_layout(
+            title="Energy Savings upon implementing the VSD and Impeller Trim",
+            xaxis_title="% of Rated Flowrate",
+            yaxis_title="Working %",
+            yaxis2={
+                "title": "Annual Energy Saving (MWh)",
+                "titlefont": {"color": "blue"},
+                "tickfont": {"color": "blue"},
+            },
+        )
+
+        self.energy_savings_graph = fig
+
+    def generate_report(self) -> None:
+        self.generate_energy_savings_graph()
+        print("Report generated successfully")

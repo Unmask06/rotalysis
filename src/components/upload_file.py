@@ -8,7 +8,6 @@ from . import ids
 def render() -> html.Div:
     return html.Div(
         [
-            html.H1("Upload File"),
             dcc.Upload(
                 id=ids.UPLOAD_DATA,
                 children=html.Div(["Drag and Drop or ", html.A("Select Files")]),
