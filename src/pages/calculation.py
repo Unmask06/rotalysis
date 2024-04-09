@@ -4,7 +4,7 @@ pages/calculation.py - Calculation page for the Rotalysis app.
 
 import dash
 import dash_bootstrap_components as dbc
-from dash import dcc, html, dash_table
+from dash import dcc, html
 
 from components import ids, upload_file
 
