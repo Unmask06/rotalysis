@@ -6,28 +6,6 @@ recursive=no
 suggestion-mode=yes
 unsafe-load-any-extension=no
 
-[BASIC]
-argument-naming-style=snake_case
-attr-naming-style=snake_case
-bad-names=foo,bar,baz,toto,tutu,tata
-class-attribute-naming-style=any
-class-const-naming-style=UPPER_CASE
-class-naming-style=PascalCase
-const-naming-style=UPPER_CASE
-docstring-min-length=-1
-function-naming-style=snake_case
-good-names=i,j,k,ex,Run,_
-method-naming-style=snake_case
-module-naming-style=snake_case
-variable-naming-style=snake_case
-
-[CLASSES]
-check-protected-access-in-special-methods=no
-defining-attr-methods=__init__,__new__,setUp,__post_init__
-exclude-protected=_asdict,_fields,_replace,_source,_make
-valid-classmethod-first-arg=cls
-valid-metaclass-classmethod-first-arg=mcs
-
 [DESIGN]
 max-args=7
 max-attributes=9
@@ -40,51 +18,16 @@ max-returns=6
 max-statements=50
 min-public-methods=2
 
-[EXCEPTIONS]
-overgeneral-exceptions=builtins.BaseException,builtins.Exception
 
 [FORMAT]
 indent-after-paren=4
 indent-string='    '
 max-line-length=100
-max-module-lines=1000
+max-module-lines=800
 
-[IMPORTS]
-known-third-party=enchant
-
-[LOGGING]
-logging-format-style=new
 
 [MESSAGES CONTROL]
-confidence=HIGH,CONTROL_FLOW,INFERENCE,INFERENCE_FAILURE,UNDEFINED
-disable=raw-checker-failed,bad-inline-option,locally-disabled,file-ignored,suppressed-message,useless-suppression,deprecated-pragma,use-symbolic-message-instead,W1203,C0116
+disable=W1203,R0903
 enable=c-extension-no-member, consider-using-f-string
 
-[METHOD_ARGS]
-timeout-methods=requests.api.delete,requests.api.get,requests.api.head,requests.api.options,requests.api.patch,requests.api.post,requests.api.put,requests.api.request
 
-[MISCELLANEOUS]
-notes=FIXME,XXX,TODO
-
-[REFACTORING]
-max-nested-blocks=5
-never-returning-functions=sys.exit,argparse.parse_error
-
-[REPORTS]
-evaluation=max(0, 0 if fatal else 10.0 - ((float(5 * error + warning + refactor + convention) / statement) * 10))
-reports=no
-score=yes
-
-[SIMILARITIES]
-ignore-comments=yes
-ignore-docstrings=yes
-ignore-imports=yes
-ignore-signatures=yes
-min-similarity-lines=4
-
-[TYPECHECK]
-ignore-none=yes
-ignore-on-opaque-inference=yes
-missing-member-hint=yes
-missing-member-hint-distance=1
-missing-member-max-choices=1
