@@ -30,7 +30,13 @@ def layout():
             dbc.Container(
                 [
                     dcc.Download(id=ids.DOWNLOAD_OUTPUT),
-                    html.Button("Download the result", id=ids.DOWNLOAD_BUTTON),
+                    dbc.Button(
+                        id=ids.DOWNLOAD_BUTTON,
+                        children=[
+                            html.I(className="fa-regular fa-circle-down"),
+                            "Download the result",
+                        ],
+                    ),
                     html.Div(id=ids.OUTPUT_SUMMARY_TABLE),
                     dcc.Graph(id=ids.GRAPH_REPORT_ENERGY_SAVINGS),
                 ],

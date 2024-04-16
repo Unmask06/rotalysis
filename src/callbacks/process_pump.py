@@ -1,9 +1,10 @@
 import base64
 import io
-from typing import Dict, Tuple
+from typing import Dict
 
+import dash_bootstrap_components as dbc
 import pandas as pd
-from dash import Dash, dash_table, html
+from dash import Dash, dash_table, html, no_update
 from dash.dependencies import Input, Output, State
 
 from components import ids
@@ -44,39 +45,59 @@ def register_process_pump_callbacks(app: Dash):
             Output(ids.OUTPUT_SUMMARY_TABLE, "children"),
             Output(ids.GRAPH_REPORT_ENERGY_SAVINGS, "figure"),
         ],
-        Input(ids.BUTTON_PROCESS_PUMP, "n_clicks"),
-        State(ids.STORE_DATA, "data"),
+        [Input(ids.BUTTON_PROCESS_PUMP, "n_clicks")],
+        [State(ids.STORE_DATA, "data")],
         prevent_initial_call=True,
     )
-    def process_pump(n_clicks: int, data: Dict[str, str]):
+    def process_pump(n_clicks, data):
         if n_clicks is None:
-            return html.Div("Click the button to process the pump.")
-        if not data["filename"]:
-            return html.Div("No file has been uploaded.")
+            return (
+                {"display": "none"},
+                "Click the button to process the pump.",
+                no_update,
+                no_update,
+            )
+        if not data or "filename" not in data or not data["filename"]:
+            return (
+                {"display": "block"},
+                html.Div("No file has been uploaded."),
+                no_update,
+                no_update,
+            )
 
-        dfs = parse_contents(data["filename"], data["contents"])
-        design_data = dfs[InputSheetNames.DESIGN_DATA]
-        operating_data = dfs[InputSheetNames.OPERATIONAL_DATA]
-        unit = dfs[InputSheetNames.UNIT]
-        pump = Pump(
-            config=config,
-            emission_factor=emission_factor,
-            process_data=design_data,
-            operation_data=operating_data,
-            unit=unit,
-        )
+        try:
+            dfs = parse_contents(data["filename"], data["contents"])
+            design_data = dfs[InputSheetNames.DESIGN_DATA]
+            operating_data = dfs[InputSheetNames.OPERATIONAL_DATA]
+            unit = dfs[InputSheetNames.UNIT]
+            pump = Pump(
+                config=config,
+                emission_factor=emission_factor,
+                process_data=design_data,
+                operation_data=operating_data,
+                unit=unit,
+            )
 
-        pump.process_pump()
-        pump_reporter = PumpReporter(pump)
-        pump_reporter.generate_energy_savings_graph()
-        df_summary = pump.df_summary.reset_index(drop=False)
+            pump.process_pump()
+            pump_reporter = PumpReporter(pump)
+            pump_reporter.generate_energy_savings_graph()
+            df_summary = pump.df_summary.reset_index(drop=False)
 
-        style = {"display": "block"}
-        output_msg = html.H5("Pump has been processed.")
-        summary_table = dash_table.DataTable(
-            data=df_summary.to_dict("records"),
-            columns=[{"name": i, "id": i} for i in df_summary.columns],
-        )
-        fig = pump_reporter.energy_savings_graph
+            style = {"display": "block"}
+            output_msg = html.H5("Pump has been processed.")
+            summary_table = html.Div(
+                dbc.Table.from_dataframe(df_summary, striped=True, bordered=True, hover=True),  # type: ignore
+                className="mt-4",
+            )
 
-        return (style, output_msg, summary_table, fig)
+            fig = pump_reporter.energy_savings_graph
+
+            return style, output_msg, summary_table, fig
+
+        except Exception as e:
+            return (
+                {"display": "block"},
+                html.Div(f"Error processing pump data: {e}"),
+                no_update,
+                no_update,
+            )
