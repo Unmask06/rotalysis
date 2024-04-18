@@ -6,7 +6,8 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from components import ids, upload_file
+from components.calculation import ids
+from components.calculation import upload_file
 
 dash.register_page(__name__)
 

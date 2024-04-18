@@ -4,8 +4,8 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import Dash, html
 
-from callbacks import data_transfer, process_pump
-from components import layout
+from callbacks import calculation,design_stage
+from components.common import layout
 
 FONT_AWESOME = "https://use.fontawesome.com/releases/v5.15.4/js/all.js"
 app = Dash(
@@ -18,8 +18,8 @@ app = Dash(
 app.title = "Rotalysis"
 
 app.layout = layout.create_layout(app.title)
-data_transfer.register_callbacks(app)
-process_pump.register_callbacks(app)
+calculation.register_callbacks(app)
+design_stage.design_stage_callbacks(app)
 
 
 if __name__ == "__main__":
