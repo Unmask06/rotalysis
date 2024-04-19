@@ -1,69 +1,30 @@
-import dash
-import dash_bootstrap_components as dbc
-from dash import dcc, html
+"""This module compiles the layout and callbacks of the design stage page."""
 
-from components.design_stage import flow_spread_table, ids
-from custom_components.dropdown import DropdownCustom
-from custom_components.input import InputCustom
+import dash
+from dash import html
+
+from components.design_stage import energy_savings_data
+from components.design_stage import energy_savings_data as esdc
+from components.design_stage import ids
+from components.design_stage import pump_design_data as pddc
+from components.design_stage import pump_operation_data as podc
 
 dash.register_page(__name__)
 
-head_input = InputCustom(
-    id=ids.PUMP_DESIGN_RATED_HEAD,
-    label="Pump Rated Head (m)",
-    addon_text="m",
-)
-rated_flow_input = InputCustom(
-    id=ids.PUMP_DESIGN_RATED_FLOW,
-    label="Pump Rated Flow (m3/hr)",
-    addon_text="m3/hr",
-)
-rated_efficiency_input = InputCustom(
-    id=ids.PUMP_DESIGN_RATED_EFFICIENCY,
-    label="Pump Rated Efficiency (%)",
-    addon_text="%",
-)
-density_input = InputCustom(
-    id=ids.PUMP_DENSITY,
-    label="Density (kg/m3)",
-    addon_text="kg/m3",
-)
-
-flow_spread = DropdownCustom(
-    id=ids.FLOW_SPREAD,
-    label="Flow Spread type",
-    options=[
-        {"label": "Constant", "value": "constant"},
-        {"label": "Variable", "value": "variable"},
-    ],
-)
+pump_design_input = pddc.export_container(ids.PUMP_DESIGN_INPUT_CONTAINER)
+pump_operation_input = podc.export_container(ids.PUMP_OPERATION_INPUT_CONTAINER)
+energy_savings = esdc.export_container(ids.ENERGY_SAVINGS_CONTAINER)
 
 
-# components
-pump_design_input = html.Div(
-    id=ids.PUMP_DESIGN_INPUT_CONTAINER,
-    children=[
-        head_input.layout(),
-        rated_flow_input.layout(),
-        rated_efficiency_input.layout(),
-        density_input.layout(),
-    ],
+layout = html.Div(
+    [
+        html.H1("Design Stage"),
+        pump_design_input,
+        pump_operation_input,
+        energy_savings,
+    ]
 )
 
-pump_operation_input = html.Div(
-    id=ids.PUMP_OPERATION_INPUT_CONTAINER,
-    children=[
-        flow_spread.layout(),
-    ],
-)
-
-
-def layout():
-    return html.Div(
-        [
-            html.H1("Design Stage"),
-            html.Div(pump_design_input),
-            html.Div(pump_operation_input),
-            flow_spread_table.render(),
-        ]
-    )
+pddc.register_callbacks()
+podc.register_callbacks()
+energy_savings_data.register_callbacks()
