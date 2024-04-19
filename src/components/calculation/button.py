@@ -2,20 +2,18 @@ import base64
 import io
 from typing import Dict
 
+import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
-from dash import Dash, dash_table, html, no_update
-from dash.dependencies import Input, Output, State
+from dash import Input, Output, State, callback, dcc, html, no_update
 
-from components import ids
+from components.calculation import ids, upload_file
 from rotalysis.definitions import InputSheetNames
 from rotalysis.pump import Pump, PumpReporter
 
-config = pd.read_excel("src/data/Config.xlsx", sheet_name="PumpConfig1")
-emission_factor = pd.read_excel("src/data/Config.xlsx", sheet_name="Emission Factor")
+from . import ids
 
 
-# helper functions
 def parse_contents(filename: str, contents: str) -> Dict[str, pd.DataFrame] | html.Div:
     content_type, content_string = contents.split(",")
 
@@ -32,13 +30,19 @@ def parse_contents(filename: str, contents: str) -> Dict[str, pd.DataFrame] | ht
         return html.Div(["There was an error processing this file."])
 
 
-def register_callbacks(app: Dash):
-    register_process_pump_callbacks(app)
+def register_callbacks():
 
+    @callback(
+        Output(ids.DOWNLOAD_OUTPUT, "data"),
+        Input(ids.DOWNLOAD_BUTTON, "n_clicks"),
+        prevent_initial_call=True,
+    )
+    def download_result(n_clicks: int):
+        if n_clicks is None:
+            return None
+        return dcc.send_file("src/data/output/Output.xlsx")
 
-def register_process_pump_callbacks(app: Dash):
-
-    @app.callback(
+    @callback(
         [
             Output(ids.OUTPUT_CONTAINER, "style"),
             Output(ids.OUTPUT_PROCESS_PUMP, "children"),
@@ -50,6 +54,13 @@ def register_process_pump_callbacks(app: Dash):
         prevent_initial_call=True,
     )
     def process_pump(n_clicks, data):
+        config = pd.read_excel("src/data/Config.xlsx", sheet_name="PumpConfig1")
+        emission_factor = pd.read_excel(
+            "src/data/Config.xlsx", sheet_name="Emission Factor"
+        )
+
+        # helper functions
+
         if n_clicks is None:
             return (
                 {"display": "none"},

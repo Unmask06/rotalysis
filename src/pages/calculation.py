@@ -2,16 +2,23 @@
 pages/calculation.py - Calculation page for the Rotalysis app.
 """
 
+import base64
+import io
+from typing import Dict
+
 import dash
 import dash_bootstrap_components as dbc
-from dash import dcc, html
+import pandas as pd
+from dash import Input, Output, State, callback, dcc, html, no_update
 
-from components import ids, upload_file
+from components.calculation import button, ids, upload_file
+
 
 dash.register_page(__name__)
 
 
 def layout():
+
     return dbc.Container(
         [
             html.H3("Calculation Page"),
@@ -45,3 +52,7 @@ def layout():
             ),
         ]
     )
+
+
+upload_file.register_callbacks()
+button.register_callbacks()
