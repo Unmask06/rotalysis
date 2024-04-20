@@ -8,3 +8,5 @@ dash
 xlwings
 dash_bootstrap_components
 xlsxwriter
+sympy
+scipy
