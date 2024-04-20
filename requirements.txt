@@ -10,3 +10,4 @@ dash_bootstrap_components
 xlsxwriter
 sympy
 scipy
+dash-ag-grid

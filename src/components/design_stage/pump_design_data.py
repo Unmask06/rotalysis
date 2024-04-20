@@ -1,9 +1,13 @@
+import dash_ag_grid as dag
 from dash import callback, dcc, html
 from dash.dependencies import Input, Output, State
 
 from custom_components.input import InputCustom
+import pandas as pd
 
 from . import ids
+
+pump_curve_data = 
 
 head_input = InputCustom(
     id=ids.PUMP_DESIGN_RATED_HEAD,
@@ -12,8 +16,8 @@ head_input = InputCustom(
 )
 rated_flow_input = InputCustom(
     id=ids.PUMP_DESIGN_RATED_FLOW,
-    label="Pump Rated Flow (m3/hr)",
-    addon_text="m3/hr",
+    label="Pump Rated Flow (m3/s)",
+    addon_text="m3/s",
 )
 rated_efficiency_input = InputCustom(
     id=ids.PUMP_DESIGN_RATED_EFFICIENCY,
@@ -29,6 +33,14 @@ dialog = dcc.ConfirmDialog(
     id="confirm-input",
     message="callback triggered",
 )
+pump_curve_data = dag.AgGrid(
+    id=ids.PUMP_CURVE_DATA,
+    columnDefs=[
+        {"headerName": "Flow Rate (m3/h)", "field": "flow_rate"},
+        {"headerName": "Head (m)", "field": "head"},
+    ],
+    rowData=[{"flow_rate": 0, "head": 0}],
+)
 
 
 def export_container(id: str):
@@ -39,6 +51,7 @@ def export_container(id: str):
             rated_flow_input.layout(),
             rated_efficiency_input.layout(),
             density_input.layout(),
+            pump_curve_data,
             dialog,
         ],
     )

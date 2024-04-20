@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 from rotalysis import definitions as defs
 
-from .pump import Pump
+from .pump_optimizer import PumpOptimizer
 
 
 class PumpReporter:
@@ -24,7 +24,7 @@ class PumpReporter:
 
     energy_savings_graph: go.Figure
 
-    def __init__(self, pump: Pump) -> None:
+    def __init__(self, pump: PumpOptimizer) -> None:
         if pump.df_summary is None:
             raise ValueError(
                 "Please run the pump analysis first before generating the report"

@@ -5,5 +5,5 @@ from .valve_function import ValveFunction
 from .inputs import RotalysisInput
 from .economics import Economics
 from .pump.pump_function import PumpFunction
-from .pump.pump import CustomException, Pump
+from .pump.pump_optimizer import CustomException, PumpOptimizer
 from .compressor_function import CompressorFunction

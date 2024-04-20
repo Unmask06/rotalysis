@@ -9,7 +9,7 @@ from dash import Input, Output, State, callback, dcc, html, no_update
 
 from components.calculation import ids, upload_file
 from rotalysis.definitions import InputSheetNames
-from rotalysis.pump import Pump, PumpReporter
+from rotalysis.pump import PumpOptimizer, PumpReporter
 
 from . import ids
 
@@ -81,7 +81,7 @@ def register_callbacks():
             design_data = dfs[InputSheetNames.DESIGN_DATA]
             operating_data = dfs[InputSheetNames.OPERATIONAL_DATA]
             unit = dfs[InputSheetNames.UNIT]
-            pump = Pump(
+            pump = PumpOptimizer(
                 config=config,
                 emission_factor=emission_factor,
                 process_data=design_data,

@@ -8,6 +8,7 @@ from typing import List, Tuple, Union
 import numpy as np
 from plotly import graph_objects as go
 from scipy.optimize import curve_fit, fsolve
+from .pump import Pump
 
 
 def head_curve(
