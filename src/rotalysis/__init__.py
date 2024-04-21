@@ -7,3 +7,4 @@ from .economics import Economics
 from .pump.pump_function import PumpFunction
 from .pump.pump_optimizer import CustomException, PumpOptimizer
 from .compressor_function import CompressorFunction
+from .pump.pump import Pump

@@ -27,7 +27,7 @@ max-module-lines=800
 
 
 [MESSAGES CONTROL]
-disable=W1203,R0903, C3001
+disable=W1203,R0903, C3001, use-dict-literal
 enable=c-extension-no-member, consider-using-f-string
 
 

@@ -3,12 +3,11 @@ rotalysis.pump.curve_generator
 This module contains the class PumpCurveGenerator, which generates pump and system curves.
 """
 
-from typing import List, Tuple, Union
+from typing import Callable, List, Tuple, Union
 
 import numpy as np
 from plotly import graph_objects as go
 from scipy.optimize import curve_fit, fsolve
-from .pump import Pump
 
 
 def head_curve(
@@ -89,3 +88,18 @@ def get_headcurve_coefficients(flow, head) -> Tuple:
     equation = lambda Q, a, b, c: (a * Q**2) + (b * Q) + c
     params, _ = curve_fit(equation, flow, head)
     return tuple(params)
+
+
+def get_quadratic_equation(a: float, b: float, c: float) -> Callable[[float], float]:
+    """
+    Returns a quadratic equation in the form of a lambda function.
+
+    Parameters:
+    a (float): The coefficient of x^2.
+    b (float): The coefficient of x.
+    c (float): The constant term.
+
+    Returns:
+    Callable[[float], float]: A lambda function representing the quadratic equation.
+    """
+    return lambda x: (a * x**2) + (b * x) + c
