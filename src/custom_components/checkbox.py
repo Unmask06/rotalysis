@@ -8,18 +8,21 @@ from dash import dcc, html
 class CheckboxCustom:
     """Custom checkbox component using dcc.Checklist."""
 
-    id: str = "checkbox-1"
     options: List[dict] = field(default_factory=list)
     value: List[str] = field(default_factory=list)
     label: Optional[str] = None
     help_text: str = ""
     error_message: str = ""
+    instance_count: int = field(default=0, init=False, repr=False)
 
     def __post_init__(self):
         if not self.options:
             raise ValueError("Options must be provided.")
-        self.help_text_id = f"{self.id}-help"
-        self.error_message_id = f"{self.id}-error"
+
+        type(self).instance_count += 1
+        self.id = f"({self.__class__.__name__}-{self.instance_count})"
+        self.help_text_id: str = f"{self.id}-help"
+        self.error_message_id: str = f"{self.id}-error"
         self.label_id = f"{self.id}-label" if self.label is not None else None
 
     @property
