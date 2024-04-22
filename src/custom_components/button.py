@@ -1,37 +1,33 @@
-from dash import callback, html
-from dash.dependencies import Input, Output
+from dataclasses import dataclass
+
+from dash import html
 
 
+@dataclass
 class Button:
-    def __init__(self, id, label, color="bg-blue-500", hidden=False):
-        """
-        Initialize the reusable button component.
+    """Custom checkbox component using Dash HTML components html.Button."""
 
-        :param id_prefix: A unique identifier prefix for the button to ensure component uniqueness.
-        :param label: The label text to display on the button.
-        :param button_style: A string representing additional CSS classes for styling the button.
-        :param output_element_id: The ID of an element where the button's action output will be displayed.
-        """
-        self.id = id
-        self.label = label
-        self.color = color
-        self.hidden = hidden
+    id: str
+    label: str
+    color: str = "bg-blue-500"
+    hidden: bool = False
 
-    def render(self):
+    def __post_init__(self):
+        if self.hidden:
+            self.style = {"display": "none"}
+        else:
+            self.style = {}
+
+    @property
+    def layout(self) -> html.Button:
         """
-        Generate the layout for the button component.
+        Generates the HTML layout for the button component.
 
         :return: A Dash HTML component representing the button.
         """
-
-        if self.hidden:
-            style = {"display": "none"}
-        else:
-            style = {}
-
         return html.Button(
             self.label,
-            id=f"{self.id}",
+            id=self.id,
             className=f"{self.color} hover:bg-blue-700 text-white py-2 px-4 m-2 w-40",
-            style=style,
+            style=self.style,
         )

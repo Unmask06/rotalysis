@@ -1,18 +1,15 @@
 from dash import html
+from dataclasses import dataclass
 
 
+@dataclass
 class DisplayField:
-    def __init__(self, label="Label", value="", addon_text=""):
-        """
-        Initialize the display field component with a label, value, and optional add-on text.
-        :param label: The text for the label displayed alongside the value.
-        :param value: The value to display.
-        :param addon_text: Optional text to display next to the value.
-        """
-        self.label = label
-        self.value = value
-        self.addon_text = addon_text
+    """ Custom display field component using Dash HTML components."""
+    label: str = "Label"
+    value: str = ""
+    addon_text: str = ""
 
+    @property
     def layout(self):
         """
         Generates the HTML layout for the display field component.

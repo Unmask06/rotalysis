@@ -1,26 +1,42 @@
-from dash import html, dcc
+from dataclasses import dataclass, field
+from typing import List, Optional
+
+from dash import dcc, html
 
 
+@dataclass
 class CheckboxCustom:
-    def __init__(
-        self,
-        id="checkbox-1",
-        options=[],
-        value=[],
-        label="Label",
-        help_text="",
-        error_message="",
-    ):
-        self.label = label
-        self.options = options
-        self.value = value
-        self.id = id
-        self.help_text = help_text
-        self.error_message = error_message
+    """Custom checkbox component using dcc.Checklist."""
 
-    def layout(self):
+    id: str = "checkbox-1"
+    options: List[dict] = field(default_factory=list)
+    value: List[str] = field(default_factory=list)
+    label: Optional[str] = None
+    help_text: str = ""
+    error_message: str = ""
 
-        return html.Div(
+    def __post_init__(self):
+        if not self.options:
+            raise ValueError("Options must be provided.")
+        self.help_text_id = f"{self.id}-help"
+        self.error_message_id = f"{self.id}-error"
+        self.label_id = f"{self.id}-label" if self.label is not None else None
+
+    @property
+    def layout(self) -> html.Div:
+        """Generates the HTML layout for the custom checkbox component."""
+        components = []
+
+        if self.label is not None:
+            components.append(
+                html.Label(
+                    self.label,
+                    htmlFor=self.id,
+                    className="text-sm font-medium text-gray-700",
+                )
+            )
+
+        components.extend(
             [
                 dcc.Checklist(
                     id=self.id,
@@ -30,14 +46,15 @@ class CheckboxCustom:
                 ),
                 html.P(
                     self.help_text,
-                    id=f"{self.id}-help",
+                    id=self.help_text_id,
                     className="mt-2 text-sm text-gray-500",
                 ),
                 html.Div(
                     self.error_message,
-                    id=f"{self.id}-error",
+                    id=self.error_message_id,
                     className="mt-2 text-sm text-red-600",
                 ),
-            ],
-            className="m-4",
+            ]
         )
+
+        return html.Div(components, className="m-4")

@@ -9,13 +9,10 @@ import plotly.graph_objects as go
 from dash import callback, dcc, html
 from dash.dependencies import Input, Output, State
 
+from custom_components.checkbox import CheckboxCustom
 from rotalysis.pump import Pump
 
 from . import ids
-
-# Global figure to maintain state across updates
-PUMP_CURVE_FIG = go.Figure()
-
 
 def create_bar_chart(x, y) -> go.Figure:
     # This might be a static figure that is only created once.
@@ -48,14 +45,30 @@ def update_figure_with_curve(data, fig, curve_type):
         )
 
 
+graph_checkbox = CheckboxCustom(
+    id=ids.GRAPH_CHECKBOX,
+    options=[
+        {"label": "Pump Curve", "value": "pump"},
+        {"label": "System Curve", "value": "system"},
+        {"label": "Efficiency Curve", "value": "efficiency"},
+    ],
+    label="Select Curves to Display",
+    help_text="Select the curves you want to display on the graph.",
+).layout
+
+test_div = html.Div(id=ids.TEST_DIV)
+
+
 def export_container(id: str):
     return html.Div(
         [
             html.Button(id=ids.GENERATE_GRAPH_BUTTON, children="Generate Graph"),
+            graph_checkbox,
             dcc.Graph(
                 id=ids.ENERGY_SAVINGS_GRAPH,
                 figure={},
             ),
+            test_div,
         ],
         id=id,
     )
@@ -63,22 +76,33 @@ def export_container(id: str):
 
 def register_callbacks():
     @callback(
+        Output(ids.TEST_DIV, "children"),
+        [Input(ids.GENERATE_GRAPH_BUTTON, "n_clicks")],
+        [State(ids.ENERGY_SAVINGS_GRAPH, "figure")],
+        prevent_initial_call=True,
+    )
+    def check_figure(n_clicks, figure):
+        if n_clicks == 0:
+            raise dash.exceptions.PreventUpdate
+        return html.Div(f"Figure: {figure}")
+
+    # callback to get the selected curves
+    @callback(
         Output(ids.ENERGY_SAVINGS_GRAPH, "figure"),
+        [Input(ids.GRAPH_CHECKBOX, "value")],
         [
-            Input(ids.PUMP_CURVE_DATA, "rowData"),
-            Input(ids.SYSTEM_CURVE_DATA, "rowData"),
-            Input(ids.EFFICIENCY_CURVE_DATA, "rowData"),
+            State(ids.PUMP_CURVE_DATA, "rowData"),
+            State(ids.SYSTEM_CURVE_DATA, "rowData"),
+            State(ids.EFFICIENCY_CURVE_DATA, "rowData"),
         ],
         prevent_initial_call=True,
     )
-    def update_all_graphs(pump_data, system_data, efficiency_data):
-        global PUMP_CURVE_FIG
-
-        ctx = dash.callback_context
-        if not ctx.triggered:
-            return dash.no_update
-        PUMP_CURVE_FIG = update_figure_with_curve(pump_data, PUMP_CURVE_FIG, "pump")
-        PUMP_CURVE_FIG = update_figure_with_curve(system_data, PUMP_CURVE_FIG, "system")
-        PUMP_CURVE_FIG = update_figure_with_curve(efficiency_data, PUMP_CURVE_FIG, "efficiency")
-
-        return PUMP_CURVE_FIG
+    def update_graph(curve_types, pump_data, system_data, efficiency_data):
+        fig = go.Figure()
+        if "pump" in curve_types:
+            fig = update_figure_with_curve(pump_data, fig, "pump")
+        if "system" in curve_types:
+            fig = update_figure_with_curve(system_data, fig, "system")
+        if "efficiency" in curve_types:
+            fig = update_figure_with_curve(efficiency_data, fig, "efficiency")
+        return fig
