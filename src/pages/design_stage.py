@@ -3,7 +3,6 @@
 import dash
 from dash import html
 
-from components.design_stage import energy_savings_data
 from components.design_stage import energy_savings_data as esdc
 from components.design_stage import ids
 from components.design_stage import pump_design_data as pddc
@@ -27,4 +26,4 @@ layout = html.Div(
 
 pddc.register_callbacks()
 podc.register_callbacks()
-energy_savings_data.register_callbacks()
+esdc.register_callbacks()

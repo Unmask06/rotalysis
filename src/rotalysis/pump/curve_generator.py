@@ -3,34 +3,47 @@ rotalysis.pump.curve_generator
 This module contains the class PumpCurveGenerator, which generates pump and system curves.
 """
 
-from typing import Callable, List, Tuple, Union
+from typing import Callable, Tuple
 
 import numpy as np
-from plotly import graph_objects as go
 from scipy.optimize import curve_fit, fsolve
 
 
-def head_curve(
-    flow: Union[float, List[float], np.ndarray],
+def get_quadratic_equation(a: float, b: float, c: float) -> Callable[[float], float]:
+    """
+    Returns a quadratic equation in the form of a lambda function.
+
+    Parameters:
+    a (float): The coefficient of x^2.
+    b (float): The coefficient of x.
+    c (float): The constant term.
+
+    Returns:
+    Callable[[float], float]: A lambda function representing the quadratic equation.
+    """
+    return lambda x: (a * x**2) + (b * x) + c
+
+
+def get_head_from_curve(
+    flow: float,
     a: float,
     b: float = 0,
     noflow_head: float = 0,
-):
+) -> float:
     """
-    Calculates the head curve for a given flow rate.
+    Calculates the head value from a pump curve.
 
     Parameters:
-    - flow: The flow rate at which to calculate the head curve. Can be a single value or a list/ndarray of values.
-    - a: Coefficient 'a' in the head curve equation.
-    - b: Coefficient 'b' in the head curve equation. Default is 0.
-    - noflow_head: The head value when there is no flow. Default is 0.
+    - flow (float): The flow rate at which to calculate the head.
+    - a (float): The coefficient of the quadratic equation.
+    - b (float, optional): The linear coefficient of the quadratic equation. Defaults to 0.
+    - noflow_head (float, optional): The head value when there is no flow. Defaults to 0.
 
     Returns:
-    - The head value(s) corresponding to the given flow rate(s).
+    - float: The calculated head value.
+
     """
-    if isinstance(flow, (list, np.ndarray)):
-        return [(a * q**2) + (b * q) + noflow_head for q in flow]
-    return (a * flow**2) + (b * flow) + noflow_head
+    return get_quadratic_equation(a, b, noflow_head)(flow)
 
 
 def solve_coefficient(
@@ -49,12 +62,12 @@ def solve_coefficient(
     Returns:
     - The solution for the coefficient 'a'.
     """
-    equation = lambda a: head_curve(flow, a, b, noflow_head) - head  # type: ignore
+    equation = lambda a: get_head_from_curve(flow, a, b, noflow_head) - head  # type: ignore
     solution = fsolve(equation, x0=initial_guess)
     return solution[0]
 
 
-def get_headcurve_coefficients(flow, head) -> Tuple:
+def headcurve_fit(flow, head) -> Tuple:
     """
     Fits a quadratic polynomial to the provided flow and head data.
     Used to generate the pump curve and system curve.
@@ -81,25 +94,10 @@ def get_headcurve_coefficients(flow, head) -> Tuple:
     if flow[0] == 0:
 
         constant = head[0]
-        equation = lambda Q, a, b: (a * Q**2) + (b * Q) + constant
-        params, _ = curve_fit(equation, flow, head)
-        return (params[0], params[1], constant)
+        equation = lambda Q, a, b: get_quadratic_equation(a, b, constant)(Q)
+        popt, _ = curve_fit(equation, flow, head)  # pylint: disable=E0632
+        return (popt[0], popt[1], constant)
 
-    equation = lambda Q, a, b, c: (a * Q**2) + (b * Q) + c
-    params, _ = curve_fit(equation, flow, head)
-    return tuple(params)
-
-
-def get_quadratic_equation(a: float, b: float, c: float) -> Callable[[float], float]:
-    """
-    Returns a quadratic equation in the form of a lambda function.
-
-    Parameters:
-    a (float): The coefficient of x^2.
-    b (float): The coefficient of x.
-    c (float): The constant term.
-
-    Returns:
-    Callable[[float], float]: A lambda function representing the quadratic equation.
-    """
-    return lambda x: (a * x**2) + (b * x) + c
+    equation = lambda Q, a, b, c: get_quadratic_equation(a, b, c)(Q)
+    popt, _ = curve_fit(equation, flow, head)  # pylint: disable=E0632
+    return tuple(popt)
