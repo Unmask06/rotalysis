@@ -6,13 +6,14 @@ This module contains the energy savings data of the pump
 import dash
 import pandas as pd
 import plotly.graph_objects as go
+from agility.skeleton.custom_components import CheckboxCustom
 from dash import callback, dcc, html
 from dash.dependencies import Input, Output, State
 
-from custom_components.checkbox import CheckboxCustom
 from rotalysis.pump import Pump
 
 from . import ids
+
 
 def create_bar_chart(x, y) -> go.Figure:
     # This might be a static figure that is only created once.
@@ -46,15 +47,16 @@ def update_figure_with_curve(data, fig, curve_type):
 
 
 graph_checkbox = CheckboxCustom(
-    id=ids.GRAPH_CHECKBOX,
     options=[
-        {"label": "Pump Curve", "value": "pump"},
-        {"label": "System Curve", "value": "system"},
-        {"label": "Efficiency Curve", "value": "efficiency"},
+        "pump",
+        "system",
+        "efficiency",
     ],
+    value=["pump"],
     label="Select Curves to Display",
     help_text="Select the curves you want to display on the graph.",
-).layout
+    error_message="",
+)
 
 test_div = html.Div(id=ids.TEST_DIV)
 
@@ -63,7 +65,7 @@ def export_container(id: str):
     return html.Div(
         [
             html.Button(id=ids.GENERATE_GRAPH_BUTTON, children="Generate Graph"),
-            graph_checkbox,
+            graph_checkbox.layout,
             dcc.Graph(
                 id=ids.ENERGY_SAVINGS_GRAPH,
                 figure={},
@@ -89,7 +91,7 @@ def register_callbacks():
     # callback to get the selected curves
     @callback(
         Output(ids.ENERGY_SAVINGS_GRAPH, "figure"),
-        [Input(ids.GRAPH_CHECKBOX, "value")],
+        [Input(graph_checkbox.id, "value")],
         [
             State(ids.PUMP_CURVE_DATA, "rowData"),
             State(ids.SYSTEM_CURVE_DATA, "rowData"),

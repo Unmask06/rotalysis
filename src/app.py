@@ -3,8 +3,6 @@
 import dash_bootstrap_components as dbc
 from dash import Dash
 
-# from callbacks import calculation, design_stage
-# from components.calculation import upload_file
 from components.common.layout import create_layout
 
 FONT_AWESOME = "https://use.fontawesome.com/releases/v5.15.4/js/all.js"
@@ -22,3 +20,4 @@ app.layout = create_layout(app)
 
 if __name__ == "__main__":
     app.run(debug=True, port="80")
+    # app.run(host="10.29.3.31", port="80")

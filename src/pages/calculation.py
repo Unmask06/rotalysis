@@ -13,7 +13,6 @@ from dash import Input, Output, State, callback, dcc, html, no_update
 
 from components.calculation import button, ids, upload_file
 
-
 dash.register_page(__name__)
 
 
@@ -23,7 +22,7 @@ def layout():
         [
             html.H3("Calculation Page"),
             upload_file.render(),
-            html.Button("Process Pump", id=ids.BUTTON_PROCESS_PUMP),
+            html.Button("Process Pump", id=button.process_pump_button.id),
             dcc.Loading(
                 id=ids.LOADING_PROCESS_PUMP,
                 type="default",

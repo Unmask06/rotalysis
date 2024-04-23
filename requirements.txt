@@ -11,3 +11,4 @@ xlsxwriter
 sympy
 scipy
 dash-ag-grid
+git+https://github.com/sandeeprah/agility.git@skeleton-components

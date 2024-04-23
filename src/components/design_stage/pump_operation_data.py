@@ -1,10 +1,9 @@
 import dash
 import dash_ag_grid as dag
 import pandas as pd
+from agility.skeleton.custom_components import DropdownCustom
 from dash import Dash, callback, dcc, html
 from dash.dependencies import Input, Output, State
-
-from custom_components.dropdown import DropdownCustom
 
 from . import ids
 
@@ -20,13 +19,12 @@ data = pd.DataFrame([{col["id"]: 0 for col in percentage_columns}])
 data["Total"] = data.sum(axis=1)
 
 flow_spread_dropdown = DropdownCustom(
-    id=ids.FLOW_SPREAD_DROPDOWN,
     label="Flow Spread Pattern",
     options=[
         {"label": "Constant", "value": "constant"},
         {"label": "Variable", "value": "variable"},
     ],
-).layout()
+)
 
 # Using AgGrid instead of a simple Dash DataTable
 flow_spread_table = html.Div(
@@ -47,7 +45,7 @@ normalize_button = html.Button("Normalize", id=ids.NORMAL_HOURS_BUTTON)
 def export_container(id: str):
     return html.Div(
         [
-            flow_spread_dropdown,
+            flow_spread_dropdown.layout,
             flow_spread_table,
             normalize_button,
         ],
@@ -61,7 +59,7 @@ def register_callbacks():
         Output(ids.FLOW_SPREAD_TABLE, "rowData"),
         [
             Input(ids.NORMAL_HOURS_BUTTON, "n_clicks"),
-            Input(ids.FLOW_SPREAD_DROPDOWN, "value"),
+            Input(flow_spread_dropdown.id, "value"),
         ],
         [State(ids.FLOW_SPREAD_TABLE, "rowData")],
         prevent_initial_call=True,
@@ -83,7 +81,7 @@ def register_callbacks():
                 df["Total"] = df.sum(axis=1)
                 return df.to_dict("records")
 
-        elif trigger_id == ids.FLOW_SPREAD_DROPDOWN:
+        elif trigger_id == flow_spread_dropdown.id:
             if dropdown_value == "constant":
                 data = pd.DataFrame([{col["id"]: 0 for col in percentage_columns}])
                 for col in data.columns:

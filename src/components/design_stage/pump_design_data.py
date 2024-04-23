@@ -1,32 +1,28 @@
 import dash
 import dash_ag_grid as dag
 import pandas as pd
+from agility.skeleton.custom_components import InputCustom
 from dash import callback, dcc, html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 
-from custom_components.input import InputCustom
 from rotalysis.pump import Pump
 
 from . import ids
 
 head_input = InputCustom(
-    id=ids.PUMP_DESIGN_RATED_HEAD,
     label="Pump Rated Head (m)",
     addon_text="m",
 )
 rated_flow_input = InputCustom(
-    id=ids.PUMP_DESIGN_RATED_FLOW,
     label="Pump Rated Flow (m3/s)",
     addon_text="m3/s",
 )
 rated_efficiency_input = InputCustom(
-    id=ids.PUMP_DESIGN_RATED_EFFICIENCY,
     label="Pump Rated Efficiency (%)",
     addon_text="%",
 )
 density_input = InputCustom(
-    id=ids.PUMP_DENSITY,
     label="Density (kg/m3)",
     addon_text="kg/m3",
 )
@@ -90,10 +86,10 @@ def export_container(id: str):
     return html.Div(
         id=id,
         children=[
-            head_input.layout(),
-            rated_flow_input.layout(),
-            rated_efficiency_input.layout(),
-            density_input.layout(),
+            head_input.layout,
+            rated_flow_input.layout,
+            rated_efficiency_input.layout,
+            density_input.layout,
             sample_fill_button,
             get_pump_curve_grid(x, y),
             get_system_curve_grid(x, y),
@@ -112,9 +108,9 @@ def register_callbacks():
         Output(ids.SYSTEM_CURVE_DATA, "rowData"),
         Output(ids.EFFICIENCY_CURVE_DATA, "rowData"),
         Input(ids.FILL_SAMPLE_BUTTON, "n_clicks"),
-        State(ids.PUMP_DESIGN_RATED_HEAD, "value"),
-        State(ids.PUMP_DESIGN_RATED_FLOW, "value"),
-        State(ids.PUMP_DENSITY, "value"),
+        State(head_input.id, "value"),
+        State(rated_flow_input.id, "value"),
+        State(density_input.id, "value"),
     )
     def fill_sample_data(n_clicks, rated_head, rated_flow, density):
         if n_clicks == 0:

@@ -5,6 +5,7 @@ from typing import Dict
 import dash
 import dash_bootstrap_components as dbc
 import pandas as pd
+from agility.skeleton.custom_components import ButtonCustom, CustomDataTable
 from dash import Input, Output, State, callback, dcc, html, no_update
 
 from components.calculation import ids, upload_file
@@ -12,6 +13,10 @@ from rotalysis.definitions import InputSheetNames
 from rotalysis.pump import PumpOptimizer, PumpReporter
 
 from . import ids
+
+process_pump_button = ButtonCustom(
+    label="Process Pump",
+)
 
 
 def parse_contents(filename: str, contents: str) -> Dict[str, pd.DataFrame] | html.Div:
@@ -49,7 +54,7 @@ def register_callbacks():
             Output(ids.OUTPUT_SUMMARY_TABLE, "children"),
             Output(ids.GRAPH_REPORT_ENERGY_SAVINGS, "figure"),
         ],
-        [Input(ids.BUTTON_PROCESS_PUMP, "n_clicks")],
+        [Input(process_pump_button.id, "n_clicks")],
         [State(ids.STORE_DATA, "data")],
         prevent_initial_call=True,
     )
@@ -96,11 +101,7 @@ def register_callbacks():
 
             style = {"display": "block"}
             output_msg = html.H5("Pump has been processed.")
-            summary_table = html.Div(
-                dbc.Table.from_dataframe(df_summary, striped=True, bordered=True, hover=True),  # type: ignore
-                className="mt-4",
-            )
-
+            summary_table = CustomDataTable(df=df_summary).layout
             fig = pump_reporter.energy_savings_graph
 
             return style, output_msg, summary_table, fig
