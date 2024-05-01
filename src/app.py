@@ -1,21 +1,26 @@
 """app.py - Main file for the Rotalyis app."""
 
-import dash_bootstrap_components as dbc
-from dash import Dash
 
-from components.common.layout import create_layout
+from agility.skeleton.custom_components import NavbarCustom
+from dash import Dash, html, page_container
 
 FONT_AWESOME = "https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+TAILWIND = "https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
 app = Dash(
     __name__,
     use_pages=True,
     suppress_callback_exceptions=True,
-    external_stylesheets=[dbc.themes.BOOTSTRAP, FONT_AWESOME],
+    external_stylesheets=[TAILWIND, FONT_AWESOME],
 )
 
 app.title = "Rotalysis"
 
-app.layout = create_layout(app)
+app.layout = html.Div(
+    [
+        NavbarCustom(app.title).layout,
+        page_container,
+    ]
+)
 
 
 if __name__ == "__main__":

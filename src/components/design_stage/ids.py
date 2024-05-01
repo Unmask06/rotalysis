@@ -1,15 +1,5 @@
 """This module contains the ids of the components in the app layout."""
 
-PUMP_DESIGN_INPUT_CONTAINER = "pump-design-input-container"
-PUMP_OPERATION_INPUT_CONTAINER = "pump-operation-input-container"
 FLOW_SPREAD_TABLE = "flow-spread-table"
-OPERATION_HOURS_CONTAINER = "operation-hours-container"
-NORMAL_HOURS_BUTTON = "normal-hours-button"
-ENERGY_SAVINGS_CONTAINER = "energy-savings-container"
+
 ENERGY_SAVINGS_GRAPH = "energy-savings-graph"
-GENERATE_GRAPH_BUTTON = "generate-graph-button"
-PUMP_CURVE_DATA = "pump-curve-data"
-SYSTEM_CURVE_DATA = "system-curve-data"
-EFFICIENCY_CURVE_DATA = "efficiency-curve-data"
-FILL_SAMPLE_BUTTON = "fill-sample-button"
-TEST_DIV = "test-div"
