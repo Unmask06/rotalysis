@@ -16,7 +16,7 @@ energy_savings = esdc.export_container()
 
 layout = html.Div(
     [
-        html.H1("Design Stage", className="text-2xl font-bold p-4"),
+        html.H1("Pump Design Stage Energy Calculation", className="text-2xl font-bold p-4"),
         pump_design_input,
         pump_operation_input,
         energy_savings,

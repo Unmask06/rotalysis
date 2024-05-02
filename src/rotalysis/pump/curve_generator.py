@@ -67,7 +67,27 @@ def solve_coefficient(
     return solution[0]
 
 
-def headcurve_fit(flow, head) -> Tuple:
+def get_headcurve_coeff_from_twopoint(rated_flow, rated_head) -> Tuple:
+    """
+    Calculates the coefficients of the head curve equation from two points.
+    Assumes a quadratic equation with b = 0
+
+    Parameters:
+    - rated_flow (float): The rated flow rate.
+    - rated_head (float): The rated head value.
+
+    Returns:
+    - Tuple: The coefficients of the head curve equation.
+    """
+    shutoff_head = rated_head * 1.3
+    a = solve_coefficient(
+        rated_flow, rated_head, initial_guess=1, b=0, noflow_head=shutoff_head
+    )
+
+    return (a, 0, shutoff_head)
+
+
+def get_headcurve_coeff_from_multipoint(flow, head) -> Tuple:
     """
     Fits a quadratic polynomial to the provided flow and head data.
     Used to generate the pump curve and system curve.
