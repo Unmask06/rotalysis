@@ -7,9 +7,10 @@ from agility.skeleton.custom_components import (
     ContainerCustom,
     InputCustom,
 )
-from dash import callback
+from dash import callback, html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
+from dash_ag_grid import AgGrid
 
 from rotalysis.pump import Pump
 
@@ -34,43 +35,60 @@ density_input = InputCustom(
 
 sample_fill_button = ButtonCustom(label="Populate typical pump curve data")
 
-pump_curve_grid = AgGridCustom(
-    df=pd.DataFrame(
-        data={
-            "flow_rate": ["" for i in range(10)],
-            "pump_head": ["" for i in range(10)],
-        }
-    ),
-    editable=True,
-    ag_grid_props={"className": "flex-auto p-4 border"},
-)
-system_curve_grid = AgGridCustom(
-    df=pd.DataFrame(
-        data={
-            "flow_rate": ["" for i in range(10)],
-            "system_head": ["" for i in range(10)],
-        }
-    ),
-    editable=True,
-    ag_grid_props={"className": "flex-auto p-4 border"},
-)
-efficiency_curve_grid = AgGridCustom(
-    df=pd.DataFrame(
-        data={
-            "flow_rate": ["" for i in range(10)],
-            "efficiency": ["" for i in range(10)],
-        }
-    ),
-    editable=True,
-    ag_grid_props={"className": "flex-auto p-4 border"},
+pump_curve_grid = AgGrid(
+    id=ids.PUMP_CURVE_GRID,
+    columnDefs=[
+        {
+            "headerName": "Flow Rate",
+            "field": "flow_rate",
+            "editable": True,
+        },
+        {
+            "headerName": "Pump Head",
+            "field": "pump_head",
+            "editable": True,
+        },
+    ],
+    defaultColDef={"resizable": True, "editable": True,"width":"150"},
+    rowData=[{} for _ in range(10)],  # Add 10 blank rows
+    className="ag-theme-alpine",
+    style={"width": "100%"},
 )
 
-curve_grid_container = ContainerCustom(
-    [
-        pump_curve_grid.layout,
-        system_curve_grid.layout,
-        efficiency_curve_grid.layout,
+
+system_curve_grid = AgGrid(
+    id="system_curve_grid",
+    columnDefs=[
+        {"headerName": "Flow Rate", "field": "flow_rate", "editable": True},
+        {"headerName": "System Head", "field": "system_head", "editable": True},
     ],
+    defaultColDef={"resizable": True, "editable": True, "width": "150"},
+    rowData=[{} for _ in range(10)],
+    className="ag-theme-alpine",
+    style={"width": "100%"},
+)
+
+# Define the efficiency curve grid
+efficiency_curve_grid = AgGrid(
+    id="efficiency_curve_grid",
+    columnDefs=[
+        {"headerName": "Flow Rate", "field": "flow_rate", "editable": True},
+        {"headerName": "Efficiency", "field": "efficiency", "editable": True},
+    ],
+    defaultColDef={"resizable": True, "editable": True, "width": "150"},
+    rowData=[{} for _ in range(10)],
+    className="ag-theme-alpine",
+    style={"width": "100%"},
+)
+
+# Create a flex container for the grids
+curve_grid_container = html.Div(
+    [
+        html.Div([pump_curve_grid], className="flex-1 p-2 border"),
+        html.Div([system_curve_grid], className="flex-1 p-2 border"),
+        html.Div([efficiency_curve_grid], className="flex-1 p-2 border"),
+    ],
+    className="flex flex-row",
 )
 
 
@@ -82,9 +100,7 @@ def export_container():
             rated_efficiency_input.layout,
             density_input.layout,
             sample_fill_button.layout,
-            pump_curve_grid.layout,
-            system_curve_grid.layout,
-            efficiency_curve_grid.layout,
+            curve_grid_container,
         ],
     ).layout
 
@@ -105,9 +121,9 @@ def register_callbacks():
     )
     def fill_sample_data(_, rated_head, rated_flow, density):
         pump = Pump(rated_head=rated_head, rated_flow=rated_flow, density=density)
-        pump_curve = pump.sample_pump_curve[["flow_rate", "pump_head"]]
-        system_curve = pump.sample_pump_curve[["flow_rate", "system_head"]]
-        efficiency_curve = pump.sample_pump_curve[["flow_rate", "efficiency"]]
+        pump_curve = pump.sample_pump_curve[["flow_rate", "pump_head"]].round(2)
+        system_curve = pump.sample_pump_curve[["flow_rate", "system_head"]].round(2)
+        efficiency_curve = pump.sample_pump_curve[["flow_rate", "efficiency"]].round(2)
 
         return (
             pump_curve.to_dict(orient="records"),

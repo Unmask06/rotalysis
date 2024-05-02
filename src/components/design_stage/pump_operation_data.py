@@ -12,7 +12,7 @@ from dash.dependencies import Input, Output, State
 
 from . import ids
 
-# Define column headers for AgGrid
+# Component creation -----------------------------------------------------------
 
 flow_spread_df: pd.DataFrame = pd.DataFrame(
     columns=["rated_flow_percentage", "operated_hours"],
@@ -38,7 +38,7 @@ flow_spread_dropdown = DropdownCustom(
 )
 
 flow_spread_table = dag.AgGrid(
-    id="flow-table",
+    id=ids.FLOW_SPREAD_TABLE,
     columnDefs=[
         {
             "headerName": "Rated Flow Percentage",
@@ -50,6 +50,7 @@ flow_spread_table = dag.AgGrid(
     defaultColDef={"resizable": True, "editable": True},
     rowData=flow_spread_df.to_dict("records"),
     className="ag-theme-alpine",
+    style={"width": "50%"},
 )
 
 flow_spread_total = DisplayField(
@@ -70,26 +71,31 @@ def export_container() -> html.Div:
     ).layout
 
 
+# Callbacks Resgistration ------------------------------------------------------
+
+
 def register_callbacks():
     # get total hours
     @callback(
         Output(flow_spread_total.value_id, "children"),
-        Input("flow-table", "cellValueChanged"),
-        State("flow-table", "rowData"),
+        [
+            Input(ids.FLOW_SPREAD_TABLE, "cellValueChanged"),
+            Input(ids.FLOW_SPREAD_TABLE, "rowData"),
+        ],
     )
     def update_total_hours(_, flow_spread_data):
         df = pd.DataFrame(flow_spread_data)
         total = df["operated_hours"].sum()
-        return total
+        return str(total)
 
     # normalize hours
     @callback(
-        Output("flow-table", "rowData"),
+        Output(ids.FLOW_SPREAD_TABLE, "rowData"),
         [
             Input(normalize_button.id, "n_clicks"),
             Input(flow_spread_dropdown.id, "value"),
         ],
-        [State("flow-table", "rowData"), State(flow_spread_total.value_id, "children")],
+        [State(ids.FLOW_SPREAD_TABLE, "rowData"), State(flow_spread_total.value_id, "children")],
         prevent_initial_call=True,
     )
     def update_data(n_clicks, dropdown_value, flow_spread_data, total_hours):
@@ -128,3 +134,4 @@ def register_callbacks():
                     "operated_hours": [0, 2, 5, 7, 5, 3, 2, 0],
                 }
                 return pd.DataFrame(data).to_dict("records")
+            return dash.no_update

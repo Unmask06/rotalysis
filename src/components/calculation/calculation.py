@@ -25,12 +25,10 @@ upload_field = UploadCustom(
 )
 
 process_pump_button = ButtonCustom(
-    label="Process Pump",
+    label="Process Pump", button_props={"style": {"display": "none"}}
 )
 
-download_button = ButtonCustom(
-    label="Download the result",
-)
+download_button = ButtonCustom(label="Download the result")
 
 output_summary_table_container = ContainerCustom()
 output_container = ContainerCustom(
@@ -40,15 +38,23 @@ output_container = ContainerCustom(
         output_summary_table_container.layout,
         dcc.Graph(id=ids.GRAPH_REPORT_ENERGY_SAVINGS),
     ],
+    html_props={"style": {"display": "none"}},
 )
 
 
 def export_container() -> html.Div:
     return ContainerCustom(
-        [upload_field.layout, process_pump_button.layout, output_container.layout]
+        [
+            upload_field.layout,
+            process_pump_button.layout,
+            output_container.layout,
+        ],
+        classname="container mx-auto",
     ).layout
 
+
 # helper functions --------------------------------------------------------------------------
+
 
 def parse_contents(filename: str, contents: str) -> Dict[str, pd.DataFrame] | html.Div:
     _, content_string = contents.split(",")
@@ -71,6 +77,14 @@ def register_callbacks():
     upload_field.register_callbacks()
 
     @callback(
+        Output(process_pump_button.id, "style"),
+        Input(upload_field.storage_id, "modified_timestamp"),
+        prevent_initial_call=True,
+    )
+    def show_process_pump_button(_):
+        return {"display": "block"}
+
+    @callback(
         Output(ids.DOWNLOAD_OUTPUT, "data"),
         Input(download_button.id, "n_clicks"),
         prevent_initial_call=True,
@@ -85,7 +99,7 @@ def register_callbacks():
             Output(output_container.id, "style"),
             Output(process_pump_button.feedback_id, "children"),
             Output(output_summary_table_container.id, "children"),
-            Output(ids.GRAPH_REPORT_ENERGY_SAVINGS, "figure")
+            Output(ids.GRAPH_REPORT_ENERGY_SAVINGS, "figure"),
         ],
         [Input(process_pump_button.id, "n_clicks")],
         [State(upload_field.storage_id, "data")],
@@ -106,7 +120,7 @@ def register_callbacks():
             )
         if not data or "filename" not in data or not data["filename"]:
             return (
-                {"display": "block"},
+                {"display": "none"},
                 html.Div("No file has been uploaded."),
                 no_update,
                 no_update,

@@ -15,13 +15,19 @@ from . import ids
 from .pump_design_data import efficiency_curve_grid, pump_curve_grid, system_curve_grid
 
 
-def create_bar_chart(x, y) -> go.Figure:
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=x, y=y))
+def create_bar_chart(fig: go.Figure, x, y) -> go.Figure:
+    fig.add_trace(go.Bar(x=x, y=y, yaxis="y3"))
     fig.update_layout(
-        title="Energy Savings",
-        xaxis_title="Flow Spread Pattern",
-        yaxis_title="Operating Hours",
+        yaxis3=dict(
+            title="Operating Hours",
+            overlaying="y",
+            side="right",
+            showgrid=False,
+            showline=True,
+            showticklabels=True,
+            zeroline=False,
+            position=0.95,
+        ),
     )
     return fig
 
@@ -47,7 +53,7 @@ def update_figure_with_curve(data, fig, curve_type):
 
 graph_checkbox = CheckboxCustom(
     options=["pump", "system", "efficiency", "flow_spread"],
-    value=["pump"],
+    value=[],
     label="Select Curves to Display",
     help_text="Select the curves you want to display on the graph.",
     error_message="",
@@ -61,6 +67,7 @@ def export_container():
             dcc.Graph(
                 id=ids.ENERGY_SAVINGS_GRAPH,
                 figure={},
+                style={"display": "none"},
             ),
         ],
     ).layout
@@ -69,16 +76,22 @@ def export_container():
 def register_callbacks():
     # callback to get the selected curves
     @callback(
-        Output(ids.ENERGY_SAVINGS_GRAPH, "figure"),
+        [
+            Output(ids.ENERGY_SAVINGS_GRAPH, "figure"),
+            Output(ids.ENERGY_SAVINGS_GRAPH, "style"),
+        ],
         [Input(graph_checkbox.id, "value")],
         [
             State(pump_curve_grid.id, "rowData"),
             State(system_curve_grid.id, "rowData"),
             State(efficiency_curve_grid.id, "rowData"),
+            State(ids.FLOW_SPREAD_TABLE, "rowData"),
         ],
         prevent_initial_call=True,
     )
-    def update_graph(curve_types, pump_data, system_data, efficiency_data):
+    def update_graph(
+        curve_types, pump_data, system_data, efficiency_data, flow_spread_data
+    ):
         fig = go.Figure()
         if "pump" in curve_types:
             fig = update_figure_with_curve(pump_data, fig, "pump")
@@ -87,5 +100,8 @@ def register_callbacks():
         if "efficiency" in curve_types:
             fig = update_figure_with_curve(efficiency_data, fig, "efficiency")
         if "flow_spread" in curve_types:
-            fig = create_bar_chart(["A", "B", "C"], [1, 2, 3])
-        return fig
+            df = pd.DataFrame(flow_spread_data)
+            fig = create_bar_chart(
+                fig, df["rated_flow_percentage"], df["operated_hours"]
+            )
+        return fig, {"display": "block"}
