@@ -3,26 +3,31 @@ src/components/design_stage/energy_savings_data.py
 This module contains the energy savings data of the pump
 """
 
-import dash
 import pandas as pd
 import plotly.graph_objects as go
-from agility.skeleton.custom_components import CheckboxCustom
-from dash import callback, dcc, html
+from agility.skeleton.custom_components import CheckboxCustom, ContainerCustom
+from dash import callback, dcc
 from dash.dependencies import Input, Output, State
 
 from rotalysis.pump import Pump
 
 from . import ids
+from .pump_design_data import efficiency_curve_grid, pump_curve_grid, system_curve_grid
 
 
-def create_bar_chart(x, y) -> go.Figure:
-    # This might be a static figure that is only created once.
-    fig = go.Figure()
-    fig.add_trace(go.Bar(x=x, y=y))
+def create_bar_chart(fig: go.Figure, x, y) -> go.Figure:
+    fig.add_trace(go.Bar(x=x, y=y, yaxis="y3"))
     fig.update_layout(
-        title="Energy Savings",
-        xaxis_title="Flow Spread Pattern",
-        yaxis_title="Operating Hours",
+        yaxis3=dict(
+            title="Operating Hours",
+            overlaying="y",
+            side="right",
+            showgrid=False,
+            showline=True,
+            showticklabels=True,
+            zeroline=False,
+            position=0.95,
+        ),
     )
     return fig
 
@@ -47,59 +52,46 @@ def update_figure_with_curve(data, fig, curve_type):
 
 
 graph_checkbox = CheckboxCustom(
-    options=[
-        "pump",
-        "system",
-        "efficiency",
-    ],
-    value=["pump"],
+    options=["pump", "system", "efficiency", "flow_spread"],
+    value=[],
     label="Select Curves to Display",
     help_text="Select the curves you want to display on the graph.",
     error_message="",
 )
 
-test_div = html.Div(id=ids.TEST_DIV)
 
-
-def export_container(id: str):
-    return html.Div(
+def export_container():
+    return ContainerCustom(
         [
-            html.Button(id=ids.GENERATE_GRAPH_BUTTON, children="Generate Graph"),
             graph_checkbox.layout,
             dcc.Graph(
                 id=ids.ENERGY_SAVINGS_GRAPH,
                 figure={},
+                style={"display": "none"},
             ),
-            test_div,
         ],
-        id=id,
-    )
+    ).layout
 
 
 def register_callbacks():
-    @callback(
-        Output(ids.TEST_DIV, "children"),
-        [Input(ids.GENERATE_GRAPH_BUTTON, "n_clicks")],
-        [State(ids.ENERGY_SAVINGS_GRAPH, "figure")],
-        prevent_initial_call=True,
-    )
-    def check_figure(n_clicks, figure):
-        if n_clicks == 0:
-            raise dash.exceptions.PreventUpdate
-        return html.Div(f"Figure: {figure}")
-
     # callback to get the selected curves
     @callback(
-        Output(ids.ENERGY_SAVINGS_GRAPH, "figure"),
+        [
+            Output(ids.ENERGY_SAVINGS_GRAPH, "figure"),
+            Output(ids.ENERGY_SAVINGS_GRAPH, "style"),
+        ],
         [Input(graph_checkbox.id, "value")],
         [
-            State(ids.PUMP_CURVE_DATA, "rowData"),
-            State(ids.SYSTEM_CURVE_DATA, "rowData"),
-            State(ids.EFFICIENCY_CURVE_DATA, "rowData"),
+            State(pump_curve_grid.id, "rowData"),
+            State(system_curve_grid.id, "rowData"),
+            State(efficiency_curve_grid.id, "rowData"),
+            State(ids.FLOW_SPREAD_TABLE, "rowData"),
         ],
         prevent_initial_call=True,
     )
-    def update_graph(curve_types, pump_data, system_data, efficiency_data):
+    def update_graph(
+        curve_types, pump_data, system_data, efficiency_data, flow_spread_data
+    ):
         fig = go.Figure()
         if "pump" in curve_types:
             fig = update_figure_with_curve(pump_data, fig, "pump")
@@ -107,4 +99,9 @@ def register_callbacks():
             fig = update_figure_with_curve(system_data, fig, "system")
         if "efficiency" in curve_types:
             fig = update_figure_with_curve(efficiency_data, fig, "efficiency")
-        return fig
+        if "flow_spread" in curve_types:
+            df = pd.DataFrame(flow_spread_data)
+            fig = create_bar_chart(
+                fig, df["rated_flow_percentage"], df["operated_hours"]
+            )
+        return fig, {"display": "block"}

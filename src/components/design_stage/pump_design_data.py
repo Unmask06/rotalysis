@@ -1,102 +1,108 @@
-import dash
-import dash_ag_grid as dag
+"""Pump design data container."""
+
 import pandas as pd
-from agility.skeleton.custom_components import InputCustom
-from dash import callback, dcc, html
+from agility.skeleton.custom_components import (
+    AgGridCustom,
+    ButtonCustom,
+    ContainerCustom,
+    InputCustom,
+)
+from dash import callback, html
 from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
+from dash_ag_grid import AgGrid
 
 from rotalysis.pump import Pump
 
 from . import ids
 
 head_input = InputCustom(
-    label="Pump Rated Head (m)",
+    label="Pump Rated Head",
     addon_text="m",
 )
 rated_flow_input = InputCustom(
-    label="Pump Rated Flow (m3/s)",
+    label="Pump Rated Flow",
     addon_text="m3/s",
 )
 rated_efficiency_input = InputCustom(
-    label="Pump Rated Efficiency (%)",
+    label="Pump Rated Efficiency",
     addon_text="%",
 )
 density_input = InputCustom(
-    label="Density (kg/m3)",
+    label="Density",
     addon_text="kg/m3",
 )
-dialog = dcc.ConfirmDialog(
-    id="confirm-input",
-    message="callback triggered",
+
+sample_fill_button = ButtonCustom(label="Populate typical pump curve data")
+
+pump_curve_grid = AgGrid(
+    id=ids.PUMP_CURVE_GRID,
+    columnDefs=[
+        {
+            "headerName": "Flow Rate",
+            "field": "flow_rate",
+            "editable": True,
+        },
+        {
+            "headerName": "Pump Head",
+            "field": "pump_head",
+            "editable": True,
+        },
+    ],
+    defaultColDef={"resizable": True, "editable": True,"width":"150"},
+    rowData=[{} for _ in range(10)],  # Add 10 blank rows
+    className="ag-theme-alpine",
+    style={"width": "100%"},
 )
 
 
-def get_pump_curve_grid(flowrates, pump_heads):
-    return dag.AgGrid(
-        id=ids.PUMP_CURVE_DATA,
-        columnDefs=[
-            {"headerName": "Flow Rate (m3/h)", "field": "flow_rate", "editable": True},
-            {"headerName": "Pump Head (m)", "field": "pump_head", "editable": True},
-        ],
-        rowData=[
-            {"flow_rate": flow, "head": head}
-            for flow, head in zip(flowrates, pump_heads)
-        ],
-    )
+system_curve_grid = AgGrid(
+    id="system_curve_grid",
+    columnDefs=[
+        {"headerName": "Flow Rate", "field": "flow_rate", "editable": True},
+        {"headerName": "System Head", "field": "system_head", "editable": True},
+    ],
+    defaultColDef={"resizable": True, "editable": True, "width": "150"},
+    rowData=[{} for _ in range(10)],
+    className="ag-theme-alpine",
+    style={"width": "100%"},
+)
 
+# Define the efficiency curve grid
+efficiency_curve_grid = AgGrid(
+    id="efficiency_curve_grid",
+    columnDefs=[
+        {"headerName": "Flow Rate", "field": "flow_rate", "editable": True},
+        {"headerName": "Efficiency", "field": "efficiency", "editable": True},
+    ],
+    defaultColDef={"resizable": True, "editable": True, "width": "150"},
+    rowData=[{} for _ in range(10)],
+    className="ag-theme-alpine",
+    style={"width": "100%"},
+)
 
-def get_system_curve_grid(flowrates, system_heads):
-    return dag.AgGrid(
-        id=ids.SYSTEM_CURVE_DATA,
-        columnDefs=[
-            {"headerName": "Flow Rate (m3/h)", "field": "flow_rate", "editable": True},
-            {"headerName": "Sytem Head (m)", "field": "system_head", "editable": True},
-        ],
-        rowData=[
-            {"flow_rate": flow, "head": head}
-            for flow, head in zip(flowrates, system_heads)
-        ],
-    )
-
-
-def get_efficiency_curve_grid(flowrates, efficiencies):
-    return dag.AgGrid(
-        id=ids.EFFICIENCY_CURVE_DATA,
-        columnDefs=[
-            {"headerName": "Flow Rate (m3/h)", "field": "flow_rate"},
-            {"headerName": "Efficiency (%)", "field": "efficiency"},
-        ],
-        rowData=[
-            {"flow_rate": flow, "efficiency": eff}
-            for flow, eff in zip(flowrates, efficiencies)
-        ],
-    )
-
-
-sample_fill_button = html.Button(
-    id=ids.FILL_SAMPLE_BUTTON,
-    children="Fill Sample Data",
-    n_clicks=0,
+# Create a flex container for the grids
+curve_grid_container = html.Div(
+    [
+        html.Div([pump_curve_grid], className="flex-1 p-2 border"),
+        html.Div([system_curve_grid], className="flex-1 p-2 border"),
+        html.Div([efficiency_curve_grid], className="flex-1 p-2 border"),
+    ],
+    className="flex flex-row",
 )
 
 
-def export_container(id: str):
-    x, y = list(range(10)), list(range(10))
-    return html.Div(
-        id=id,
-        children=[
+def export_container():
+    return ContainerCustom(
+        [
             head_input.layout,
             rated_flow_input.layout,
             rated_efficiency_input.layout,
             density_input.layout,
-            sample_fill_button,
-            get_pump_curve_grid(x, y),
-            get_system_curve_grid(x, y),
-            get_efficiency_curve_grid(x, y),
-            dialog,
+            sample_fill_button.layout,
+            curve_grid_container,
         ],
-    )
+    ).layout
 
 
 # Get sample data for pump curve
@@ -104,22 +110,20 @@ def export_container(id: str):
 
 def register_callbacks():
     @callback(
-        Output(ids.PUMP_CURVE_DATA, "rowData"),
-        Output(ids.SYSTEM_CURVE_DATA, "rowData"),
-        Output(ids.EFFICIENCY_CURVE_DATA, "rowData"),
-        Input(ids.FILL_SAMPLE_BUTTON, "n_clicks"),
+        Output(pump_curve_grid.id, "rowData"),
+        Output(system_curve_grid.id, "rowData"),
+        Output(efficiency_curve_grid.id, "rowData"),
+        Input(sample_fill_button.id, "n_clicks"),
         State(head_input.id, "value"),
         State(rated_flow_input.id, "value"),
         State(density_input.id, "value"),
+        prevent_initial_call=True,
     )
-    def fill_sample_data(n_clicks, rated_head, rated_flow, density):
-        if n_clicks == 0:
-            raise PreventUpdate
-
+    def fill_sample_data(_, rated_head, rated_flow, density):
         pump = Pump(rated_head=rated_head, rated_flow=rated_flow, density=density)
-        pump_curve = pump.sample_pump_curve[["flow_rate", "pump_head"]]
-        system_curve = pump.sample_pump_curve[["flow_rate", "system_head"]]
-        efficiency_curve = pump.sample_pump_curve[["flow_rate", "efficiency"]]
+        pump_curve = pump.sample_pump_curve[["flow_rate", "pump_head"]].round(2)
+        system_curve = pump.sample_pump_curve[["flow_rate", "system_head"]].round(2)
+        efficiency_curve = pump.sample_pump_curve[["flow_rate", "efficiency"]].round(2)
 
         return (
             pump_curve.to_dict(orient="records"),
