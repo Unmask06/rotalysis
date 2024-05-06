@@ -23,6 +23,7 @@ class PumpFunction:
         Returns:
             float: Differential pressure in bar.
         """
+        
         return discharge_pressure - suction_pressure
 
     @staticmethod

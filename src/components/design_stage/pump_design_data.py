@@ -84,7 +84,7 @@ pump_curve_grid = AgGrid(
 
 
 system_curve_grid = AgGrid(
-    id="system_curve_grid",
+    id=ids.SYSTEM_CURVE_GRID,
     columnDefs=[
         {"headerName": "Flow Rate", "field": "flow_rate", "editable": True},
         {"headerName": "System Head", "field": "system_head", "editable": True},
@@ -96,7 +96,7 @@ system_curve_grid = AgGrid(
 )
 
 efficiency_curve_grid = AgGrid(
-    id="efficiency_curve_grid",
+    id=ids.EFFICIENCY_CURVE_GRID,
     columnDefs=[
         {"headerName": "Flow Rate", "field": "flow_rate", "editable": True},
         {"headerName": "Efficiency", "field": "efficiency", "editable": True},
@@ -278,18 +278,20 @@ def register_callbacks():
             button_style = {"display": "block"}
             static_head_input_disabled = True
             shutoff_head_input_disabled = True
-        if calc_level == "three_points":
+        elif calc_level == "three_points":
             input_style = {"display": "block"}
             grid_style = {"display": "none"}
-            button_style = {"display":"block"}
+            button_style = {"display": "block"}
             static_head_input_disabled = False
             shutoff_head_input_disabled = False
-        else:
+        elif calc_level == "multiple_points":
             input_style = {"display": "block"}
             grid_style = {"display": "block"}
             button_style = {"display": "none"}
             static_head_input_disabled = True
             shutoff_head_input_disabled = True
+        else:
+            return dash.no_update
 
         return (
             input_style,
