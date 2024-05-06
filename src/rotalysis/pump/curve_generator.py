@@ -46,28 +46,36 @@ def get_head_from_curve(
     return get_quadratic_equation(a, b, noflow_head)(flow)
 
 
-def solve_coefficient(
-    flow: float, head: float, initial_guess: float, b: float = 0, noflow_head: float = 0
-) -> float:
+def get_headcurve_coeff_from_threepoints(
+    flow: float,
+    head: float,
+    initial_guess: float = 1,
+    b: float = 0,
+    noflow_head: float = 0,
+) -> Tuple[float, float, float]:
     """
-    Solve for the coefficient 'a' in the head curve equation.
+    Calculates the coefficients (a,b,c) of the head curve equation from three points.
 
     Parameters:
-    - flow: The flow rate.
-    - head: The desired head value.
-    - initial_guess: The initial guess for the coefficient.
-    - b: Coefficient 'b' in the head curve equation, if applicable.
-    - noflow_head: The head value when there is no flow.
+    - flow (float): The flow rate at which the head value is known.
+    - head (float): The head value at the specified flow rate.
+    - initial_guess (float): The initial guess for the coefficient a.
+    - b (float, optional): The linear coefficient of the quadratic equation. Defaults to 0.
+    - noflow_head (float, optional): The head value when there is no flow. Defaults to 0.
 
     Returns:
-    - The solution for the coefficient 'a'.
+    - Tuple[float, float, float]: The coefficients of the head curve equation.
+
     """
     equation = lambda a: get_head_from_curve(flow, a, b, noflow_head) - head  # type: ignore
     solution = fsolve(equation, x0=initial_guess)
-    return solution[0]
+    a = float(solution[0])
+    return (a, b, noflow_head)
 
 
-def get_headcurve_coeff_from_twopoint(rated_flow, rated_head) -> Tuple:
+def get_headcurve_coeff_from_twopoint(
+    rated_flow: float, rated_head: float
+) -> Tuple[float, float, float]:
     """
     Calculates the coefficients of the head curve equation from two points.
     Assumes a quadratic equation with b = 0
@@ -80,11 +88,11 @@ def get_headcurve_coeff_from_twopoint(rated_flow, rated_head) -> Tuple:
     - Tuple: The coefficients of the head curve equation.
     """
     shutoff_head = rated_head * 1.3
-    a = solve_coefficient(
+    (a, b, c) = get_headcurve_coeff_from_threepoints(
         rated_flow, rated_head, initial_guess=1, b=0, noflow_head=shutoff_head
     )
 
-    return (a, 0, shutoff_head)
+    return (a, b, c)
 
 
 def get_headcurve_coeff_from_multipoint(flow, head) -> Tuple:

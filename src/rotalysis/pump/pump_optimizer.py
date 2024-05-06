@@ -12,8 +12,6 @@ from typing import Any, Dict, Union
 import numpy as np
 import numpy_financial as npf
 import pandas as pd
-import xlwings as xw
-import xlwings.constants as xwc
 
 from rotalysis import Economics as ec
 from rotalysis import UtilityFunction as uf
@@ -249,7 +247,7 @@ class PumpOptimizer:
             * flowrate_conversion.get(flowrate_unit, 1)
         )
 
-        pressure_unit = self.unit["pressure"]
+        pressure_unit = str(self.unit["pressure"])
         pressure_conversion = {"bar": 1, "psi": 0.0689476}
 
         self.dfoperation[

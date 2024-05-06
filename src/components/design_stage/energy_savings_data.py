@@ -12,7 +12,6 @@ from dash.dependencies import Input, Output, State
 from rotalysis.pump import Pump
 
 from . import ids
-from .pump_design_data import efficiency_curve_grid, pump_curve_grid, system_curve_grid
 
 
 def create_bar_chart(fig: go.Figure, x, y) -> go.Figure:
@@ -50,6 +49,8 @@ def update_figure_with_curve(data, fig, curve_type):
             flowrates=df["flow_rate"], efficiencies=df["efficiency"], fig=fig
         )
 
+    return fig
+
 
 graph_checkbox = CheckboxCustom(
     options=["pump", "system", "efficiency", "flow_spread"],
@@ -82,9 +83,9 @@ def register_callbacks():
         ],
         [Input(graph_checkbox.id, "value")],
         [
-            State(pump_curve_grid.id, "rowData"),
-            State(system_curve_grid.id, "rowData"),
-            State(efficiency_curve_grid.id, "rowData"),
+            State(ids.PUMP_CURVE_GRID, "rowData"),
+            State(ids.SYSTEM_CURVE_GRID, "rowData"),
+            State(ids.EFFICIENCY_CURVE_GRID, "rowData"),
             State(ids.FLOW_SPREAD_TABLE, "rowData"),
         ],
         prevent_initial_call=True,
@@ -102,6 +103,8 @@ def register_callbacks():
         if "flow_spread" in curve_types:
             df = pd.DataFrame(flow_spread_data)
             fig = create_bar_chart(
-                fig, df["rated_flow_percentage"], df["operated_hours"]
+                fig,
+                df["rated_flow_percentage"],
+                df["operated_hours"],
             )
         return fig, {"display": "block"}
