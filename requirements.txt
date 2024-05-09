@@ -11,4 +11,5 @@ xlsxwriter
 sympy
 scipy
 dash-ag-grid
+nbformat
 git+https://github.com/sandeeprah/agility.git@skeleton-components

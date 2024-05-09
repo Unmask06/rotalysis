@@ -1,20 +1,21 @@
-""" This module leverages the pump_function.py module in the rotalysis folder
-    to calculate the energy savings potential of a pump upon conversion to 
-    variable speed drive or trimming the impeller based on the operating data
-"""
+""" This module contains the PumpDataCleaner class which is responsible for cleaning 
+the operational data of the pump and setting the relevant data for the PumpOptimizer. """
 
 import logging
 
+import numpy as np
 import pandas as pd
 
 from rotalysis import UtilityFunction as uf
 from rotalysis.definitions import (
-    ComputedVariables,
+    ConfigurationVariables,
     EmissionVariables,
     InputSheetNames,
     PumpDesignDataVariables,
     PumpOperationVariables,
+    PumpVariables,
 )
+from rotalysis.pump import PumpFunction as PF
 
 logger = logging.getLogger(__name__)
 
@@ -42,30 +43,30 @@ class PumpDataCleaner:
     }
 
     computed_columns = {
-        ComputedVariables.FLOWRATE_PERCENT: "%",
-        ComputedVariables.DIFFERENTIAL_PRESSURE: "bar",
-        ComputedVariables.ACTUAL_CV: "gpm",
-        ComputedVariables.CALCULATED_CV_DROP: "bar",
-        ComputedVariables.MEASURED_CV_DROP: "bar",
-        ComputedVariables.CV_PRESSURE_DROP: "bar",
-        ComputedVariables.INHERENT_PIPING_LOSS: "bar",
-        ComputedVariables.REQUIRED_DIFFERENTIAL_PRESSURE: "bar",
-        ComputedVariables.REQUIRED_SPEED_VARIATION: "%",
-        ComputedVariables.BASE_HYDRAULIC_POWER: "MW",
-        ComputedVariables.OLD_PUMP_EFFICIENCY: "%",
-        ComputedVariables.OLD_MOTOR_EFFICIENCY: "%",
-        ComputedVariables.BASE_MOTOR_POWER: "MW",
-        ComputedVariables.WORKING_HOURS: "h",
-        ComputedVariables.WORKING_PERCENT: "%",
+        PumpVariables.FLOWRATE_PERCENT: "%",
+        PumpVariables.DIFFERENTIAL_PRESSURE: "bar",
+        PumpVariables.ACTUAL_CV: "gpm",
+        PumpVariables.CALCULATED_CV_DROP: "bar",
+        PumpVariables.MEASURED_CV_DROP: "bar",
+        PumpVariables.CV_PRESSURE_DROP: "bar",
+        PumpVariables.INHERENT_PIPING_LOSS: "bar",
+        PumpVariables.REQUIRED_DIFFERENTIAL_PRESSURE: "bar",
+        PumpVariables.REQUIRED_SPEED_VARIATION: "%",
+        PumpVariables.BASE_HYDRAULIC_POWER: "MW",
+        PumpVariables.OLD_PUMP_EFFICIENCY: "%",
+        PumpVariables.OLD_MOTOR_EFFICIENCY: "%",
+        PumpVariables.BASE_MOTOR_POWER: "MW",
+        PumpVariables.WORKING_HOURS: "h",
+        PumpVariables.WORKING_PERCENT: "%",
     }
     energy_columns = {
-        ComputedVariables.SELECTED_MEASURE: "",
-        ComputedVariables.SELECTED_SPEED_VARIATION: "%",
-        ComputedVariables.NEW_PUMP_EFFICIENCY: "%",
-        ComputedVariables.NEW_MOTOR_EFFICIENCY: "%",
-        ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION: "MWh",
-        ComputedVariables.PROPOSED_CASE_ENERGY_CONSUMPTION: "MWh",
-        ComputedVariables.ANNUAL_ENERGY_SAVING: "MWh",
+        PumpVariables.SELECTED_MEASURE: "",
+        PumpVariables.SELECTED_SPEED_VARIATION: "%",
+        PumpVariables.NEW_PUMP_EFFICIENCY: "%",
+        PumpVariables.NEW_MOTOR_EFFICIENCY: "%",
+        PumpVariables.BASE_CASE_ENERGY_CONSUMPTION: "MWh",
+        PumpVariables.PROPOSED_CASE_ENERGY_CONSUMPTION: "MWh",
+        PumpVariables.ANNUAL_ENERGY_SAVING: "MWh",
     }
     emission_columns = {
         EmissionVariables.BASE_CASE_EMISSION: "tCO2e",
@@ -112,7 +113,6 @@ class PumpDataCleaner:
         dfprocess = dfprocess.iloc[:, :3].dropna(subset=[InputSheetNames.DESIGN_DATA])
         dfprocess.set_index(InputSheetNames.DESIGN_DATA, inplace=True)
         self.process_data = dfprocess.to_dict("index")
-
         # Set Pump unit
         dfunit = self.unit.iloc[:, :2].dropna(subset=[InputSheetNames.UNIT])
         self.unit = dict(zip(dfunit["parameter"], dfunit[InputSheetNames.UNIT]))
@@ -282,6 +282,13 @@ class PumpDataCleaner:
         )
 
     def built_data_cleaner(self):
+        """
+        Retuns the cleaned operational data for the pump optimization.
+
+        Returns:
+            self.operation_data: pd.DataFrame
+
+        """
         self.__set_config()
         self.__set_data()
         self.__check_mandatory_columns()
@@ -290,3 +297,304 @@ class PumpDataCleaner:
         self.convert_default_unit()
         self.remove_non_operating_rows()
         self.set_computed_columns()
+
+    def __get_flowrate_percent(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns()
+        - Calculates the flowrate percentage for each row in the dataframe
+        - Group the values based on the bin_percent specified in config file
+        - The resulting binned values are stored in a new column 'flowrate_percent'
+        """
+        percent = self.config[ConfigurationVariables.BIN_PERCENT]["value"]
+        self.operation_data[PumpVariables.FLOWRATE_PERCENT] = (
+            self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE]
+            / self.process_data[PumpDesignDataVariables.RATED_FLOWRATE]["value"]
+        )
+
+        bins = np.arange(0.275, 1 + (5 * percent), percent).tolist()
+        labels = np.arange(0.30, 1 + (5 * percent), percent).tolist()
+        self.operation_data[PumpVariables.FLOWRATE_PERCENT] = pd.cut(
+            self.operation_data[PumpVariables.FLOWRATE_PERCENT],
+            bins=bins,
+            labels=labels,
+            right=True,
+        )
+
+    def __check_recirculation(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns()
+        - Check if recirculation flow is greater than the discharge flow
+        """
+        if PumpOperationVariables.RECIRCULATION_FLOW in self.operation_data.columns:
+            if (
+                self.operation_data[PumpOperationVariables.RECIRCULATION_FLOW]
+                > self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE]
+            ).all():
+                self.logger.warning("Recirculation flow is greater than discharge flow")
+
+    def get_computed_columns(self):
+        """
+        Returns:
+        self.operation_data: pd.DataFrame
+
+        - Computed columns for the pump operation data
+        - Group the dfoperarion dataframe based on the flowrate percentage and
+            create a new datframe "dfcalculation"
+
+        ** Core functions are stored in the PumpFunction class
+        """
+
+        self.__add_computed_columns()
+        self.__get_cv_drop()
+        self.__get_required_differential_pressure()
+        self.__get_required_speed_varation()
+        self.__get_base_hydraulic_power()
+        self.__get_efficiency()
+        self.__get_base_motor_power()
+        self.__check_recirculation()
+        self.__check_discharge_flow()
+        self.__get_flowrate_percent()
+
+        self.logger.info("Computed columns added")
+
+    def __add_computed_columns(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns()
+
+        """
+
+        self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE] = (
+            PF.get_differential_pressure(
+                self.operation_data[PumpOperationVariables.DISCHARGE_PRESSURE],
+                self.operation_data[PumpOperationVariables.SUCTION_PRESSURE],
+            )
+        )
+
+    def __get_cv_drop(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns()
+        - Calculates the cv_drop and inherant pipe loss based on the calculation_method
+            1. downstream_pressure
+            2. cv_opening
+        """
+        density = self.process_data[PumpDesignDataVariables.DENSITY]["value"]
+        valve_size = self.process_data[PumpDesignDataVariables.DISCHARGE_VALVE_SIZE][
+            "value"
+        ]
+        valve_character = self.process_data[
+            PumpDesignDataVariables.DISCHARGE_VALVE_CHARACTER
+        ]["value"]
+        calculation_method = self.process_data[
+            PumpDesignDataVariables.CALCULATION_METHOD
+        ]["value"]
+
+        if calculation_method == PumpOperationVariables.CV_OPENING:
+            if not uf.is_empty_value(valve_size):
+                self.operation_data[PumpVariables.ACTUAL_CV] = PF.get_actual_cv(
+                    valve_size,
+                    self.operation_data[PumpOperationVariables.CV_OPENING],
+                    valve_character,
+                )
+
+                self.operation_data[PumpVariables.CALCULATED_CV_DROP] = (
+                    PF.get_calculated_cv_drop(
+                        self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE],
+                        self.operation_data[PumpVariables.ACTUAL_CV],
+                        density,
+                    )
+                )
+                self.operation_data[PumpVariables.CV_PRESSURE_DROP] = (
+                    self.operation_data[PumpVariables.CALCULATED_CV_DROP]
+                )
+                self.operation_data[PumpVariables.INHERENT_PIPING_LOSS] = 0
+            else:
+                error_msg = "valve_size is not defined in config file."
+                self.logger.error(error_msg)
+                raise CustomException(error_msg)
+
+        elif calculation_method == PumpOperationVariables.DOWNSTREAM_PRESSURE:
+            self.operation_data[PumpVariables.MEASURED_CV_DROP] = (
+                PF.get_measured_cv_drop(
+                    self.operation_data[PumpOperationVariables.DISCHARGE_PRESSURE],
+                    self.operation_data[PumpOperationVariables.DOWNSTREAM_PRESSURE],
+                )
+            )
+
+            self.operation_data[PumpVariables.CV_PRESSURE_DROP] = self.operation_data[
+                PumpVariables.MEASURED_CV_DROP
+            ]
+            self.operation_data[PumpVariables.INHERENT_PIPING_LOSS] = (
+                self.operation_data[PumpVariables.CV_PRESSURE_DROP]
+                * self.config[ConfigurationVariables.PIPING_LOSS]["value"]
+            )
+
+    def __get_required_differential_pressure(self):
+        self.operation_data[PumpVariables.REQUIRED_DIFFERENTIAL_PRESSURE] = (
+            self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE]
+            + self.operation_data[PumpVariables.INHERENT_PIPING_LOSS]
+            - self.operation_data[PumpVariables.CV_PRESSURE_DROP]
+        )
+
+    def __get_required_speed_varation(self):
+        self.operation_data[PumpVariables.REQUIRED_SPEED_VARIATION] = (
+            PF.get_speed_variation(
+                self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE],
+                self.operation_data[PumpVariables.REQUIRED_DIFFERENTIAL_PRESSURE],
+            )
+        )
+
+    def __get_base_hydraulic_power(self):
+        self.operation_data[PumpVariables.BASE_HYDRAULIC_POWER] = (
+            PF.get_base_hydraulic_power(
+                self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE],
+                self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE],
+            )
+        )
+
+    def __get_bep_flowrate(self):
+        """
+        PRIVATE METHOD USED IN __get_efficiency()
+        """
+        bep_flowrate = self.process_data[PumpDesignDataVariables.BEP_FLOWRATE]["value"]
+        if uf.is_empty_value(bep_flowrate):
+            bep_flowrate = self.process_data[PumpDesignDataVariables.RATED_FLOWRATE][
+                "value"
+            ]
+        elif isinstance(bep_flowrate, str):
+            bep_flowrate = self.process_data[PumpDesignDataVariables.RATED_FLOWRATE][
+                "value"
+            ]
+            self.logger.warning(
+                "BEP_flowrate should be empty or numeric. Please don't string values next time.\n\
+                    Rated flowrate is used as BEP_flowrate."
+            )
+
+        return bep_flowrate
+
+    def __get_bep_efficiency(self):
+        """
+        PRIVATE METHOD USED IN __get_efficiency()
+        """
+
+        bep_efficiency = self.process_data[PumpDesignDataVariables.BEP_EFFICIENCY][
+            "value"
+        ]
+        if uf.is_empty_value(bep_efficiency):
+            bep_efficiency = self.config[ConfigurationVariables.PUMP_EFFICIENCY][
+                "value"
+            ]
+        elif isinstance(bep_efficiency, str):
+            bep_efficiency = self.config[ConfigurationVariables.PUMP_EFFICIENCY][
+                "value"
+            ]
+            self.logger.warning(
+                "BEP_efficiency should be empty or numeric. Please don't use string values.\
+                    Default pump efficiency is used as BEP_efficiency."
+            )
+
+        return bep_efficiency
+
+    def __get_efficiency(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns()
+        Calculates
+            1. old_pump_efficiency
+            2. old_motor_efficiency
+        """
+        bep_flowrate = self.__get_bep_flowrate()
+        bep_efficiency = self.__get_bep_efficiency()
+
+        self.operation_data[PumpVariables.OLD_PUMP_EFFICIENCY] = PF.get_pump_efficiency(
+            bep_flowrate,
+            bep_efficiency,
+            self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE],
+        )
+
+        # calculate old_motor_efficiency
+        if uf.is_empty_value(
+            self.process_data[PumpDesignDataVariables.MOTOR_EFFICIENCY]["value"]
+        ):
+            self.process_data[PumpDesignDataVariables.MOTOR_EFFICIENCY]["value"] = 0.9
+            self.logger.warning(
+                "motor_efficiency is empty. \n motor efficiency is considered 90% by default"
+            )
+
+        self.operation_data[PumpVariables.OLD_MOTOR_EFFICIENCY] = self.process_data[
+            PumpDesignDataVariables.MOTOR_EFFICIENCY
+        ]["value"]
+
+    def __get_base_motor_power(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns()
+        """
+        self.operation_data[PumpVariables.BASE_MOTOR_POWER] = (
+            self.operation_data[PumpVariables.BASE_HYDRAULIC_POWER]
+            / self.operation_data[PumpVariables.OLD_PUMP_EFFICIENCY]
+            / self.operation_data[PumpVariables.OLD_MOTOR_EFFICIENCY]
+        )
+
+    def __check_discharge_flow(self):
+        """
+        PRIVATE METHOD USED IN get_computed_columns() as quality check
+
+        Raises:
+            CustomException if the discharge flowrate is less than 30% of the rated flowrate
+        """
+
+        if (
+            self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE].max()
+            < 0.3 * self.process_data[PumpDesignDataVariables.RATED_FLOWRATE]["value"]
+        ):
+            error_msg = "The maximum flowrate is less than 30% of the rated flowrate. \n\
+                Please check the flowrate unit."
+            self.logger.warning(error_msg)
+
+            raise CustomException(
+                "Analysis stopped since VFD and Impeller trimming will not be effective."
+            )
+
+    def group_by_flowrate_percent(self):
+        """
+        - Group the dfoperation dataframe based on the flowrate percentage
+        - Create a new datframe "dfcalculation"
+        """
+        df2 = self.operation_data.groupby(
+            by=[PumpVariables.FLOWRATE_PERCENT],
+            as_index=False,
+            dropna=False,
+            observed=False,
+        ).mean(numeric_only=True)
+
+        working_hours = self.operation_data.groupby(
+            by=[PumpVariables.FLOWRATE_PERCENT],
+            as_index=False,
+            dropna=False,
+            observed=False,
+        )[PumpOperationVariables.DISCHARGE_FLOWRATE].size()
+
+        df2[PumpVariables.WORKING_HOURS] = working_hours["size"]
+
+        df2[PumpVariables.WORKING_PERCENT] = (
+            df2[PumpVariables.WORKING_HOURS] / df2[PumpVariables.WORKING_HOURS].sum()
+        )
+
+        df2.loc[
+            df2[PumpVariables.WORKING_PERCENT]
+            < self.config[ConfigurationVariables.MIN_WORKING_PERCENT]["value"],
+            [PumpVariables.WORKING_HOURS, PumpVariables.WORKING_PERCENT],
+        ] = 0
+
+        df2[PumpVariables.WORKING_PERCENT] = (
+            df2[PumpVariables.WORKING_HOURS] / df2[PumpVariables.WORKING_HOURS].sum()
+        )
+
+        df2[PumpVariables.WORKING_HOURS] = df2[PumpVariables.WORKING_PERCENT] * 8760
+
+        df2 = df2.loc[df2[PumpVariables.WORKING_PERCENT] > 0].reset_index(drop=True)
+        df2[PumpVariables.WORKING_PERCENT] = (
+            df2[PumpVariables.WORKING_HOURS] / df2[PumpVariables.WORKING_HOURS].sum()
+        )
+
+        df2[PumpVariables.WORKING_HOURS] = df2[PumpVariables.WORKING_PERCENT] * 8760
+
+        self.dfcalculation = df2

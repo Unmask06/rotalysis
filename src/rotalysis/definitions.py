@@ -3,6 +3,23 @@ src/rotalysis/definitions.py
 This module contains the definitions for the Rotalysis app.
 """
 
+from enum import Enum
+
+
+class PumpCalculationMethod(Enum):
+    """Enumeration for pump calculation method."""
+
+    TWO_POINT_METHOD = "Two Point Method"
+    MULTI_POINT_METHOD = "Multi Point Method"
+    HISTORIAN_DATA = "Historian Data"
+
+
+class PumpControlStrategy(Enum):
+    """Enumeration for pump control strategy."""
+
+    DISCHARGE_VALVE_THROTTLING = "Discharge Valve Throttling"
+    VARIABLE_SPEED_DRIVE = "Variable Speed Drive"
+
 
 class ValveCharacter:
     """Enumeration for valve character."""
@@ -50,7 +67,13 @@ class EmissionVariables:
     ANNUAL_GHG_REDUCTION = "Annual GHG Reduction"
 
 
-class ComputedVariables:
+class PumpVariables:
+    SUCTION_PRESSURE = "Suction Pressure"
+    DISCHARGE_PRESSURE = "Discharge Pressure"
+    DISCHARGE_FLOWRATE = "Discharge Flowrate"
+    CV_OPENING = "CV Opening"
+    DOWNSTREAM_PRESSURE = "Downstream Pressure"
+    RECIRCULATION_FLOW = "Recirculation Flow"
     FLOWRATE_PERCENT = "Flowrate Percent"
     DIFFERENTIAL_PRESSURE = "Differential Pressure"
     ACTUAL_CV = "Actual CV"

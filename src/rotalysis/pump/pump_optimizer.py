@@ -16,12 +16,12 @@ import pandas as pd
 from rotalysis import Economics as ec
 from rotalysis import UtilityFunction as uf
 from rotalysis.definitions import (
-    ComputedVariables,
     ConfigurationVariables,
     EconomicsVariables,
     EmissionVariables,
     PumpDesignDataVariables,
     PumpOperationVariables,
+    PumpVariables,
 )
 
 from .data_cleaner import PumpDataCleaner
@@ -82,21 +82,21 @@ class PumpOptimizer:
         self.operation_data = pump_data.operation_data
         self.unit = pump_data.unit
         self.logger = logger
-        self.get_emission_factor()
+        # self.get_emission_factor()
 
-    def get_emission_factor(self):
-        """
-        Returns the emission factor from the config file.
+    # def get_emission_factor(self):
+    #     """
+    #     Returns the emission factor from the config file.
 
-        Returns:
-            float: emission factor
-        """
-        dfemission_factor = self.emission_factor
-        dfemission_factor = dfemission_factor.iloc[:, :2].dropna(
-            subset=[EmissionVariables.EMISSION_FACTOR]
-        )
-        dfemission_factor.set_index("site", inplace=True)
-        self.dfemission_factor = dfemission_factor.to_dict("index")
+    #     Returns:
+    #         float: emission factor
+    #     """
+    #     dfemission_factor = self.emission_factor
+    #     dfemission_factor = dfemission_factor.iloc[:, :2].dropna(
+    #         subset=[EmissionVariables.EMISSION_FACTOR]
+    #     )
+    #     dfemission_factor.set_index("site", inplace=True)
+    #     self.dfemission_factor = dfemission_factor.to_dict("index")
 
     def __get_flowrate_percent(self):
         """
@@ -106,15 +106,15 @@ class PumpOptimizer:
         - The resulting binned values are stored in a new column 'flowrate_percent'
         """
         percent = self.config[ConfigurationVariables.BIN_PERCENT]["value"]
-        self.operation_data[ComputedVariables.FLOWRATE_PERCENT] = (
+        self.operation_data[PumpVariables.FLOWRATE_PERCENT] = (
             self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE]
             / self.process_data[PumpDesignDataVariables.RATED_FLOWRATE]["value"]
         )
 
         bins = np.arange(0.275, 1 + (5 * percent), percent).tolist()
         labels = np.arange(0.30, 1 + (5 * percent), percent).tolist()
-        self.operation_data[ComputedVariables.FLOWRATE_PERCENT] = pd.cut(
-            self.operation_data[ComputedVariables.FLOWRATE_PERCENT],
+        self.operation_data[PumpVariables.FLOWRATE_PERCENT] = pd.cut(
+            self.operation_data[PumpVariables.FLOWRATE_PERCENT],
             bins=bins,
             labels=labels,
             right=True,
@@ -134,6 +134,9 @@ class PumpOptimizer:
 
     def get_computed_columns(self):
         """
+        Returns:
+        self.operation_data: pd.DataFrame
+
         - Computed columns for the pump operation data
         - Group the dfoperarion dataframe based on the flowrate percentage and
             create a new datframe "dfcalculation"
@@ -160,7 +163,7 @@ class PumpOptimizer:
 
         """
 
-        self.operation_data[ComputedVariables.DIFFERENTIAL_PRESSURE] = (
+        self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE] = (
             PF.get_differential_pressure(
                 self.operation_data[PumpOperationVariables.DISCHARGE_PRESSURE],
                 self.operation_data[PumpOperationVariables.SUCTION_PRESSURE],
@@ -187,64 +190,64 @@ class PumpOptimizer:
 
         if calculation_method == PumpOperationVariables.CV_OPENING:
             if not uf.is_empty_value(valve_size):
-                self.operation_data[ComputedVariables.ACTUAL_CV] = PF.get_actual_cv(
+                self.operation_data[PumpVariables.ACTUAL_CV] = PF.get_actual_cv(
                     valve_size,
                     self.operation_data[PumpOperationVariables.CV_OPENING],
                     valve_character,
                 )
 
-                self.operation_data[ComputedVariables.CALCULATED_CV_DROP] = (
+                self.operation_data[PumpVariables.CALCULATED_CV_DROP] = (
                     PF.get_calculated_cv_drop(
                         self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE],
-                        self.operation_data[ComputedVariables.ACTUAL_CV],
+                        self.operation_data[PumpVariables.ACTUAL_CV],
                         density,
                     )
                 )
-                self.operation_data[ComputedVariables.CV_PRESSURE_DROP] = (
-                    self.operation_data[ComputedVariables.CALCULATED_CV_DROP]
+                self.operation_data[PumpVariables.CV_PRESSURE_DROP] = (
+                    self.operation_data[PumpVariables.CALCULATED_CV_DROP]
                 )
-                self.operation_data[ComputedVariables.INHERENT_PIPING_LOSS] = 0
+                self.operation_data[PumpVariables.INHERENT_PIPING_LOSS] = 0
             else:
                 error_msg = "valve_size is not defined in config file."
                 self.logger.error(error_msg)
                 raise CustomException(error_msg)
 
         elif calculation_method == PumpOperationVariables.DOWNSTREAM_PRESSURE:
-            self.operation_data[ComputedVariables.MEASURED_CV_DROP] = (
+            self.operation_data[PumpVariables.MEASURED_CV_DROP] = (
                 PF.get_measured_cv_drop(
                     self.operation_data[PumpOperationVariables.DISCHARGE_PRESSURE],
                     self.operation_data[PumpOperationVariables.DOWNSTREAM_PRESSURE],
                 )
             )
 
-            self.operation_data[ComputedVariables.CV_PRESSURE_DROP] = (
-                self.operation_data[ComputedVariables.MEASURED_CV_DROP]
-            )
-            self.operation_data[ComputedVariables.INHERENT_PIPING_LOSS] = (
-                self.operation_data[ComputedVariables.CV_PRESSURE_DROP]
+            self.operation_data[PumpVariables.CV_PRESSURE_DROP] = self.operation_data[
+                PumpVariables.MEASURED_CV_DROP
+            ]
+            self.operation_data[PumpVariables.INHERENT_PIPING_LOSS] = (
+                self.operation_data[PumpVariables.CV_PRESSURE_DROP]
                 * self.config[ConfigurationVariables.PIPING_LOSS]["value"]
             )
 
     def __get_required_differential_pressure(self):
-        self.operation_data[ComputedVariables.REQUIRED_DIFFERENTIAL_PRESSURE] = (
-            self.operation_data[ComputedVariables.DIFFERENTIAL_PRESSURE]
-            + self.operation_data[ComputedVariables.INHERENT_PIPING_LOSS]
-            - self.operation_data[ComputedVariables.CV_PRESSURE_DROP]
+        self.operation_data[PumpVariables.REQUIRED_DIFFERENTIAL_PRESSURE] = (
+            self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE]
+            + self.operation_data[PumpVariables.INHERENT_PIPING_LOSS]
+            - self.operation_data[PumpVariables.CV_PRESSURE_DROP]
         )
 
     def __get_required_speed_varation(self):
-        self.operation_data[ComputedVariables.REQUIRED_SPEED_VARIATION] = (
+        self.operation_data[PumpVariables.REQUIRED_SPEED_VARIATION] = (
             PF.get_speed_variation(
-                self.operation_data[ComputedVariables.DIFFERENTIAL_PRESSURE],
-                self.operation_data[ComputedVariables.REQUIRED_DIFFERENTIAL_PRESSURE],
+                self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE],
+                self.operation_data[PumpVariables.REQUIRED_DIFFERENTIAL_PRESSURE],
             )
         )
 
     def __get_base_hydraulic_power(self):
-        self.operation_data[ComputedVariables.BASE_HYDRAULIC_POWER] = (
+        self.operation_data[PumpVariables.BASE_HYDRAULIC_POWER] = (
             PF.get_base_hydraulic_power(
                 self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE],
-                self.operation_data[ComputedVariables.DIFFERENTIAL_PRESSURE],
+                self.operation_data[PumpVariables.DIFFERENTIAL_PRESSURE],
             )
         )
 
@@ -301,12 +304,10 @@ class PumpOptimizer:
         bep_flowrate = self.__get_bep_flowrate()
         bep_efficiency = self.__get_bep_efficiency()
 
-        self.operation_data[ComputedVariables.OLD_PUMP_EFFICIENCY] = (
-            PF.get_pump_efficiency(
-                bep_flowrate,
-                bep_efficiency,
-                self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE],
-            )
+        self.operation_data[PumpVariables.OLD_PUMP_EFFICIENCY] = PF.get_pump_efficiency(
+            bep_flowrate,
+            bep_efficiency,
+            self.operation_data[PumpOperationVariables.DISCHARGE_FLOWRATE],
         )
 
         # calculate old_motor_efficiency
@@ -318,7 +319,7 @@ class PumpOptimizer:
                 "motor_efficiency is empty. \n motor efficiency is considered 90% by default"
             )
 
-        self.operation_data[ComputedVariables.OLD_MOTOR_EFFICIENCY] = self.process_data[
+        self.operation_data[PumpVariables.OLD_MOTOR_EFFICIENCY] = self.process_data[
             PumpDesignDataVariables.MOTOR_EFFICIENCY
         ]["value"]
 
@@ -326,10 +327,10 @@ class PumpOptimizer:
         """
         PRIVATE METHOD USED IN get_computed_columns()
         """
-        self.operation_data[ComputedVariables.BASE_MOTOR_POWER] = (
-            self.operation_data[ComputedVariables.BASE_HYDRAULIC_POWER]
-            / self.operation_data[ComputedVariables.OLD_PUMP_EFFICIENCY]
-            / self.operation_data[ComputedVariables.OLD_MOTOR_EFFICIENCY]
+        self.operation_data[PumpVariables.BASE_MOTOR_POWER] = (
+            self.operation_data[PumpVariables.BASE_HYDRAULIC_POWER]
+            / self.operation_data[PumpVariables.OLD_PUMP_EFFICIENCY]
+            / self.operation_data[PumpVariables.OLD_MOTOR_EFFICIENCY]
         )
 
     def __check_discharge_flow(self):
@@ -358,50 +359,43 @@ class PumpOptimizer:
         - Create a new datframe "dfcalculation"
         """
         df2 = self.operation_data.groupby(
-            by=[ComputedVariables.FLOWRATE_PERCENT],
+            by=[PumpVariables.FLOWRATE_PERCENT],
             as_index=False,
             dropna=False,
             observed=False,
         ).mean(numeric_only=True)
 
         working_hours = self.operation_data.groupby(
-            by=[ComputedVariables.FLOWRATE_PERCENT],
+            by=[PumpVariables.FLOWRATE_PERCENT],
             as_index=False,
             dropna=False,
             observed=False,
         )[PumpOperationVariables.DISCHARGE_FLOWRATE].size()
 
-        df2[ComputedVariables.WORKING_HOURS] = working_hours["size"]
+        df2[PumpVariables.WORKING_HOURS] = working_hours["size"]
 
-        df2[ComputedVariables.WORKING_PERCENT] = (
-            df2[ComputedVariables.WORKING_HOURS]
-            / df2[ComputedVariables.WORKING_HOURS].sum()
+        df2[PumpVariables.WORKING_PERCENT] = (
+            df2[PumpVariables.WORKING_HOURS] / df2[PumpVariables.WORKING_HOURS].sum()
         )
 
         df2.loc[
-            df2[ComputedVariables.WORKING_PERCENT]
+            df2[PumpVariables.WORKING_PERCENT]
             < self.config[ConfigurationVariables.MIN_WORKING_PERCENT]["value"],
-            [ComputedVariables.WORKING_HOURS, ComputedVariables.WORKING_PERCENT],
+            [PumpVariables.WORKING_HOURS, PumpVariables.WORKING_PERCENT],
         ] = 0
 
-        df2[ComputedVariables.WORKING_PERCENT] = (
-            df2[ComputedVariables.WORKING_HOURS]
-            / df2[ComputedVariables.WORKING_HOURS].sum()
+        df2[PumpVariables.WORKING_PERCENT] = (
+            df2[PumpVariables.WORKING_HOURS] / df2[PumpVariables.WORKING_HOURS].sum()
         )
 
-        df2[ComputedVariables.WORKING_HOURS] = (
-            df2[ComputedVariables.WORKING_PERCENT] * 8760
+        df2[PumpVariables.WORKING_HOURS] = df2[PumpVariables.WORKING_PERCENT] * 8760
+
+        df2 = df2.loc[df2[PumpVariables.WORKING_PERCENT] > 0].reset_index(drop=True)
+        df2[PumpVariables.WORKING_PERCENT] = (
+            df2[PumpVariables.WORKING_HOURS] / df2[PumpVariables.WORKING_HOURS].sum()
         )
 
-        df2 = df2.loc[df2[ComputedVariables.WORKING_PERCENT] > 0].reset_index(drop=True)
-        df2[ComputedVariables.WORKING_PERCENT] = (
-            df2[ComputedVariables.WORKING_HOURS]
-            / df2[ComputedVariables.WORKING_HOURS].sum()
-        )
-
-        df2[ComputedVariables.WORKING_HOURS] = (
-            df2[ComputedVariables.WORKING_PERCENT] * 8760
-        )
+        df2[PumpVariables.WORKING_HOURS] = df2[PumpVariables.WORKING_PERCENT] * 8760
 
         self.dfcalculation = df2
 
@@ -412,26 +406,26 @@ class PumpOptimizer:
         """
 
         self.dfcalculation.loc[
-            self.dfcalculation[ComputedVariables.SELECTED_MEASURE] == "Vsd",
-            ComputedVariables.SELECTED_SPEED_VARIATION,
-        ] = self.dfcalculation[ComputedVariables.REQUIRED_SPEED_VARIATION]
+            self.dfcalculation[PumpVariables.SELECTED_MEASURE] == "Vsd",
+            PumpVariables.SELECTED_SPEED_VARIATION,
+        ] = self.dfcalculation[PumpVariables.REQUIRED_SPEED_VARIATION]
 
         self.dfcalculation.loc[
-            (self.dfcalculation[ComputedVariables.SELECTED_MEASURE] == "Impeller")
-            & (self.dfcalculation[ComputedVariables.WORKING_PERCENT] > 0),
-            ComputedVariables.SELECTED_SPEED_VARIATION,
+            (self.dfcalculation[PumpVariables.SELECTED_MEASURE] == "Impeller")
+            & (self.dfcalculation[PumpVariables.WORKING_PERCENT] > 0),
+            PumpVariables.SELECTED_SPEED_VARIATION,
         ] = (
             self.dfcalculation.loc[
-                self.dfcalculation[ComputedVariables.WORKING_PERCENT] > 0,
-                ComputedVariables.REQUIRED_SPEED_VARIATION,
+                self.dfcalculation[PumpVariables.WORKING_PERCENT] > 0,
+                PumpVariables.REQUIRED_SPEED_VARIATION,
             ]
             .dropna()
             .max()
         )
 
         self.dfcalculation.loc[
-            (self.dfcalculation[ComputedVariables.WORKING_PERCENT] <= 0),
-            ComputedVariables.SELECTED_SPEED_VARIATION,
+            (self.dfcalculation[PumpVariables.WORKING_PERCENT] <= 0),
+            PumpVariables.SELECTED_SPEED_VARIATION,
         ] = 0
 
     def __get_energy_columns(self):
@@ -441,38 +435,38 @@ class PumpOptimizer:
         """
 
         # calculate base case annual energy consumption
-        self.dfcalculation[ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION] = (
-            self.dfcalculation[ComputedVariables.BASE_MOTOR_POWER]
-            * self.dfcalculation[ComputedVariables.WORKING_HOURS]
+        self.dfcalculation[PumpVariables.BASE_CASE_ENERGY_CONSUMPTION] = (
+            self.dfcalculation[PumpVariables.BASE_MOTOR_POWER]
+            * self.dfcalculation[PumpVariables.WORKING_HOURS]
         )
 
         # calculate proposed case efficiency
-        self.dfcalculation[ComputedVariables.NEW_PUMP_EFFICIENCY] = self.dfcalculation[
-            ComputedVariables.OLD_PUMP_EFFICIENCY
+        self.dfcalculation[PumpVariables.NEW_PUMP_EFFICIENCY] = self.dfcalculation[
+            PumpVariables.OLD_PUMP_EFFICIENCY
         ]
-        self.dfcalculation[ComputedVariables.NEW_MOTOR_EFFICIENCY] = self.dfcalculation[
-            ComputedVariables.OLD_MOTOR_EFFICIENCY
+        self.dfcalculation[PumpVariables.NEW_MOTOR_EFFICIENCY] = self.dfcalculation[
+            PumpVariables.OLD_MOTOR_EFFICIENCY
         ]
 
         # calculate proposed case annual energy consumption
         eff_factor = (
-            self.dfcalculation[ComputedVariables.NEW_PUMP_EFFICIENCY]
-            * self.dfcalculation[ComputedVariables.NEW_MOTOR_EFFICIENCY]
+            self.dfcalculation[PumpVariables.NEW_PUMP_EFFICIENCY]
+            * self.dfcalculation[PumpVariables.NEW_MOTOR_EFFICIENCY]
         ) / (
-            self.dfcalculation[ComputedVariables.OLD_PUMP_EFFICIENCY]
-            * self.dfcalculation[ComputedVariables.OLD_MOTOR_EFFICIENCY]
+            self.dfcalculation[PumpVariables.OLD_PUMP_EFFICIENCY]
+            * self.dfcalculation[PumpVariables.OLD_MOTOR_EFFICIENCY]
         )
 
-        self.dfcalculation[ComputedVariables.PROPOSED_CASE_ENERGY_CONSUMPTION] = (
-            self.dfcalculation[ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION]
-            * (self.dfcalculation[ComputedVariables.SELECTED_SPEED_VARIATION] ** 3)
+        self.dfcalculation[PumpVariables.PROPOSED_CASE_ENERGY_CONSUMPTION] = (
+            self.dfcalculation[PumpVariables.BASE_CASE_ENERGY_CONSUMPTION]
+            * (self.dfcalculation[PumpVariables.SELECTED_SPEED_VARIATION] ** 3)
             * eff_factor
         )
 
         # calculate annual energy savings
-        self.dfcalculation[ComputedVariables.ANNUAL_ENERGY_SAVING] = (
-            self.dfcalculation[ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION]
-            - self.dfcalculation[ComputedVariables.PROPOSED_CASE_ENERGY_CONSUMPTION]
+        self.dfcalculation[PumpVariables.ANNUAL_ENERGY_SAVING] = (
+            self.dfcalculation[PumpVariables.BASE_CASE_ENERGY_CONSUMPTION]
+            - self.dfcalculation[PumpVariables.PROPOSED_CASE_ENERGY_CONSUMPTION]
         )
 
     def __get_emissions_columns(self, site):
@@ -485,12 +479,12 @@ class PumpOptimizer:
         ]
 
         self.dfcalculation[EmissionVariables.BASE_CASE_EMISSION] = (
-            self.dfcalculation[ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION]
+            self.dfcalculation[PumpVariables.BASE_CASE_ENERGY_CONSUMPTION]
             * emission_factor
         )
 
         self.dfcalculation[EmissionVariables.PROPOSED_CASE_EMISSION] = (
-            self.dfcalculation[ComputedVariables.PROPOSED_CASE_ENERGY_CONSUMPTION]
+            self.dfcalculation[PumpVariables.PROPOSED_CASE_ENERGY_CONSUMPTION]
             * emission_factor
         )
 
@@ -511,7 +505,7 @@ class PumpOptimizer:
         - Finally, renames the columns of all the dataframes from snake_case to Proper Case.
         """
         for option in ["Vsd", "Impeller"]:
-            self.dfcalculation[ComputedVariables.SELECTED_MEASURE] = option
+            self.dfcalculation[PumpVariables.SELECTED_MEASURE] = option
             self.__select_speed_reduction()
             self.__get_energy_columns()
             self.__get_emissions_columns(site)
@@ -529,7 +523,7 @@ class PumpOptimizer:
 
         self.df_summary = pd.concat([self.vsd_summary, self.impeller_summary], axis=1)
 
-        if self.df_summary["Vsd"][ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION] == 0:
+        if self.df_summary["Vsd"][PumpVariables.BASE_CASE_ENERGY_CONSUMPTION] == 0:
             error_msg = (
                 "Base case energy consumption is zero. Please check the input data."
             )
@@ -546,10 +540,10 @@ class PumpOptimizer:
         columns = [
             PumpDesignDataVariables.EQUIPMENT_TAG,
             PumpDesignDataVariables.RATED_FLOWRATE,
-            ComputedVariables.SELECTED_SPEED_VARIATION,
-            ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION,
-            ComputedVariables.PROPOSED_CASE_ENERGY_CONSUMPTION,
-            ComputedVariables.ANNUAL_ENERGY_SAVING,
+            PumpVariables.SELECTED_SPEED_VARIATION,
+            PumpVariables.BASE_CASE_ENERGY_CONSUMPTION,
+            PumpVariables.PROPOSED_CASE_ENERGY_CONSUMPTION,
+            PumpVariables.ANNUAL_ENERGY_SAVING,
             EmissionVariables.BASE_CASE_EMISSION,
             EmissionVariables.PROPOSED_CASE_EMISSION,
             EmissionVariables.GHG_REDUCTION,
@@ -563,19 +557,19 @@ class PumpOptimizer:
             PumpDesignDataVariables.RATED_FLOWRATE
         ]["value"]
 
-        df_summary[ComputedVariables.SELECTED_SPEED_VARIATION] = (
-            f"{dfenergy[ComputedVariables.SELECTED_SPEED_VARIATION].max():.0%}"
+        df_summary[PumpVariables.SELECTED_SPEED_VARIATION] = (
+            f"{dfenergy[PumpVariables.SELECTED_SPEED_VARIATION].max():.0%}"
             + " - "
-            + f"{dfenergy[ComputedVariables.SELECTED_SPEED_VARIATION].min():.0%}"
+            + f"{dfenergy[PumpVariables.SELECTED_SPEED_VARIATION].min():.0%}"
         )
-        df_summary[ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION] = dfenergy[
-            ComputedVariables.BASE_CASE_ENERGY_CONSUMPTION
+        df_summary[PumpVariables.BASE_CASE_ENERGY_CONSUMPTION] = dfenergy[
+            PumpVariables.BASE_CASE_ENERGY_CONSUMPTION
         ].sum()
-        df_summary[ComputedVariables.PROPOSED_CASE_ENERGY_CONSUMPTION] = dfenergy[
-            ComputedVariables.PROPOSED_CASE_ENERGY_CONSUMPTION
+        df_summary[PumpVariables.PROPOSED_CASE_ENERGY_CONSUMPTION] = dfenergy[
+            PumpVariables.PROPOSED_CASE_ENERGY_CONSUMPTION
         ].sum()
-        df_summary[ComputedVariables.ANNUAL_ENERGY_SAVING] = dfenergy[
-            ComputedVariables.ANNUAL_ENERGY_SAVING
+        df_summary[PumpVariables.ANNUAL_ENERGY_SAVING] = dfenergy[
+            PumpVariables.ANNUAL_ENERGY_SAVING
         ].sum()
         df_summary[EmissionVariables.BASE_CASE_EMISSION] = dfenergy[
             EmissionVariables.BASE_CASE_EMISSION
@@ -676,7 +670,7 @@ class PumpOptimizer:
             opex=self.config[ConfigurationVariables.VSD_OPEX]["value"]
             * self.config[ConfigurationVariables.VSD_CAPEX]["value"],
             annual_energy_savings=self.df_summary["Vsd"][
-                ComputedVariables.ANNUAL_ENERGY_SAVING
+                PumpVariables.ANNUAL_ENERGY_SAVING
             ],
             annual_emission_reduction=self.df_summary["Vsd"][
                 EmissionVariables.GHG_REDUCTION
@@ -689,7 +683,7 @@ class PumpOptimizer:
             opex=self.config[ConfigurationVariables.VFD_OPEX]["value"]
             * self.config[ConfigurationVariables.VFD_CAPEX]["value"],
             annual_energy_savings=self.df_summary["Vsd"][
-                ComputedVariables.ANNUAL_ENERGY_SAVING
+                PumpVariables.ANNUAL_ENERGY_SAVING
             ],
             annual_emission_reduction=self.df_summary["Vsd"][
                 EmissionVariables.GHG_REDUCTION
@@ -702,7 +696,7 @@ class PumpOptimizer:
             opex=self.config[ConfigurationVariables.IMPELLER_OPEX]["value"]
             * self.config[ConfigurationVariables.IMPELLER_CAPEX]["value"],
             annual_energy_savings=self.df_summary["Impeller"][
-                ComputedVariables.ANNUAL_ENERGY_SAVING
+                PumpVariables.ANNUAL_ENERGY_SAVING
             ],
             annual_emission_reduction=self.df_summary["Impeller"][
                 EmissionVariables.GHG_REDUCTION

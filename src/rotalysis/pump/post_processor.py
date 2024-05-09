@@ -38,16 +38,16 @@ class PumpReporter:
         fig = make_subplots(specs=[[{"secondary_y": True}]])
         fig.add_trace(
             go.Bar(
-                x=self.vsd_calc[defs.ComputedVariables.FLOWRATE_PERCENT],
-                y=self.vsd_calc[defs.ComputedVariables.WORKING_PERCENT],
+                x=self.vsd_calc[defs.PumpVariables.FLOWRATE_PERCENT],
+                y=self.vsd_calc[defs.PumpVariables.WORKING_PERCENT],
                 name="Flowrate %",
             ),
             secondary_y=False,
         )
         fig.add_trace(
             go.Scatter(
-                x=self.imp_trim_calc[defs.ComputedVariables.FLOWRATE_PERCENT],
-                y=self.imp_trim_calc[defs.ComputedVariables.ANNUAL_ENERGY_SAVING],
+                x=self.imp_trim_calc[defs.PumpVariables.FLOWRATE_PERCENT],
+                y=self.imp_trim_calc[defs.PumpVariables.ANNUAL_ENERGY_SAVING],
                 mode="lines+markers",
                 line_shape="spline",
                 name="Annual Energy Saving (Impeller Trim)",
@@ -56,8 +56,8 @@ class PumpReporter:
         )
         fig.add_trace(
             go.Scatter(
-                x=self.vsd_calc[defs.ComputedVariables.FLOWRATE_PERCENT],
-                y=self.vsd_calc[defs.ComputedVariables.ANNUAL_ENERGY_SAVING],
+                x=self.vsd_calc[defs.PumpVariables.FLOWRATE_PERCENT],
+                y=self.vsd_calc[defs.PumpVariables.ANNUAL_ENERGY_SAVING],
                 mode="lines",
                 line_shape="spline",
                 name="Annual Energy Saving (VSD)",

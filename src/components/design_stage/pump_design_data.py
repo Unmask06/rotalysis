@@ -193,11 +193,11 @@ def get_pump_curve_data_from_design_data(
         raise ValueError("Invalid calculation level.")
 
     if calc_level == "two_points":
-        a, b, c = cg.get_headcurve_coeff_from_twopoint(
+        co_effs = cg.get_headcurve_coeff_from_twopoint(
             float(rated_flow), float(rated_head)
         )
     if calc_level == "three_points":
-        a, b, c = cg.get_headcurve_coeff_from_threepoints(
+        co_effs = cg.get_headcurve_coeff_from_threepoints(
             flow=float(rated_flow),
             head=float(rated_head),
             initial_guess=1,
@@ -206,7 +206,7 @@ def get_pump_curve_data_from_design_data(
         )
 
     flow_rates = [float(rated_flow) * i / 10 for i in range(11)]
-    heads = [cg.get_head_from_curve(flow_rate, a, b, c) for flow_rate in flow_rates]  # type: ignore
+    heads = [cg.get_y_from_curve(flow_rate, co_effs) for flow_rate in flow_rates]  # type: ignore
     pump_curve = (
         pd.DataFrame({"flow_rate": flow_rates, "pump_head": heads})
         .round(2)
@@ -214,7 +214,7 @@ def get_pump_curve_data_from_design_data(
     )
 
     # System Curve
-    a, b, c = cg.get_headcurve_coeff_from_threepoints(
+    sytem_curve_coeffs = cg.get_headcurve_coeff_from_threepoints(
         flow=float(rated_flow),
         head=float(rated_head),
         initial_guess=1,
@@ -227,7 +227,7 @@ def get_pump_curve_data_from_design_data(
             {
                 "flow_rate": flow_rates,
                 "system_head": [
-                    cg.get_head_from_curve(flow_rate, a, b, c)
+                    cg.get_y_from_curve(flow_rate, sytem_curve_coeffs)
                     for flow_rate in flow_rates
                 ],
             }

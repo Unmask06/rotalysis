@@ -10,7 +10,10 @@ import pandas as pd
 import pint
 from plotly import graph_objects as go
 
+from rotalysis.fluid import Fluid
+
 from . import curve_generator as cg
+from .curve_generator import QuadCoeffs
 
 ureg = pint.UnitRegistry(system="SI")
 
@@ -28,7 +31,7 @@ class Pump:
         self,
         rated_head: Optional[float] = None,
         rated_flow: Optional[float] = None,
-        density: float = 1000.0,
+        fluid: Fluid = Fluid(),
     ):
         """
         Initialize a Pump object.
@@ -36,14 +39,14 @@ class Pump:
         Args:
             rated_head (float): m
             rated_flow (float): m^3/s
-            density (float, optional): kg/m^3. Defaults to 1000.0.
+            fluid (Fluid, optional): Fluid object. Defaults to Water.
         """
         self.rated_head = rated_head
         self.rated_flow = rated_flow
-        self.density = density
+        self.fluid = fluid
 
     def __repr__(self):
-        return f"Pump(rated_head={self.rated_head}, rated_flow={self.rated_flow})"
+        return f"Pump(rated_head={self.rated_head}, rated_flow={self.rated_flow}, fluid={self.fluid})"
 
     @property
     def sample_pump_curve(self) -> pd.DataFrame:
@@ -61,19 +64,19 @@ class Pump:
         flowrates = np.linspace(0, self.sample_rated_flow * 1.3, 10)
 
         # Head Curve Generation
-        head_coefficents = {"a": -0.0006, "b": -0.1382, "c": 727}
-        hea_quadratic_eq = cg.get_quadratic_equation(**head_coefficents)
-        pump_heads = [hea_quadratic_eq(q) for q in flowrates]
+        head_coefficents = QuadCoeffs(a=-0.0006, b=-0.1382, c=727)
+
+        pump_heads = [cg.get_y_from_curve(q, head_coefficents) for q in flowrates]
 
         # Efficiency Curve Generation
-        efficiency_coefficents = {"a": -0.0003, "b": 0.286, "c": 0}
-        eff_quadratic_eq = cg.get_quadratic_equation(**efficiency_coefficents)
-        efficiencies = [eff_quadratic_eq(q) for q in flowrates]
+        efficiency_coefficents = QuadCoeffs(a=-0.0003, b=0.286, c=0)
+        efficiencies = [
+            cg.get_y_from_curve(q, efficiency_coefficents) for q in flowrates
+        ]
 
         # Sytem Curve Generation
-        system_coefficents = {"a": 0.00093, "b": 0, "c": 0}
-        sys_quadratic_eq = cg.get_quadratic_equation(**system_coefficents)
-        system_heads = [sys_quadratic_eq(q) for q in flowrates]
+        system_coefficients = QuadCoeffs(a=0.00093, b=0, c=0)
+        system_heads = [cg.get_y_from_curve(q, system_coefficients) for q in flowrates]
 
         return pd.DataFrame(
             {
